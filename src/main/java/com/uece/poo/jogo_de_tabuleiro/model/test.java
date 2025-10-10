@@ -1,4 +1,4 @@
-package com.uece.poo.jogo_de_tabuleiro;
+package com.uece.poo.jogo_de_tabuleiro.model;
 
 public class test {
 
