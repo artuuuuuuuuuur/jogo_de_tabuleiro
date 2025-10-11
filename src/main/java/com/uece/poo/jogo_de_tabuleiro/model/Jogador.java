@@ -8,6 +8,7 @@ public abstract class Jogador {
     protected int[] dados = new int[2];
     protected String cor;
     protected boolean ativo, jogarNovamente;
+    protected Jogador escolhaParaVoltarAoInicio;
 
     public Jogador(String cor) {
         this.cor = cor;
@@ -15,6 +16,14 @@ public abstract class Jogador {
         this.posicao = 0;
         this.vezesJogadas = 0;
         this.jogarNovamente = true;
+    }
+
+    public Jogador(boolean ativo, String cor, boolean jogarNovamente, int posicao, int vezesJogadas) {
+        this.ativo = ativo;
+        this.cor = cor;
+        this.jogarNovamente = jogarNovamente;
+        this.posicao = posicao;
+        this.vezesJogadas = vezesJogadas;
     }
 
     public int getPosicao() {
@@ -37,7 +46,7 @@ public abstract class Jogador {
         this.cor = cor;
     }
 
-    public boolean ativo() {
+    public boolean isAtivo() {
         return ativo;
     }
 
@@ -58,6 +67,10 @@ public abstract class Jogador {
         for (int i = 0; i < dados.length; i++) {
             dados[i] = random.nextInt(6) + 1;
         }
+    }
+
+    public void voltarAoInicio() {
+        posicao = 0;
     }
 
     public abstract void jogar();
