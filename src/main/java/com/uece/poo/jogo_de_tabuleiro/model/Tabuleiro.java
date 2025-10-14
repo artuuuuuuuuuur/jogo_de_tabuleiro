@@ -8,37 +8,38 @@ public class Tabuleiro {
     private int rodadaAtual;
     private final int quantidadeJogadores;
 
-    public Tabuleiro(int quantidadeJogadores) {
+    public Tabuleiro(ArrayList<Jogador> jogadoresIniciais) {
         casas = new ArrayList<>();
-        for (int i = 0; i < 41; i++) {
+        casas.add(0, new Casa(0, jogadoresIniciais));
+        for (int i = 1; i < 41; i++) {
             switch (i) {
                 case 10:
                 case 25:
                 case 38:
-                    casas.add(new CasaDesativar());
+                    casas.add(new CasaDesativar(i, new ArrayList<Jogador>()));
                     break;
                 case 13:
-                    casas.add(new CasaMudarTipo());
+                    casas.add(new CasaMudarTipo(i, new ArrayList<Jogador>()));
                     break;
                 case 5:
                 case 15:
                 case 30:
-                    casas.add(new CasaAndarTres());
+                    casas.add(new CasaAndarTres(i, new ArrayList<Jogador>()));
                     break;
                 case 17:
                 case 27:
-                    casas.add(new CasaVoltarInicio());
+                    casas.add(new CasaVoltarInicio(i, new ArrayList<Jogador>()));
                     break;
                 case 20:
                 case 35:
-                    casas.add(new CasaTrocar());
+                    casas.add(new CasaTrocar(i, new ArrayList<Jogador>()));
                     break;
                 default:
-                    casas.add(new Casa());
+                    casas.add(new Casa(i, new ArrayList<Jogador>()));
             }
         }
         rodadaAtual = 0;
-        this.quantidadeJogadores = quantidadeJogadores;
+        this.quantidadeJogadores = jogadoresIniciais.size();
     }
 
     public ArrayList<Casa> getCasas() {

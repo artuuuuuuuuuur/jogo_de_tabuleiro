@@ -7,6 +7,11 @@ public class Casa {
     protected int index;
     protected ArrayList<Jogador> jogadores;
 
+    public Casa(int index, ArrayList<Jogador> jogadores) {
+        this.index = index;
+        this.jogadores = jogadores;
+    }
+
     public int getIndex() {
         return index;
     }

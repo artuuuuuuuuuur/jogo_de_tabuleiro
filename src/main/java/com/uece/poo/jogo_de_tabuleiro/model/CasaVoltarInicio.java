@@ -1,8 +1,10 @@
 package com.uece.poo.jogo_de_tabuleiro.model;
 
+import java.util.ArrayList;
+
 public class CasaVoltarInicio extends Casa {
-    public CasaVoltarInicio() {
-        super();
+    public CasaVoltarInicio(int index, ArrayList<Jogador> jogadores) {
+        super(index, jogadores);
     }
     
     public void executarAcaoEspecial(Tabuleiro tabuleiro) {

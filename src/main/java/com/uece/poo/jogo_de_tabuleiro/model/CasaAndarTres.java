@@ -1,9 +1,11 @@
 package com.uece.poo.jogo_de_tabuleiro.model;
 
+import java.util.ArrayList;
+
 public class CasaAndarTres extends Casa {
 
-    public CasaAndarTres() {
-        super();
+    public CasaAndarTres(int index, ArrayList<Jogador> jogadores) {
+        super(index, jogadores);
     }
 
     public void executarAcaoEspecial(Tabuleiro tabuleiro) {

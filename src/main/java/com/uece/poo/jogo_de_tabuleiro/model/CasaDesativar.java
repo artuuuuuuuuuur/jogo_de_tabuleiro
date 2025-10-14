@@ -1,9 +1,11 @@
 package com.uece.poo.jogo_de_tabuleiro.model;
 
+import java.util.ArrayList;
+
 public class CasaDesativar extends Casa {
 
-    public CasaDesativar() {
-        super();
+    public CasaDesativar(int index, ArrayList<Jogador> jogadores) {
+        super(index, jogadores);
     }
 
     public void executarAcaoEspecial(Tabuleiro tabuleiro) {

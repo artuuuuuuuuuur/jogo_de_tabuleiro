@@ -1,11 +1,12 @@
 package com.uece.poo.jogo_de_tabuleiro.model;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class CasaMudarTipo extends Casa {
 
-    public CasaMudarTipo() {
-        super();
+    public CasaMudarTipo(int index, ArrayList<Jogador> jogadores) {
+        super(index, jogadores);
     }
 
     public void executarAcaoEspecial(Tabuleiro tabuleiro) {
