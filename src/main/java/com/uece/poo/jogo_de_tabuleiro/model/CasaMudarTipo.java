@@ -8,7 +8,7 @@ public class CasaMudarTipo extends Casa {
         super();
     }
 
-    public void executarAcaoEspecial() {
+    public void executarAcaoEspecial(Jogador jogadorAlvo, Tabuleiro tabuleiro) {
         for (Jogador jogador : jogadores) {
             Random random = new Random();
             int tipo = random.nextInt(3);

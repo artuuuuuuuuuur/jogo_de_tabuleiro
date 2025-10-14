@@ -30,6 +30,10 @@ public abstract class Jogador {
         return posicao;
     }
 
+    public void setPosicao(int posicao) {
+        this.posicao = posicao;
+    }
+
     public int getVezesJogadas() {
         return vezesJogadas;
     }

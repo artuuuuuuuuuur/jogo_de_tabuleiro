@@ -1,12 +1,22 @@
 package com.uece.poo.jogo_de_tabuleiro.model;
 
 public class CasaTrocar extends Casa {
+
     public CasaTrocar() {
         super();
     }
-    
-    // Criar classe Tabuleiro
-    public void executarAcaoEspecial() {
-        
+
+    public void executarAcaoEspecial(Jogador jogadorAlvo, Tabuleiro tabuleiro) {
+        for (Jogador jogadorUser : jogadores) {
+            for (Casa casa : tabuleiro.getCasas()) {
+                for (Jogador jogador : casa.getJogadores()) {
+                    if (jogadorAlvo.equals(jogador)) {
+                        Jogador jogadorSwitch = jogador;
+                        jogador.setPosicao(jogadorUser.getPosicao());
+                        jogadorUser.setPosicao(jogadorSwitch.getPosicao());
+                    }
+                }
+            }
+        }
     }
 }
