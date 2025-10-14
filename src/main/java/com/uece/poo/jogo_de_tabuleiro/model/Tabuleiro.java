@@ -13,29 +13,12 @@ public class Tabuleiro {
         casas.add(0, new Casa(0, jogadoresIniciais));
         for (int i = 1; i < 41; i++) {
             switch (i) {
-                case 10:
-                case 25:
-                case 38:
-                    casas.add(new CasaDesativar(i, new ArrayList<Jogador>()));
-                    break;
-                case 13:
-                    casas.add(new CasaMudarTipo(i, new ArrayList<Jogador>()));
-                    break;
-                case 5:
-                case 15:
-                case 30:
-                    casas.add(new CasaAndarTres(i, new ArrayList<Jogador>()));
-                    break;
-                case 17:
-                case 27:
-                    casas.add(new CasaVoltarInicio(i, new ArrayList<Jogador>()));
-                    break;
-                case 20:
-                case 35:
-                    casas.add(new CasaTrocar(i, new ArrayList<Jogador>()));
-                    break;
-                default:
-                    casas.add(new Casa(i, new ArrayList<Jogador>()));
+                case 10, 25, 38 -> casas.add(new CasaDesativar(i, new ArrayList<>()));
+                case 13 -> casas.add(new CasaMudarTipo(i, new ArrayList<>()));
+                case 5, 15, 30 -> casas.add(new CasaAndarTres(i, new ArrayList<>()));
+                case 17, 27 -> casas.add(new CasaVoltarInicio(i, new ArrayList<>()));
+                case 20, 35 -> casas.add(new CasaTrocar(i, new ArrayList<>()));
+                default -> casas.add(new Casa(i, new ArrayList<>()));
             }
         }
         rodadaAtual = 0;
