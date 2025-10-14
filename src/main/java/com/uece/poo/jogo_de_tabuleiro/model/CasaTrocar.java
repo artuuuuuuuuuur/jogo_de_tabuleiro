@@ -9,13 +9,18 @@ public class CasaTrocar extends Casa {
     public void executarAcaoEspecial(Tabuleiro tabuleiro) {
         for (Jogador jogadorUser : jogadores) {
             for (Casa casa : tabuleiro.getCasas()) {
-                for (Jogador jogador : casa.getJogadores()) {
-                    if (jogadorUser.getJogadorAlvo().equals(jogador)) {
-                        Jogador jogadorSwitch = jogador;
-                        jogador.setPosicao(jogadorUser.getPosicao());
-                        jogadorUser.setPosicao(jogadorSwitch.getPosicao());
+                if (!casa.getJogadores().isEmpty()) {
+                    for (Jogador jogador : casa.getJogadores()) {
+                        if (!jogador.equals(jogadorUser)) {
+                            if (jogadorUser.getJogadorAlvo().equals(jogador)) {
+                                Jogador jogadorSwitch = jogador;
+                                jogador.setPosicao(jogadorUser.getPosicao());
+                                jogadorUser.setPosicao(jogadorSwitch.getPosicao());
+                            }
+                        }
                     }
                 }
+                break;
             }
         }
     }
