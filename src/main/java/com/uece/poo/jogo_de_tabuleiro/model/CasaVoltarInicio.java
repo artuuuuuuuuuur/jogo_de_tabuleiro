@@ -5,15 +5,15 @@ public class CasaVoltarInicio extends Casa {
         super();
     }
     
-    public void executarAcaoEspecial(Jogador jogadorAlvo, Tabuleiro tabuleiro) {
-        // for(Jogador jogadorUser : jogadores) {
-        //     for (Casa casa : tabuleiro.getCasas()) {
-        //         for (Jogador jogador : casa.getJogadores()) {
-        //             if (jogadorAlvo.equals(jogador)) {
-                        
-        //             }
-        //         }
-        //     }
-        // }
+    public void executarAcaoEspecial(Tabuleiro tabuleiro) {
+        for (Jogador jogadorUser : jogadores) {
+            for (Casa casa : tabuleiro.getCasas()) {
+                for (Jogador jogador : casa.getJogadores()) {
+                    if (jogadorUser.getJogadorAlvo().equals(jogador)) {
+                        jogador.setPosicao(0);
+                    }
+                }
+            }
+        }
     }
 }

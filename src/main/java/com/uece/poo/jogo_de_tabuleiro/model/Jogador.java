@@ -8,7 +8,7 @@ public abstract class Jogador {
     protected int[] dados = new int[2];
     protected String cor;
     protected boolean ativo, jogarNovamente;
-    protected Jogador escolhaParaVoltarAoInicio;
+    protected Jogador jogadorAlvo;
 
     public Jogador(String cor) {
         this.cor = cor;
@@ -78,4 +78,12 @@ public abstract class Jogador {
     }
 
     public abstract void jogar();
+
+    public Jogador getJogadorAlvo() {
+        return jogadorAlvo;
+    }
+    
+    public void setJogadorAlvo(Jogador jogadorAlvo) {
+        this.jogadorAlvo = jogadorAlvo;
+    }
 }

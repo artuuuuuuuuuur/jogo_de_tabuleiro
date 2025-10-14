@@ -6,7 +6,7 @@ public class CasaDesativar extends Casa {
         super();
     }
 
-    public void executarAcaoEspecial(Jogador jogadorAlvo, Tabuleiro tabuleiro) {
+    public void executarAcaoEspecial(Tabuleiro tabuleiro) {
         for (Jogador jogador : jogadores) {
             jogador.setAtivo(false);
         }

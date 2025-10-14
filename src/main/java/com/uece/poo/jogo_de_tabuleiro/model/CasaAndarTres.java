@@ -6,7 +6,7 @@ public class CasaAndarTres extends Casa {
         super();
     }
 
-    public void executarAcaoEspecial(Jogador jogadorAlvo, Tabuleiro tabuleiro) {
+    public void executarAcaoEspecial(Tabuleiro tabuleiro) {
         for (Jogador jogador : jogadores) {
             if (jogador != null && !(jogador instanceof JogadorAzarado)) {
                 jogador.andar(3);
