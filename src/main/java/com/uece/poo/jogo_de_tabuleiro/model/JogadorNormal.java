@@ -12,7 +12,6 @@ public class JogadorNormal extends Jogador {
 
     @Override
     public void jogar() {
-        dadosIguais = false;
         if (ativo) {
             jogarNovamente = true;
             while (jogarNovamente) {
@@ -22,6 +21,7 @@ public class JogadorNormal extends Jogador {
                 andar(dados[0] + dados[1]);
                 vezesJogadas++;
                 System.out.println(nome + " jogou!");
+                dadosIguais = false;
 
                 if (dados[0] == dados[1]) {
                     dadosIguais = true;

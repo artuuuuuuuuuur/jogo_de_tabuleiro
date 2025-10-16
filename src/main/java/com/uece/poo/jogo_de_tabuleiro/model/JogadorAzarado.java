@@ -12,7 +12,6 @@ public class JogadorAzarado extends Jogador {
 
     @Override
     public void jogar() {
-        dadosIguais = false;
         if (ativo) {
             jogarNovamente = true;
             while (jogarNovamente) {
@@ -22,6 +21,7 @@ public class JogadorAzarado extends Jogador {
                     andar(dados[0] + dados[1]);
                     vezesJogadas++;
                     System.out.println(nome + " jogou!");
+                    dadosIguais = false;
                 } else {
                     jogarNovamente = true;
                 }

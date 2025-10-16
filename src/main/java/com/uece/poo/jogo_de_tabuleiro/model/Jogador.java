@@ -66,14 +66,14 @@ public abstract class Jogador {
         return jogarNovamente;
     }
 
-    public void andar(int numCasas) {
+    protected void andar(int numCasas) {
         posicao = posicao + numCasas;
         if (posicao > 40) {
             posicao = 40;
         }
     }
 
-    public void rolarDados() {
+    protected void rolarDados() {
         Random random = new Random();
         for (int i = 0; i < dados.length; i++) {
             dados[i] = random.nextInt(6) + 1;

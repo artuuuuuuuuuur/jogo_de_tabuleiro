@@ -120,7 +120,7 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="84.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="8" GridPane.rowIndex="7" />
          </children>
       </GridPane>
-      <Button layoutX="506.0" layoutY="695.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="140.0" style="-fx-background-color: #2F4F4F;" text="JOGAR DADOS" />
+      <Button fx:id="jogarDadosButton" layoutX="506.0" layoutY="695.0" mnemonicParsing="false" onAction="#resume" prefHeight="42.0" prefWidth="140.0" style="-fx-background-color: #2F4F4F;" text="JOGAR DADOS" />
       <AnchorPane layoutX="14.0" layoutY="499.0" prefHeight="262.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF;">
          <children>
             <Label layoutX="107.0" layoutY="4.0" text="COLOCAÇÕES">
@@ -226,6 +226,7 @@
             <Font size="25.0" />
          </font>
       </Label>
+      <Label fx:id="currentPlayer" layoutX="436.0" layoutY="739.0" prefHeight="18.0" prefWidth="290.0" />
    </children>
    <opaqueInsets>
       <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
