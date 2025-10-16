@@ -6,24 +6,26 @@ public abstract class Jogador {
 
     protected int posicao, vezesJogadas;
     protected int[] dados = new int[2];
-    protected String cor;
+    protected String cor, nome;
     protected boolean ativo, jogarNovamente;
     protected Jogador jogadorAlvo;
 
-    public Jogador(String cor) {
+    public Jogador(String cor, String nome) {
         this.cor = cor;
         this.ativo = true;
         this.posicao = 0;
         this.vezesJogadas = 0;
         this.jogarNovamente = true;
+        this.nome = nome;
     }
 
-    public Jogador(boolean ativo, String cor, boolean jogarNovamente, int posicao, int vezesJogadas) {
+    public Jogador(boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas) {
         this.ativo = ativo;
         this.cor = cor;
         this.jogarNovamente = jogarNovamente;
         this.posicao = posicao;
         this.vezesJogadas = vezesJogadas;
+        this.nome = nome;
     }
 
     public int getPosicao() {
@@ -82,8 +84,16 @@ public abstract class Jogador {
     public Jogador getJogadorAlvo() {
         return jogadorAlvo;
     }
-    
+
     public void setJogadorAlvo(Jogador jogadorAlvo) {
         this.jogadorAlvo = jogadorAlvo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }

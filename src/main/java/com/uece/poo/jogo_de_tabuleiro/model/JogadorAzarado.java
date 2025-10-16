@@ -2,12 +2,12 @@ package com.uece.poo.jogo_de_tabuleiro.model;
 
 public class JogadorAzarado extends Jogador {
 
-    public JogadorAzarado(String cor) {
-        super(cor);
+    public JogadorAzarado(String cor, String nome) {
+        super(cor, nome);
     }
 
-    public JogadorAzarado(boolean ativo, String cor, boolean jogarNovamente, int posicao, int vezesJogadas) {
-        super(ativo, cor, jogarNovamente, posicao, vezesJogadas);
+    public JogadorAzarado(boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas) {
+        super(ativo, cor, nome, jogarNovamente, posicao, vezesJogadas);
     }
 
     @Override
