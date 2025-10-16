@@ -1,14 +1,321 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
+<?import com.gluonhq.charm.glisten.control.Avatar?>
+<?import com.gluonhq.charm.glisten.control.Icon?>
+<?import com.gluonhq.charm.glisten.control.TextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.PrimaryController">
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.PrimaryController">
    <children>
-      <Label text="Primary View" />
-      <Button fx:id="primaryButton" text="Switch to Secondary View" onAction="#switchToSecondary"/>
+      <AnchorPane cache="true" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B0E0E6;">
+         <children>
+            <Label contentDisplay="TOP" ellipsisString="" layoutX="241.0" layoutY="67.0" scaleX="3.0" scaleY="3.0" text="Campeão dos 7 mares" textAlignment="CENTER">
+               <font>
+                  <Font name="Serif Bold Italic" size="12.0" />
+               </font>
+               <effect>
+                  <DropShadow blurType="GAUSSIAN" height="0.0" radius="0.0" width="0.0" />
+               </effect>
+               <textFill>
+                  <RadialGradient centerX="0.5027624309392266" centerY="0.4786729857819905" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.28999999165534973" green="0.3197080194950104" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+            </Label>
+            <Button layoutX="259.0" layoutY="192.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" style="-fx-background-color: #1E90FF;" text="START" />
+            <Button layoutX="26.0" layoutY="348.0" mnemonicParsing="false" scaleX="0.8" scaleY="0.8" text="?" />
+            <Icon content="HELP" layoutX="42.0" layoutY="350.0" style="-fx-background-color: #1E90FF;" />
+            <Icon content="ASSIGNMENT_IND" layoutX="223.0" layoutY="194.0" />
+            <Icon content="RECENT_ACTORS" layoutX="223.0" layoutY="231.0" />
+            <TextField floatText="JOGADORES" layoutX="259.0" layoutY="224.0" maxLength="6" prefHeight="54.0" prefWidth="89.0" />
+         </children>
+         <effect>
+            <DropShadow blurType="TWO_PASS_BOX" />
+         </effect>
+      </AnchorPane>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B0E0E6;" VBox.vgrow="ALWAYS">
+         <children>
+            <Label layoutX="164.0" layoutY="77.0" scaleX="2.0" scaleY="2.0" text="ESCOLHA SEU PERSONAGEM" textAlignment="JUSTIFY">
+               <font>
+                  <Font name="Arial Black" size="13.0" />
+               </font>
+               <textFill>
+                  <RadialGradient centerX="0.5027624309392266" centerY="0.9905213270142179" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.018292682926829267">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.28999999165534973" green="0.3197080194950104" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+            </Label>
+            <Avatar layoutX="69.0" layoutY="152.0" style="-fx-background-color: #008B8B;" />
+            <Avatar layoutX="154.0" layoutY="152.0" style="-fx-background-color: #FF4040;" />
+            <Avatar layoutX="69.0" layoutY="212.0" style="-fx-background-color: #FFFF00;" />
+            <Avatar layoutX="154.0" layoutY="212.0" style="-fx-background-color: #FF1493;" />
+            <Avatar layoutX="69.0" layoutY="273.0" style="-fx-background-color: #00FF00;" />
+            <Avatar layoutX="154.0" layoutY="273.0" style="-fx-background-color: #7D26CD;" />
+            <Button layoutX="317.0" layoutY="248.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="64.0" style="-fx-background-color: #1C1C1C;" text="AZAR" textAlignment="JUSTIFY">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+            </Button>
+            <Button layoutX="431.0" layoutY="185.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: #1C1C1C;" text="NORMAL" textAlignment="JUSTIFY">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+            </Button>
+            <Button layoutX="317.0" layoutY="185.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="64.0" style="-fx-background-color: #1C1C1C;" text="SORTE" textAlignment="JUSTIFY">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+            </Button>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="64.0" style="-fx-background-color: #1C1C1C;" text="VOLTAR" />
+            <Icon content="BORDER_COLOR" layoutX="145.0" layoutY="359.0" />
+            <Button layoutX="431.0" layoutY="246.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="64.0" style="-fx-background-color: #1C1C1C;" text="DEBUG" />
+            <ButtonBar buttonMinWidth="50.0" layoutX="156.0" layoutY="345.0" prefHeight="40.0" prefWidth="310.0">
+              <buttons>
+                  <TextField blendMode="EXCLUSION" floatText="escolha o seu nome" />
+                <Button mnemonicParsing="false" prefHeight="37.0" style="-fx-background-color: #1C1C1C;" text="CONTINUAR" />
+              </buttons>
+            </ButtonBar>
+            <Icon content="DIRECTIONS_BIKE" layoutX="76.0" layoutY="217.0" />
+            <Icon content="DIRECTIONS_CAR" layoutX="161.0" layoutY="217.0" />
+            <Icon content="GAMES" layoutX="76.0" layoutY="157.0" />
+            <Icon content="DIRECTIONS_BUS" layoutX="161.0" layoutY="157.0" />
+            <Icon content="DIRECTIONS_BOAT" layoutX="76.0" layoutY="278.0" />
+            <Icon content="DIRECTIONS_WALK" layoutX="161.0" layoutY="278.0" />
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </AnchorPane>
+      <AnchorPane prefHeight="711.0" prefWidth="770.0" style="-fx-background-color: #828282;">
+         <children>
+            <GridPane hgap="1.0" layoutX="14.0" layoutY="14.0" prefHeight="612.0" prefWidth="738.0" style="-fx-background-color: #54FF9F;" vgap="1.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="687.0" minWidth="50.0" prefWidth="50.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="687.0" minWidth="50.0" prefWidth="50.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="201.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="93.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="93.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="93.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="93.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="97.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="106.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="95.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="95.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="95.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="97.0" minHeight="50.0" prefHeight="97.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="100.0" minHeight="3.0" prefHeight="3.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="95.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <opaqueInsets>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </opaqueInsets>
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="9" GridPane.rowIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="9" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="8" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="8" GridPane.rowIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="9" GridPane.rowIndex="2" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="2" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="236.0" layoutY="316.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="236.0" layoutY="316.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="236.0" layoutY="316.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="236.0" layoutY="316.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="236.0" layoutY="316.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" layoutX="236.0" layoutY="316.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" layoutX="236.0" layoutY="316.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="236.0" layoutY="316.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="536.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="536.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="8" GridPane.rowIndex="6" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="536.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="8" GridPane.rowIndex="5" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" layoutX="536.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="7" GridPane.rowIndex="5" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="536.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" layoutX="536.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="611.0" layoutY="316.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="7" GridPane.rowIndex="7" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="611.0" layoutY="316.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="7" GridPane.rowIndex="10" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="611.0" layoutY="316.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="7" GridPane.rowIndex="10" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaf05fc" height="50.0" layoutX="536.0" layoutY="367.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="8" GridPane.rowIndex="9" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaf05fc" height="50.0" layoutX="536.0" layoutY="367.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="8" GridPane.rowIndex="11" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaf05fc" height="50.0" layoutX="536.0" layoutY="367.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="9" GridPane.rowIndex="10" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="536.0" layoutY="367.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" layoutX="536.0" layoutY="367.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="6" GridPane.rowIndex="10" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="536.0" layoutY="367.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="536.0" layoutY="367.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="536.0" layoutY="367.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="6" GridPane.rowIndex="9" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="536.0" layoutY="367.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="6" GridPane.rowIndex="8" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" layoutX="536.0" layoutY="367.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="6" GridPane.rowIndex="7" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaf05fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="9" GridPane.rowIndex="11" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaf05fc" height="50.0" layoutX="311.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="9" GridPane.rowIndex="9" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaf05fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="8" GridPane.rowIndex="10" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="86.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Icon content="DIRECTIONS_BUS" style="-fx-background-color: #FF4040;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Icon content="GAMES" style="-fx-background-color: #008B8B;" />
+                  <Icon content="DIRECTIONS_BIKE" style="-fx-background-color: #FFFF00;" GridPane.columnIndex="1" />
+                  <Icon content="DIRECTIONS_CAR" style="-fx-background-color: #FF1493;" GridPane.columnIndex="2" />
+                  <Icon content="DIRECTIONS_BOAT" style="-fx-background-color: #00FF00;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Icon content="DIRECTIONS_WALK" style="-fx-background-color: #7D26CD;" GridPane.rowIndex="1" />
+                  <Label prefHeight="18.0" prefWidth="66.0" text="  GRANDE" GridPane.columnIndex="8" GridPane.rowIndex="8">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="CAMPEÃO" GridPane.columnIndex="9" GridPane.rowIndex="8">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="84.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="8" GridPane.rowIndex="7" />
+               </children>
+            </GridPane>
+            <Button layoutX="501.0" layoutY="666.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="140.0" style="-fx-background-color: #2F4F4F;" text="JOGAR DADOS" />
+            <AnchorPane layoutX="14.0" layoutY="499.0" prefHeight="262.0" prefWidth="327.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <HBox layoutY="102.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #FF4040;">
+                     <children>
+                        <Label text="PLAYER 3">
+                           <font>
+                              <Font name="Arial Black" size="12.0" />
+                           </font>
+                        </Label>
+                        <Icon content="DIRECTIONS_BUS" />
+                     </children>
+                  </HBox>
+                  <HBox layoutY="182.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #FFFF00;">
+                     <children>
+                        <Label text="PLAYER 5">
+                           <font>
+                              <Font name="Arial Black" size="12.0" />
+                           </font>
+                        </Label>
+                        <Icon content="DIRECTIONS_BIKE" />
+                     </children>
+                  </HBox>
+                  <HBox layoutY="62.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #7D26CD;">
+                     <children>
+                        <Label text="PLAYER 2">
+                           <font>
+                              <Font name="Arial Black" size="12.0" />
+                           </font>
+                        </Label>
+                        <Icon content="DIRECTIONS_WALK" />
+                     </children>
+                  </HBox>
+                  <HBox layoutY="22.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #00FF00;">
+                     <children>
+                        <Label text="PLAYER 1">
+                           <font>
+                              <Font name="Arial Black" size="12.0" />
+                           </font>
+                        </Label>
+                        <Icon content="DIRECTIONS_BOAT" />
+                     </children>
+                  </HBox>
+                  <HBox layoutY="222.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #FF1493;">
+                     <children>
+                        <Label text="PLAYER 6">
+                           <font>
+                              <Font name="Arial Black" size="12.0" />
+                           </font>
+                        </Label>
+                        <Icon content="DIRECTIONS_CAR" />
+                     </children>
+                  </HBox>
+                  <HBox layoutY="142.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #008B8B;">
+                     <children>
+                        <Label text="PLAYER 4">
+                           <font>
+                              <Font name="Arial Black" size="12.0" />
+                           </font>
+                        </Label>
+                        <Icon content="GAMES" />
+                     </children>
+                  </HBox>
+                  <Label layoutX="107.0" layoutY="4.0" text="COLOCAÇÕES">
+                     <font>
+                        <Font name="Arial Black" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+         <opaqueInsets>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </opaqueInsets>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </AnchorPane>
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
