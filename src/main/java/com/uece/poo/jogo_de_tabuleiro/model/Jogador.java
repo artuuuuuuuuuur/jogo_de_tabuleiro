@@ -7,7 +7,7 @@ public abstract class Jogador {
     protected int posicao, vezesJogadas;
     protected int[] dados = new int[2];
     protected String cor, nome;
-    protected boolean ativo, jogarNovamente;
+    protected boolean ativo, jogarNovamente, dadosIguais;
     protected Jogador jogadorAlvo;
 
     public Jogador(String cor, String nome) {
@@ -17,15 +17,17 @@ public abstract class Jogador {
         this.vezesJogadas = 0;
         this.jogarNovamente = true;
         this.nome = nome;
+        this.dadosIguais = false;
     }
 
-    public Jogador(boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas) {
+    public Jogador(boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas, boolean dadosIguais) {
         this.ativo = ativo;
         this.cor = cor;
         this.jogarNovamente = jogarNovamente;
         this.posicao = posicao;
         this.vezesJogadas = vezesJogadas;
         this.nome = nome;
+        this.dadosIguais = dadosIguais;
     }
 
     public int getPosicao() {
@@ -66,6 +68,9 @@ public abstract class Jogador {
 
     public void andar(int numCasas) {
         posicao = posicao + numCasas;
+        if (posicao > 40) {
+            posicao = 40;
+        }
     }
 
     public void rolarDados() {
@@ -95,5 +100,9 @@ public abstract class Jogador {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public boolean isDadosIguais() {
+        return dadosIguais;
     }
 }

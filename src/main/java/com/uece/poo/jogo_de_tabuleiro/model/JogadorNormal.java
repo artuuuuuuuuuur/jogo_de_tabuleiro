@@ -6,12 +6,13 @@ public class JogadorNormal extends Jogador {
         super(cor, nome);
     }
 
-    public JogadorNormal(boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas) {
-        super(ativo, cor, nome, jogarNovamente, posicao, vezesJogadas);
+    public JogadorNormal(boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas, boolean dadosIguais) {
+        super(ativo, cor, nome, jogarNovamente, posicao, vezesJogadas, dadosIguais);
     }
 
     @Override
     public void jogar() {
+        dadosIguais = false;
         if (ativo) {
             jogarNovamente = true;
             while (jogarNovamente) {
@@ -20,9 +21,10 @@ public class JogadorNormal extends Jogador {
                 rolarDados();
                 andar(dados[0] + dados[1]);
                 vezesJogadas++;
+                System.out.println(nome + " jogou!");
 
                 if (dados[0] == dados[1]) {
-                    jogarNovamente = true;
+                    dadosIguais = true;
                 }
             }
         } else {

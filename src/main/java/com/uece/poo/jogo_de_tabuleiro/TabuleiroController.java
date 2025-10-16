@@ -1,7 +1,5 @@
 package com.uece.poo.jogo_de_tabuleiro;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import com.uece.poo.jogo_de_tabuleiro.model.Casa;
@@ -27,7 +25,7 @@ public class TabuleiroController {
     @FXML
     private Label player3Color;
     @FXML
-    private Label currentPlayerDice1;
+    private Label currentPlayerDices;
 
     public void carregarTabuleiro(Tabuleiro tabuleiro, ArrayList<Jogador> jogadores) {
         this.tabuleiro = tabuleiro;
@@ -35,57 +33,65 @@ public class TabuleiroController {
         inicializar();
     }
 
-    private void setColors() {
+    // Atualizar para quantidade dinâmica
+    private void atualizarStats() {
         if (!(jogadores.get(0) == null)) {
-            player0Color.setText(jogadores.get(0).getCor());
+            player0Color.setText("Cor: " + jogadores.get(0).getCor() + " | Nome: " + jogadores.get(0).getNome()
+                    + " | Posição: " + jogadores.get(0).getPosicao());
         }
         if (!(jogadores.get(1) == null)) {
-            player1Color.setText(jogadores.get(1).getCor());
+            player1Color.setText("Cor: " + jogadores.get(1).getCor() + " | Nome: " + jogadores.get(1).getNome()
+                    + " | Posição: " + jogadores.get(1).getPosicao());
+
         }
         if (!(jogadores.get(2) == null)) {
-            player2Color.setText(jogadores.get(2).getCor());
+            player2Color.setText("Cor: " + jogadores.get(2).getCor() + " | Nome: " + jogadores.get(2).getNome()
+                    + " | Posição: " + jogadores.get(2).getPosicao());
         }
         if (!(jogadores.get(3) == null)) {
-            player3Color.setText(jogadores.get(3).getCor());
+            player3Color.setText("Cor: " + jogadores.get(3).getCor() + " | Nome: " + jogadores.get(3).getNome()
+                    + " | Posição: " + jogadores.get(3).getPosicao());
         }
+    }
+    
+    private void jogarPartida() {
+        new Thread(() -> {
+            while (!partidaTerminada) {
+                for (Jogador jogador : jogadores) {
+
+                    jogador.jogar();
+
+                    while (jogador.isDadosIguais()) {
+                        jogador.jogar();
+                    }
+
+                    Platform.runLater(() -> {
+                        currentPlayerDices.setText("" + jogador.getDados()[0] + " + " + jogador.getDados()[1] + " = " + (jogador.getDados()[1] + jogador.getDados()[0]));
+                    });
+
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    Platform.runLater(() -> {
+                        atualizarStats();
+                    });
+
+                    if (jogador.getPosicao() == 40) {
+                        partidaTerminada = true;
+                        return;
+                    }
+
+                }
+            }
+        }).start();
     }
 
     private void inicializar() {
-        setColors();
-        new Thread(() -> {  // Thread separada para não travar o JavaFX
-            int i = 0;
-
-            while (!partidaTerminada) {
-                for (Jogador jogador : jogadores) {
-                    for (Casa casa : tabuleiro.getCasas()) {
-                        for (Jogador jogadorDaCasa : casa.getJogadores()) {
-                            if (jogador.getNome().equals(jogadorDaCasa.getNome())) {
-                                jogadorDaCasa.rolarDados();
-
-                                // Atualiza UI de forma segura:
-                                Platform.runLater(() -> {
-                                    currentPlayerDice1.setText("" + jogadorDaCasa.getDados()[0] + " + " + jogadorDaCasa.getDados()[1] + " = " + (jogadorDaCasa.getDados()[1] + jogadorDaCasa.getDados()[0]));
-                                });
-
-                                try {
-                                    Thread.sleep(2000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-
-                                if (i < 5) {
-                                    i++;
-                                } else {
-                                    partidaTerminada = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            System.out.println("Partida finalizada!");
-        }).start(); // inicia a thread separada
+        atualizarStats();
+        jogarPartida();
     }
 
 }

@@ -15,15 +15,15 @@ public class CasaMudarTipo extends Casa {
             int tipo = random.nextInt(3);
             switch (tipo) {
                 case 0 -> {
-                    jogadores.add(new JogadorNormal(jogador.isAtivo(), jogador.getCor(), jogador.getNome(), jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas()));
+                    jogadores.add(new JogadorNormal(jogador.isAtivo(), jogador.getCor(), jogador.getNome(), jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas(), jogador.isDadosIguais()));
                     jogadores.remove(jogador);
                 }
                 case 1 -> {
-                    jogadores.add(new JogadorComSorte(jogador.isAtivo(), jogador.getCor(), jogador.getNome(), jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas()));
+                    jogadores.add(new JogadorComSorte(jogador.isAtivo(), jogador.getCor(), jogador.getNome(), jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas(), jogador.isDadosIguais()));
                     jogadores.remove(jogador);
                 }
                 case 2 -> {
-                    jogadores.add(new JogadorAzarado(jogador.isAtivo(), jogador.getCor(), jogador.getNome(), jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas()));
+                    jogadores.add(new JogadorAzarado(jogador.isAtivo(), jogador.getCor(), jogador.getNome(), jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas(), jogador.isDadosIguais()));
                     jogadores.remove(jogador);
                 }
                 default ->
