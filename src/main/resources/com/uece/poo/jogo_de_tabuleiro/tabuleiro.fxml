@@ -13,7 +13,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="711.0" prefWidth="770.0" style="-fx-background-color: #828282;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.TabuleiroController">
    <children>
       <GridPane hgap="1.0" layoutX="14.0" layoutY="14.0" prefHeight="612.0" prefWidth="738.0" style="-fx-background-color: #54FF9F;" vgap="1.0">
@@ -123,24 +122,24 @@
       <Button layoutX="501.0" layoutY="666.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="140.0" style="-fx-background-color: #2F4F4F;" text="JOGAR DADOS" />
       <AnchorPane layoutX="14.0" layoutY="499.0" prefHeight="262.0" prefWidth="327.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <HBox layoutY="102.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #FF4040;">
+            <Label layoutX="107.0" layoutY="4.0" text="COLOCAÇÕES">
+               <font>
+                  <Font name="Arial Black" size="13.0" />
+               </font>
+            </Label>
+            <HBox layoutY="22.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #00FF00;">
                <children>
-                  <Label text="PLAYER 3">
+                  <Label text="PLAYER 1">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
-                  <Icon content="DIRECTIONS_BUS" />
-               </children>
-            </HBox>
-            <HBox layoutY="182.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #FFFF00;">
-               <children>
-                  <Label text="PLAYER 5">
+                  <Icon content="DIRECTIONS_BOAT" />
+                  <Label fx:id="player0Color" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="239.0">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
-                  <Icon content="DIRECTIONS_BIKE" />
                </children>
             </HBox>
             <HBox layoutY="62.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #7D26CD;">
@@ -151,26 +150,26 @@
                      </font>
                   </Label>
                   <Icon content="DIRECTIONS_WALK" />
-               </children>
-            </HBox>
-            <HBox layoutY="22.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #00FF00;">
-               <children>
-                  <Label text="PLAYER 1">
+                  <Label fx:id="player1Color" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="239.0">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
-                  <Icon content="DIRECTIONS_BOAT" />
                </children>
             </HBox>
-            <HBox layoutY="222.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #FF1493;">
+            <HBox layoutY="102.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #FF4040;">
                <children>
-                  <Label text="PLAYER 6">
+                  <Label text="PLAYER 3">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
-                  <Icon content="DIRECTIONS_CAR" />
+                  <Icon content="DIRECTIONS_BUS" />
+                  <Label fx:id="player2Color" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="239.0">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
                </children>
             </HBox>
             <HBox layoutY="142.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #008B8B;">
@@ -181,13 +180,43 @@
                      </font>
                   </Label>
                   <Icon content="GAMES" />
+                  <Label fx:id="player3Color" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="239.0">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
                </children>
             </HBox>
-            <Label layoutX="107.0" layoutY="4.0" text="COLOCAÇÕES">
-               <font>
-                  <Font name="Arial Black" size="13.0" />
-               </font>
-            </Label>
+            <HBox layoutY="182.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #FFFF00;">
+               <children>
+                  <Label text="PLAYER 5">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <Icon content="DIRECTIONS_BIKE" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="239.0">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutY="222.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #FF1493;">
+               <children>
+                  <Label text="PLAYER 6">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <Icon content="DIRECTIONS_CAR" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="239.0">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
    </children>

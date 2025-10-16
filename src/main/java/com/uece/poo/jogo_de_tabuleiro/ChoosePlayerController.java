@@ -9,12 +9,18 @@ import com.uece.poo.jogo_de_tabuleiro.model.JogadorComSorte;
 import com.uece.poo.jogo_de_tabuleiro.model.JogadorNormal;
 import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class ChoosePlayerController {
 
-    public void buildTabletop() throws IOException {
+    public void buildTabletop(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/tabuleiro.fxml"));
+        Parent root = loader.load();
 
         TabuleiroController tabuleiroController = loader.getController();
 
@@ -25,8 +31,11 @@ public class ChoosePlayerController {
         jogadores.add(new JogadorComSorte("rosa"));
 
         Tabuleiro tabuleiro = new Tabuleiro(jogadores);
-        tabuleiroController.carregarTabuleiro(tabuleiro);
+        tabuleiroController.carregarTabuleiro(tabuleiro, jogadores);
 
-        App.setRoot("tabuleiro");
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
+
 }
