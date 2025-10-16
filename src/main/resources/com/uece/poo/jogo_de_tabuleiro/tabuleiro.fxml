@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="711.0" prefWidth="770.0" style="-fx-background-color: #828282;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="711.0" prefWidth="770.0" style="-fx-background-color: #828282;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.TabuleiroController">
    <children>
       <GridPane hgap="1.0" layoutX="14.0" layoutY="14.0" prefHeight="612.0" prefWidth="738.0" style="-fx-background-color: #54FF9F;" vgap="1.0">
          <columnConstraints>

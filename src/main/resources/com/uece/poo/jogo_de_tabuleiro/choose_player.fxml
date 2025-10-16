@@ -14,8 +14,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B0E0E6;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B0E0E6;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.ChoosePlayerController">
    <children>
       <Label layoutX="164.0" layoutY="77.0" scaleX="2.0" scaleY="2.0" text="ESCOLHA SEU PERSONAGEM" textAlignment="JUSTIFY">
          <font>
@@ -70,7 +69,7 @@
       <ButtonBar buttonMinWidth="50.0" layoutX="156.0" layoutY="345.0" prefHeight="40.0" prefWidth="310.0">
          <buttons>
             <TextField blendMode="EXCLUSION" floatText="escolha o seu nome" />
-            <Button mnemonicParsing="false" prefHeight="37.0" style="-fx-background-color: #1C1C1C;" text="CONTINUAR" />
+            <Button mnemonicParsing="false" onAction="#buildTabletop" prefHeight="37.0" style="-fx-background-color: #1C1C1C;" text="CONTINUAR" />
          </buttons>
       </ButtonBar>
       <Icon content="DIRECTIONS_BIKE" layoutX="76.0" layoutY="217.0" />

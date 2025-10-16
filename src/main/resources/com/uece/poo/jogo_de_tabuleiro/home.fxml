@@ -13,7 +13,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.PrimaryController">
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.HomeController">
    <children>
       <AnchorPane cache="true" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B0E0E6;">
          <children>
@@ -41,7 +41,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button layoutX="259.0" layoutY="192.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" style="-fx-background-color: #1E90FF;" text="START" />
+            <Button layoutX="259.0" layoutY="192.0" mnemonicParsing="false" onAction="#switchToChoosePlayer" prefHeight="30.0" prefWidth="82.0" style="-fx-background-color: #1E90FF;" text="START" />
             <Button layoutX="26.0" layoutY="348.0" mnemonicParsing="false" scaleX="0.8" scaleY="0.8" text="?" />
             <Icon content="HELP" layoutX="42.0" layoutY="350.0" style="-fx-background-color: #1E90FF;" />
             <Icon content="ASSIGNMENT_IND" layoutX="223.0" layoutY="194.0" />
