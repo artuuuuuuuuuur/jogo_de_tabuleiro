@@ -1,59 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.Icon?>
-<?import com.gluonhq.charm.glisten.control.TextField?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.RadialGradient?>
-<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.PrimaryController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #00008B;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane cache="true" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B0E0E6;">
-         <children>
-            <Label contentDisplay="TOP" ellipsisString="" layoutX="241.0" layoutY="67.0" scaleX="3.0" scaleY="3.0" text="Campeão dos 7 mares" textAlignment="CENTER">
-               <font>
-                  <Font name="Serif Bold Italic" size="12.0" />
-               </font>
-               <effect>
-                  <DropShadow blurType="GAUSSIAN" height="0.0" radius="0.0" width="0.0" />
-               </effect>
-               <textFill>
-                  <RadialGradient centerX="0.5027624309392266" centerY="0.4786729857819905" radius="0.5">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="1.0" green="1.0" blue="1.0" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="0.28999999165534973" green="0.3197080194950104" blue="1.0" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </RadialGradient>
-               </textFill>
-            </Label>
-            <Button layoutX="259.0" layoutY="192.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" style="-fx-background-color: #1E90FF;" text="START" />
-            <Button layoutX="26.0" layoutY="348.0" mnemonicParsing="false" scaleX="0.8" scaleY="0.8" text="?" />
-            <Icon content="HELP" layoutX="42.0" layoutY="350.0" style="-fx-background-color: #1E90FF;" />
-            <Icon content="ASSIGNMENT_IND" layoutX="223.0" layoutY="194.0" />
-            <Icon content="RECENT_ACTORS" layoutX="223.0" layoutY="231.0" />
-            <TextField floatText="JOGADORES" layoutX="259.0" layoutY="224.0" maxLength="6" prefHeight="54.0" prefWidth="89.0" />
-         </children>
-         <effect>
-            <DropShadow blurType="TWO_PASS_BOX" />
-         </effect>
-      </AnchorPane>
+      <Arc fill="#fff826" layoutX="180.0" layoutY="124.0" length="270.0" radiusX="100.0" radiusY="100.0" startAngle="45.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+      <Label layoutX="230.0" layoutY="84.0" text="P    E    C" textFill="#0a0000">
+         <font>
+            <Font name="Arial Black" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="346.0" layoutY="138.0" text="R    U    N" textFill="#0a0000">
+         <font>
+            <Font name="Arial Black" size="36.0" />
+         </font>
+      </Label>
+      <Circle layoutX="180.0" layoutY="69.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
+      <Button layoutX="28.0" layoutY="336.0" mnemonicParsing="false" text="?" textFill="#0a0000">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="243.0" layoutY="231.0" mnemonicParsing="false" text="MODO DE JOGO" textFill="#0a0000">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="242.0" layoutY="264.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" text="MODO DEBUG  " textFill="#0a0000">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
+      <ComboBox layoutX="197.0" layoutY="298.0" prefHeight="25.0" prefWidth="213.0" promptText="QUANTIDADE DE JOGADORES" />
    </children>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-</VBox>
+</AnchorPane>
