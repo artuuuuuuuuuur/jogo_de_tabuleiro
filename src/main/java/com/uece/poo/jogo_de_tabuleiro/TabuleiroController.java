@@ -1,6 +1,10 @@
 package com.uece.poo.jogo_de_tabuleiro;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Semaphore;
 
 import com.uece.poo.jogo_de_tabuleiro.model.Casa;
@@ -9,8 +13,16 @@ import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 public class TabuleiroController {
 
@@ -19,6 +31,7 @@ public class TabuleiroController {
     private boolean partidaTerminada = false;
     private final Semaphore pauseSemaphore = new Semaphore(0);
     private Jogador jogadorVencedor;
+    private Map<Jogador, Circle> jogadoresIcons = new HashMap<>();
 
     @FXML
     private Label player0Color;
@@ -34,10 +47,28 @@ public class TabuleiroController {
     private Label currentPlayer;
     @FXML
     private Button jogarDadosButton;
+    @FXML
+    private Circle player0Circle;
+    @FXML
+    private Circle player1Circle;
+    @FXML
+    private Circle player2Circle;
+    @FXML
+    private Circle player3Circle;
+    @FXML
+    private GridPane tabuleiroPane;
 
     public void carregarTabuleiro(Tabuleiro tabuleiro, ArrayList<Jogador> jogadores) {
         this.tabuleiro = tabuleiro;
         this.jogadores = jogadores;
+
+        for (Jogador jogador : jogadores) {
+            Circle jogadorCircle = new Circle(10);
+            jogadorCircle.setFill(Paint.valueOf(jogador.getCor()));
+            jogadoresIcons.put(jogador, jogadorCircle);
+            
+
+        }
         inicializar();
     }
 
@@ -61,13 +92,30 @@ public class TabuleiroController {
                 player3Color.setText("Cor: " + jogadores.get(3).getCor() + " | Nome: " + jogadores.get(3).getNome()
                         + " | Posição: " + jogadores.get(3).getPosicao());
             }
-            
-            for (Casa casa : tabuleiro.getCasas()) {
-                for (Jogador jogador : jogadores) {
-                    if(jogador.getPosicao() == casa.getIndex()) {
-                        casa.addJogador(jogador);
-                    } else {
-                        casa.removeJogador(jogador);
+
+            atualizarCasas();
+        });
+    }
+
+    private void atualizarCasas() {
+        List<Jogador> jogadoresCopy = new CopyOnWriteArrayList<>();
+        for (Casa casa : tabuleiro.getCasas()) {
+            for (Jogador jogador : jogadoresCopy) {
+                if (jogador.getPosicao() == casa.getIndex()) {
+                    casa.addJogador(jogador);
+                } else {
+                    casa.removeJogador(jogador);
+                }
+            }
+        }
+
+        Platform.runLater(() -> {
+            for (Jogador jogador : jogadores) {
+                Pane casaAtual = (Pane) tabuleiroPane.lookup("#casa" + jogador.getPosicao());
+                if (casaAtual != null) {
+                    Circle circle = jogadoresIcons.get(jogador);
+                    if (!casaAtual.getChildren().contains(circle)) {
+                        casaAtual.getChildren().add(circle);
                     }
                 }
             }
@@ -93,12 +141,12 @@ public class TabuleiroController {
                     if (jogador.getPosicao() == 40) {
                         partidaTerminada = true;
                         jogadorVencedor = jogador;
+                        System.out.println("Partida terminada. " + jogadorVencedor.getNome() + " venceu!");
                         return;
                     }
 
                 }
             }
-            System.out.println("Partida terminada. " + jogadorVencedor.getNome() + " venceu!");
         }).start();
     }
 
