@@ -1,13 +1,13 @@
 package com.uece.poo.jogo_de_tabuleiro.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Casa {
 
     protected int index;
-    protected ArrayList<Jogador> jogadores;
+    protected List<Jogador> jogadores;
 
-    public Casa(int index, ArrayList<Jogador> jogadores) {
+    public Casa(int index, List<Jogador> jogadores) {
         this.index = index;
         this.jogadores = jogadores;
     }
@@ -16,7 +16,11 @@ public class Casa {
         return index;
     }
 
-    public ArrayList<Jogador> getJogadores() {
+    public void clearJogadores() {
+        jogadores.clear();
+    }
+
+    public List<Jogador> getJogadores() {
         return jogadores;
     }
 
@@ -28,7 +32,10 @@ public class Casa {
         jogadores.remove(jogador);
     }
 
-    public void setJogadores(ArrayList<Jogador> jogadores) {
+    public void executarAcaoEspecial(Tabuleiro tabuleiro) {
+    }
+
+    public void setJogadores(List<Jogador> jogadores) {
         this.jogadores = jogadores;
     }
 }

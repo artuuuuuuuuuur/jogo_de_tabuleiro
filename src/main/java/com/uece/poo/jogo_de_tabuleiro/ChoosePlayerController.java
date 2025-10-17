@@ -25,10 +25,23 @@ public class ChoosePlayerController {
         TabuleiroController tabuleiroController = loader.getController();
 
         ArrayList<Jogador> jogadores = new ArrayList<>();
-        jogadores.add(new JogadorNormal("blue", "Artur"));
-        jogadores.add(new JogadorNormal("yellow", "Fernando"));
-        jogadores.add(new JogadorAzarado("green", "João"));
-        jogadores.add(new JogadorComSorte("pink", "Paulo"));
+
+        Jogador artur = new JogadorNormal("blue", "Artur");
+        Jogador fernando = new JogadorNormal("yellow", "Fernando");
+        Jogador joao = new JogadorAzarado("green", "João");
+        Jogador paulo = new JogadorComSorte("pink", "Paulo");
+        
+        artur.setJogadorAlvo(fernando);
+        fernando.setJogadorAlvo(joao);
+        joao.setJogadorAlvo(paulo);
+        paulo.setJogadorAlvo(artur);
+    
+
+        jogadores.add(artur);
+        jogadores.add(fernando);
+        jogadores.add(joao);
+        jogadores.add(paulo);
+
 
         Tabuleiro tabuleiro = new Tabuleiro(jogadores);
         tabuleiroController.carregarTabuleiro(tabuleiro, jogadores);

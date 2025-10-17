@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Box?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -102,14 +101,13 @@
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
                </children>
             </Pane>
-            <Pane fx:id="casa0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Pane fx:id="casa0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
-                  <Circle fx:id="player0Circle" fill="DODGERBLUE" layoutX="12.0" layoutY="14.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Circle fx:id="player1Circle" fill="DODGERBLUE" layoutX="36.0" layoutY="13.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Circle fx:id="player2Circle" fill="DODGERBLUE" layoutX="59.0" layoutY="17.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Circle fx:id="player3Circle" fill="DODGERBLUE" layoutX="22.0" layoutY="35.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
             </Pane>
             <Pane fx:id="casa26" GridPane.columnIndex="7" GridPane.rowIndex="3">
                <children>

@@ -9,6 +9,7 @@ public abstract class Jogador {
     protected String cor, nome;
     protected boolean ativo, jogarNovamente, dadosIguais;
     protected Jogador jogadorAlvo;
+    protected int lastCasaEspecialIndex = -1;
 
     public Jogador(String cor, String nome) {
         this.cor = cor;
@@ -30,12 +31,23 @@ public abstract class Jogador {
         this.dadosIguais = dadosIguais;
     }
 
-    public int getPosicao() {
-        return posicao;
+    public int getLastCasaEspecialIndex() {
+        return lastCasaEspecialIndex;
     }
 
-    public void setPosicao(int posicao) {
-        this.posicao = posicao;
+    public void setLastCasaEspecialIndex(int idx) {
+        this.lastCasaEspecialIndex = idx;
+    }
+
+    public void setPosicao(int pos) {
+        if (this.posicao != pos) {
+            this.lastCasaEspecialIndex = -1;
+        }
+        this.posicao = pos;
+    }
+
+    public int getPosicao() {
+        return posicao;
     }
 
     public int getVezesJogadas() {
