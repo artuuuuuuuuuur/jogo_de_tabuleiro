@@ -69,7 +69,6 @@ public class TabuleiroController {
         inicializar();
     }
 
-    // atualiza labels e posições visuais (sempre no JavaFX thread)
     private void atualizarStats() {
         Platform.runLater(() -> {
             // protege com tamanho mínimo

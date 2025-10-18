@@ -6,31 +6,25 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #00008B;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.ChoosePlayerController">
+<AnchorPane fx:id="choosePLayerAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="600.0" style="-fx-background-color: #00008B;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.ChoosePlayerController">
    <children>
       <Button fx:id="voltarButton" layoutX="7.0" layoutY="14.0" mnemonicParsing="false" onAction="#voltar" text="VOLTAR" textFill="#0a0000">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font>
       </Button>
-      <ColorPicker layoutX="115.0" layoutY="153.0" />
-      <ComboBox layoutX="319.0" layoutY="153.0" prefWidth="150.0" promptText="TIPO DE JOGADOR" />
-      <TextField layoutX="236.0" layoutY="238.0" prefHeight="23.0" prefWidth="132.0" promptText="DIGITE O SEU NOME">
-         <font>
-            <Font name="Arial" size="12.0" />
-         </font>
-      </TextField>
-      <Button layoutX="253.0" layoutY="291.0" mnemonicParsing="false" text="CONTINUAR" textFill="#0a0000">
+      <Button layoutX="245.0" layoutY="491.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#buildTabletop" prefHeight="30.0" prefWidth="109.0" text="CONTINUAR" textFill="#0a0000" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="246.0">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font>
       </Button>
-      <Label layoutX="137.0" layoutY="47.0" text="ESCOLHA SEU JOGADOR">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="56.0" prefHeight="37.0" prefWidth="608.0" text="ESCOLHA SEUS JOGADORES" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="56.0">
          <font>
             <Font name="Arial Black" size="24.0" />
          </font>
@@ -56,5 +50,101 @@
             </LinearGradient>
          </textFill>
       </Label>
+      <Pane fx:id="jogador1" disable="true" layoutX="29.0" layoutY="99.0" prefHeight="120.0" prefWidth="250.0" AnchorPane.leftAnchor="29.0">
+         <children>
+            <Label layoutX="7.0" layoutY="5.0" text="Jogador 1" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ColorPicker fx:id="jogadorCor1" layoutX="7.0" layoutY="74.0" prefHeight="26.0" prefWidth="109.0" />
+            <ComboBox fx:id="tipoJogador1" layoutX="126.0" layoutY="73.0" prefHeight="27.0" prefWidth="100.0" promptText="Tipo" />
+            <TextField fx:id="jogadorNome1" layoutX="5.0" layoutY="41.0" prefHeight="26.0" prefWidth="220.0" promptText="DIGITE O SEU NOME">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
+      <Pane fx:id="jogador3" disable="true" layoutX="29.0" layoutY="222.0" prefHeight="120.0" prefWidth="250.0" AnchorPane.leftAnchor="29.0">
+         <children>
+            <Label layoutX="7.0" layoutY="5.0" text="Jogador 3" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ColorPicker fx:id="jogadorCor3" layoutX="7.0" layoutY="74.0" prefHeight="26.0" prefWidth="109.0" />
+            <ComboBox fx:id="tipoJogador3" layoutX="126.0" layoutY="73.0" prefHeight="27.0" prefWidth="100.0" promptText="Tipo" />
+            <TextField fx:id="jogadorNome3" layoutX="5.0" layoutY="41.0" prefHeight="26.0" prefWidth="220.0" promptText="DIGITE O SEU NOME">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
+      <Pane fx:id="jogador5" disable="true" layoutX="29.0" layoutY="346.0" prefHeight="120.0" prefWidth="250.0" AnchorPane.leftAnchor="29.0">
+         <children>
+            <Label layoutX="7.0" layoutY="5.0" text="Jogador 5" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ColorPicker fx:id="jogadorCor5" layoutX="7.0" layoutY="74.0" prefHeight="26.0" prefWidth="109.0" />
+            <ComboBox fx:id="tipoJogador5" layoutX="126.0" layoutY="73.0" prefHeight="27.0" prefWidth="100.0" promptText="Tipo" />
+            <TextField fx:id="jogadorNome5" layoutX="5.0" layoutY="41.0" prefHeight="26.0" prefWidth="220.0" promptText="DIGITE O SEU NOME">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
+      <Pane fx:id="jogador2" disable="true" layoutX="349.0" layoutY="99.0" prefHeight="120.0" prefWidth="250.0" AnchorPane.rightAnchor="37.0">
+         <children>
+            <Label layoutX="7.0" layoutY="5.0" text="Jogador 2" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ColorPicker fx:id="jogadorCor2" layoutX="7.0" layoutY="74.0" prefHeight="26.0" prefWidth="109.0" />
+            <ComboBox fx:id="tipoJogador2" layoutX="126.0" layoutY="73.0" prefHeight="27.0" prefWidth="100.0" promptText="Tipo" />
+            <TextField fx:id="jogadorNome2" layoutX="5.0" layoutY="41.0" prefHeight="26.0" prefWidth="220.0" promptText="DIGITE O SEU NOME">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
+      <Pane fx:id="jogador4" disable="true" layoutX="349.0" layoutY="222.0" prefHeight="120.0" prefWidth="250.0" AnchorPane.rightAnchor="37.0">
+         <children>
+            <Label layoutX="7.0" layoutY="5.0" text="Jogador 4" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ColorPicker fx:id="jogadorCor4" layoutX="7.0" layoutY="74.0" prefHeight="26.0" prefWidth="109.0" />
+            <ComboBox fx:id="tipoJogador4" layoutX="126.0" layoutY="73.0" prefHeight="27.0" prefWidth="100.0" promptText="Tipo" />
+            <TextField fx:id="jogadorNome4" layoutX="5.0" layoutY="41.0" prefHeight="26.0" prefWidth="220.0" promptText="DIGITE O SEU NOME">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
+      <Pane fx:id="jogador6" disable="true" layoutX="349.0" layoutY="346.0" prefHeight="120.0" prefWidth="250.0" AnchorPane.rightAnchor="37.0">
+         <children>
+            <Label layoutX="7.0" layoutY="5.0" text="Jogador 6" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ColorPicker fx:id="jogadorCor6" layoutX="7.0" layoutY="74.0" prefHeight="26.0" prefWidth="109.0" />
+            <ComboBox fx:id="tipoJogador6" layoutX="126.0" layoutY="73.0" prefHeight="27.0" prefWidth="100.0" promptText="Tipo" />
+            <TextField fx:id="jogadorNome6" layoutX="5.0" layoutY="41.0" prefHeight="26.0" prefWidth="220.0" promptText="DIGITE O SEU NOME">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
