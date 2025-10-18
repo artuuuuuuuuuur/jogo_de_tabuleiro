@@ -8,8 +8,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #00008B;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #00008B;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.HomeController">
    <children>
       <Arc fill="#fff826" layoutX="180.0" layoutY="124.0" length="270.0" radiusX="100.0" radiusY="100.0" startAngle="45.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
       <Label layoutX="230.0" layoutY="84.0" text="P    E    C" textFill="#0a0000">
@@ -28,16 +27,16 @@
             <Font name="Arial Black" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="243.0" layoutY="231.0" mnemonicParsing="false" text="MODO DE JOGO" textFill="#0a0000">
+      <Button fx:id="modoNormalButton" layoutX="229.0" layoutY="248.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="132.0" text="MODO NORMAL" textFill="#0a0000" AnchorPane.leftAnchor="229.0">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="242.0" layoutY="264.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" text="MODO DEBUG  " textFill="#0a0000">
+      <Button fx:id="modoDebugButton" layoutX="229.0" layoutY="281.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="132.0" text="MODO DEBUG  " textFill="#0a0000">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font>
       </Button>
-      <ComboBox layoutX="197.0" layoutY="298.0" prefHeight="25.0" prefWidth="213.0" promptText="QUANTIDADE DE JOGADORES" />
+      <ComboBox fx:id="quantJogadoresComboBox" layoutX="164.0" layoutY="326.0" prefHeight="27.0" prefWidth="264.0" promptText="QUANTIDADE DE JOGADORES" visibleRowCount="5" />
    </children>
 </AnchorPane>
