@@ -51,7 +51,7 @@ public class CasaMudarTipo extends Casa {
             if (idx >= 0) {
                 listaGlobal.set(idx, r.newPlayer);
                 r.newPlayer.setLastCasaEspecialIndex(this.getIndex()); // marca que já foi processado aqui
-                System.out.println(r.oldPlayer.getNome() + " mudou de tipo.");
+                System.out.println(r.oldPlayer.getNome() + " mudou de tipo. Novo tipo: " + r.newPlayer.getClass());
             }
         }
     }

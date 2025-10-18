@@ -15,18 +15,18 @@ public class CasaTrocar extends Casa {
 
         for (Jogador jogadorUser : jogadoresSnapshot) {
             for (Casa casa : casasSnapshot) {
-                List<Jogador> jogadoresCasaSnapshot = List.copyOf(casa.getJogadores());
-                for (Jogador jogador : jogadoresCasaSnapshot) {
-                    if (!jogador.equals(jogadorUser) && jogadorUser.getJogadorAlvo() != null) {
-                        if (jogadorUser.getJogadorAlvo().equals(jogador)) {
-                            // trocando posições sem causar modificação durante iteração
+                if(!casa.getJogadores().isEmpty()) {
+                    List<Jogador> jogadoresCasaSnapshot = List.copyOf(casa.getJogadores());
+                    for (Jogador jogador : jogadoresCasaSnapshot) {
+                        if (!jogador.equals(jogadorUser)) {
                             int posTemp = jogador.getPosicao();
                             jogador.setPosicao(jogadorUser.getPosicao());
                             jogadorUser.setPosicao(posTemp);
                             System.out.println(jogadorUser.getNome() + " trocou com " + jogador.getNome());
                         }
+                        return;
                     }
-                }
+                } 
             }
         }
     }

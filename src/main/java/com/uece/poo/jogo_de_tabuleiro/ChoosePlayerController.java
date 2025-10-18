@@ -44,7 +44,7 @@ public class ChoosePlayerController {
 
 
         Tabuleiro tabuleiro = new Tabuleiro(jogadores);
-        tabuleiroController.carregarTabuleiro(tabuleiro, jogadores);
+        tabuleiroController.carregarTabuleiro(tabuleiro, jogadores, true);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
