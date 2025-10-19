@@ -1,48 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.Icon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Box?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="711.0" prefWidth="770.0" style="-fx-background-color: #828282;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.TabuleiroController">
+<AnchorPane fx:id="gameAnchorPane" prefHeight="963.0" prefWidth="1009.0" style="-fx-background-color: transparent;" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.TabuleiroController">
    <children>
-      <GridPane fx:id="tabuleiroPane" hgap="1.0" layoutX="14.0" layoutY="14.0" prefHeight="612.0" prefWidth="738.0" style="-fx-background-color: #54FF9F;" vgap="1.0">
+      <Pane prefHeight="971.0" prefWidth="1009.0" style="-fx-background-color: #54FF9F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="jogarDadosButton" layoutX="577.0" layoutY="861.0" mnemonicParsing="false" onAction="#resume" prefHeight="58.0" prefWidth="259.0" style="-fx-background-color: #1f613c;" text="JOGAR DADOS" textFill="WHITE">
+               <font>
+                  <Font size="30.0" />
+               </font></Button>
+            <Label fx:id="currentPlayer" alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="11.0" prefHeight="58.0" prefWidth="979.0" textFill="#00a130">
+               <font>
+                  <Font name="Arial Narrow Bold" size="35.0" />
+               </font></Label>
+         </children></Pane>
+      <GridPane fx:id="tabuleiroPane" alignment="CENTER" hgap="1.0" layoutX="14.0" layoutY="28.0" prefHeight="612.0" prefWidth="979.0" vgap="1.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="50.0" prefWidth="50.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="687.0" minWidth="50.0" prefWidth="50.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="687.0" minWidth="50.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="70.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="100.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="100.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="100.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="100.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="100.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="100.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="100.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="687.0" minWidth="100.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="687.0" minWidth="100.0" prefWidth="50.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="201.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="93.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="93.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="93.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="93.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="97.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="106.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="95.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="95.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="95.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="97.0" minHeight="50.0" prefHeight="97.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="201.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="93.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="93.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="93.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="93.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="97.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="106.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="95.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="95.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="95.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="97.0" minHeight="70.0" prefHeight="97.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="100.0" minHeight="3.0" prefHeight="3.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="95.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
          </rowConstraints>
@@ -53,332 +63,515 @@
             <VBox prefHeight="200.0" prefWidth="100.0" />
             <Pane fx:id="casa11" GridPane.columnIndex="4" GridPane.rowIndex="7">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane11" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa6" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane6" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa5" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="70.0" stroke="#fff200" strokeDashOffset="5.0" strokeLineCap="ROUND" strokeLineJoin="BEVEL" strokeWidth="3.0" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane5" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa24" GridPane.columnIndex="9" GridPane.rowIndex="3">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane24" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa4" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane4" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa10" GridPane.columnIndex="4" GridPane.rowIndex="8">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="70.0" stroke="#fff200" strokeWidth="3.0" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane10" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa22" GridPane.columnIndex="9" GridPane.rowIndex="1">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane22" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa8" GridPane.columnIndex="2" GridPane.rowIndex="8">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane8" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
-            <Pane fx:id="casa2" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Pane fx:id="casa2" styleClass="casa" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane2" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa21" GridPane.columnIndex="8" GridPane.rowIndex="1">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane21" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
-            <Pane fx:id="casa0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
-               <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
-               </children>
+            <Pane fx:id="casa0" prefHeight="48.0" prefWidth="112.0" styleClass="casa" stylesheets="@styles.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00e4e0fc" height="111.0" layoutX="-32.0" layoutY="-40.0" stroke="BLACK" strokeType="INSIDE" width="165.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="4.0" layoutY="-40.0" prefHeight="20.0" prefWidth="90.0" text="Início">
+                     <font>
+                        <Font name="System Bold" size="23.0" />
+                     </font>
+                  </Label>
+                  <FlowPane fx:id="casaFlowPane0" alignment="CENTER" hgap="5.0" layoutX="-30.0" layoutY="-10.0" prefHeight="81.0" prefWidth="159.0" vgap="5.0">
+                     <padding>
+                        <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                     </padding>
+                  </FlowPane>
+               </children>
             </Pane>
             <Pane fx:id="casa26" GridPane.columnIndex="7" GridPane.rowIndex="3">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane26" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa25" GridPane.columnIndex="8" GridPane.rowIndex="3">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="70.0" stroke="#fff200" strokeWidth="3.0" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane25" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa23" GridPane.columnIndex="9" GridPane.rowIndex="2">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane23" alignment="CENTER" hgap="7.0" layoutX="6.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa20" GridPane.columnIndex="7" GridPane.rowIndex="1">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="70.0" stroke="#fff200" strokeWidth="3.0" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane20" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa19" GridPane.columnIndex="6" GridPane.rowIndex="1">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane19" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa18" GridPane.columnIndex="5" GridPane.rowIndex="1">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane18" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa17" GridPane.columnIndex="4" GridPane.rowIndex="1">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="70.0" stroke="#fff200" strokeWidth="3.0" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane17" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="311.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="2" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="236.0" layoutY="316.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.rowIndex="1" />
             <Pane fx:id="casa16" GridPane.columnIndex="4" GridPane.rowIndex="2">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane16" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa9" GridPane.columnIndex="3" GridPane.rowIndex="8">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane9" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa7" GridPane.columnIndex="1" GridPane.rowIndex="8">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane7" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
-            <Pane fx:id="casa1" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Pane fx:id="casa1" styleClass="casa" stylesheets="@styles.css" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" styleClass="casa" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane1" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
-            <Pane fx:id="casa15" GridPane.columnIndex="4" GridPane.rowIndex="3">
+            <Pane fx:id="casa15" styleClass="casa" stylesheets="@styles.css" GridPane.columnIndex="4" GridPane.rowIndex="3">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="70.0" stroke="#fff200" strokeWidth="3.0" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane15" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa13" GridPane.columnIndex="4" GridPane.rowIndex="5">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="70.0" stroke="#fff200" strokeWidth="3.0" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane13" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa12" GridPane.columnIndex="4" GridPane.rowIndex="6">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane12" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="536.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="1" />
             <Pane fx:id="casa32" GridPane.columnIndex="8" GridPane.rowIndex="6">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane32" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa31" GridPane.columnIndex="8" GridPane.rowIndex="5">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane31" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa30" GridPane.columnIndex="7" GridPane.rowIndex="5">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="70.0" stroke="#fff200" strokeWidth="3.0" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane30" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa29" GridPane.columnIndex="6" GridPane.rowIndex="5">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane29" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa27" GridPane.columnIndex="6" GridPane.rowIndex="3">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="70.0" stroke="#fff200" strokeWidth="3.0" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane27" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa34" GridPane.columnIndex="7" GridPane.rowIndex="7">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane34" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="611.0" layoutY="316.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="7" GridPane.rowIndex="10" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" layoutX="611.0" layoutY="316.0" stroke="BLACK" strokeType="INSIDE" width="100.0" GridPane.columnIndex="7" GridPane.rowIndex="10" />
             <Pane fx:id="casa39" GridPane.columnIndex="7" GridPane.rowIndex="10">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane39" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaf05fc" height="50.0" layoutX="536.0" layoutY="367.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="8" GridPane.rowIndex="9" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaf05fc" height="50.0" layoutX="536.0" layoutY="367.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="8" GridPane.rowIndex="11" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaf05fc" height="50.0" layoutX="536.0" layoutY="367.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="9" GridPane.rowIndex="10" />
             <Pane fx:id="casa14" GridPane.columnIndex="4" GridPane.rowIndex="4">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane14" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa38" GridPane.columnIndex="6" GridPane.rowIndex="10">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="70.0" stroke="#fff200" strokeWidth="3.0" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane38" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa28" GridPane.columnIndex="6" GridPane.rowIndex="4">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane28" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa3" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane3" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa37" GridPane.columnIndex="6" GridPane.rowIndex="9">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane37" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa36" GridPane.columnIndex="6" GridPane.rowIndex="8">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane36" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
             <Pane fx:id="casa35" GridPane.columnIndex="6" GridPane.rowIndex="7">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#120372fc" height="70.0" stroke="#fff200" strokeWidth="3.0" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane35" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaf05fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="9" GridPane.rowIndex="11" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaf05fc" height="50.0" layoutX="311.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="9" GridPane.rowIndex="9" />
             <Pane fx:id="casa40" GridPane.columnIndex="8" GridPane.rowIndex="10">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaf05fc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaf05fc" height="164.0" layoutX="3.0" layoutY="-57.0" stroke="BLACK" strokeType="INSIDE" width="140.0" />
+                  <Label layoutX="1.0" layoutY="-51.0" prefHeight="18.0" prefWidth="159.0" text="  GRANDE CAMPEÃO">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <FlowPane fx:id="casaFlowPane40" alignment="CENTER" hgap="7.0" layoutX="14.0" layoutY="-29.0" prefHeight="123.0" prefWidth="118.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" layoutX="86.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
-            <Icon content="GAMES" style="-fx-background-color: #008B8B;" />
-            <Icon content="DIRECTIONS_BIKE" style="-fx-background-color: #FFFF00;" GridPane.columnIndex="1" />
-            <Icon content="DIRECTIONS_CAR" style="-fx-background-color: #FF1493;" GridPane.columnIndex="2" />
-            <Icon content="DIRECTIONS_BOAT" style="-fx-background-color: #00FF00;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Icon content="DIRECTIONS_WALK" style="-fx-background-color: #7D26CD;" GridPane.rowIndex="1" />
-            <Label prefHeight="18.0" prefWidth="66.0" text="  GRANDE" GridPane.columnIndex="8" GridPane.rowIndex="8">
-               <font>
-                  <Font name="Arial Black" size="12.0" />
-               </font>
-            </Label>
-            <Label text="CAMPEÃO" GridPane.columnIndex="9" GridPane.rowIndex="8">
-               <font>
-                  <Font name="Arial Black" size="12.0" />
-               </font>
-            </Label>
             <Pane fx:id="casa33" GridPane.columnIndex="8" GridPane.rowIndex="7">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="50.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1145abfc" height="70.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                  <FlowPane fx:id="casaFlowPane33" alignment="CENTER" hgap="7.0" prefHeight="70.0" prefWidth="100.0" vgap="7.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </FlowPane>
                </children>
             </Pane>
          </children>
       </GridPane>
-      <Button fx:id="jogarDadosButton" layoutX="506.0" layoutY="695.0" mnemonicParsing="false" onAction="#resume" prefHeight="42.0" prefWidth="140.0" style="-fx-background-color: #2F4F4F;" text="JOGAR DADOS" />
-      <AnchorPane layoutX="14.0" layoutY="499.0" prefHeight="262.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF;">
+      <AnchorPane fx:id="playersAnchorPane" layoutX="88.0" layoutY="682.0" prefHeight="262.0" prefWidth="400.0" style="-fx-background-color: #00c26b;">
          <children>
-            <Label layoutX="107.0" layoutY="4.0" text="COLOCAÇÕES">
+            <Label layoutX="153.0" layoutY="4.0" text="Jogadores">
                <font>
                   <Font name="Arial Black" size="13.0" />
                </font>
             </Label>
-            <HBox layoutY="22.0" minWidth="400.0" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #00FF00;">
+            <HBox fx:id="playerInfo1" disable="true" layoutY="22.0" minWidth="400.0" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: gray;">
                <children>
                   <Label text="PLAYER 1">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
-                  <Icon content="DIRECTIONS_BOAT" />
-                  <Label fx:id="player0Color" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="300.0">
+                  <Label fx:id="jogadorInfo1" prefHeight="40.0" prefWidth="333.0">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox layoutY="62.0" minWidth="400.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #7D26CD;">
+            <HBox fx:id="playerInfo2" disable="true" layoutY="62.0" minWidth="400.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: gray;">
                <children>
                   <Label text="PLAYER 2">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
-                  <Icon content="DIRECTIONS_WALK" />
-                  <Label fx:id="player1Color" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="300.0">
+                  <Label fx:id="jogadorInfo2" prefHeight="59.0" prefWidth="330.0">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox layoutY="102.0" minWidth="400.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #FF4040;">
+            <HBox fx:id="playerInfo3" disable="true" layoutY="102.0" minWidth="400.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: gray;">
                <children>
                   <Label text="PLAYER 3">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
-                  <Icon content="DIRECTIONS_BUS" />
-                  <Label fx:id="player2Color" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="300.0">
+                  <Label fx:id="jogadorInfo3" prefHeight="59.0" prefWidth="330.0">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox layoutY="142.0" minWidth="400.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #008B8B;">
+            <HBox fx:id="playerInfo4" disable="true" layoutY="142.0" minWidth="400.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: gray;">
                <children>
                   <Label text="PLAYER 4">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
-                  <Icon content="GAMES" />
-                  <Label fx:id="player3Color" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="300.0">
+                  <Label fx:id="jogadorInfo4" prefHeight="59.0" prefWidth="330.0">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox layoutY="182.0" minWidth="400.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #FFFF00;">
+            <HBox fx:id="playerInfo5" disable="true" layoutY="182.0" minWidth="400.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: gray;">
                <children>
                   <Label text="PLAYER 5">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
-                  <Icon content="DIRECTIONS_BIKE" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="300.0">
+                  <Label fx:id="jogadorInfo5" prefHeight="59.0" prefWidth="330.0">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox layoutY="222.0" minWidth="400.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: #FF1493;">
+            <HBox fx:id="playerInfo6" disable="true" layoutY="222.0" minWidth="400.0" prefHeight="40.0" prefWidth="327.0" style="-fx-background-color: gray;">
                <children>
                   <Label text="PLAYER 6">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Label>
-                  <Icon content="DIRECTIONS_CAR" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="300.0">
+                  <Label fx:id="jogadorInfo6" prefHeight="59.0" prefWidth="330.0">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
@@ -387,13 +580,6 @@
             </HBox>
          </children>
       </AnchorPane>
-      <Box depth="100" height="50.0" layoutX="576.0" layoutY="662.0" width="299.0" />
-      <Label fx:id="currentPlayerDices" alignment="CENTER" contentDisplay="CENTER" layoutX="408.0" layoutY="644.0" prefHeight="36.0" prefWidth="284.0" textFill="#ff4848">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <Label fx:id="currentPlayer" layoutX="436.0" layoutY="739.0" prefHeight="18.0" prefWidth="290.0" />
    </children>
    <opaqueInsets>
       <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />

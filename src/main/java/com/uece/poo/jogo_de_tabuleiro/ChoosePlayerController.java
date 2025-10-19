@@ -35,6 +35,9 @@ public class ChoosePlayerController {
     private boolean modoDebug;
     private ArrayList<Jogador> jogadores = new ArrayList<>();
     private int quantidadeDeJogadores;
+    private boolean jogadoresNormais = false;
+    private boolean jogadoresComSorte = false;
+    private boolean jogadoresAzarados = false;
 
     public void carregar(boolean modoDebug, int quantidadeDeJogadores) {
         this.modoDebug = modoDebug;
@@ -61,12 +64,30 @@ public class ChoosePlayerController {
 
         criarJogadores();
 
+        int count = 0;
+
+        if (jogadoresNormais) {
+            count++;
+        }
+        if (jogadoresComSorte) {
+            count++;
+        }
+        if (jogadoresAzarados) {
+            count++;
+        }
+
+        if (count < 2) {
+            System.out.println("Erro");
+            return;
+        }
+
         Tabuleiro tabuleiro = new Tabuleiro(jogadores);
         tabuleiroController.carregarTabuleiro(tabuleiro, jogadores, modoDebug);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
+
     }
 
     private void criarJogadores() {
@@ -79,15 +100,32 @@ public class ChoosePlayerController {
                     ColorPicker jogadorAtualCor = (ColorPicker) jogadorAtualPane.lookup("#jogadorCor" + i);
                     ComboBox jogadorAtualTipo = (ComboBox) jogadorAtualPane.lookup("#tipoJogador" + i);
 
+                    
+                    if (jogadorAtualNome.getText().equals("")) {
+                        jogadorAtualNome.setText("Jogador " + i);
+                    }
+                    
                     switch (String.valueOf(jogadorAtualTipo.getValue())) {
-                        case "Normal" ->
+                        case "Normal" -> {
                             jogadores.add(new JogadorNormal(String.valueOf(jogadorAtualCor.getValue()), jogadorAtualNome.getText()));
-                        case "Com Sorte" ->
+                            jogadoresNormais = true;
+                        }
+                        case "Com Sorte" -> {
                             jogadores.add(new JogadorComSorte(String.valueOf(jogadorAtualCor.getValue()), jogadorAtualNome.getText()));
-                        case "Azarado" ->
+                            jogadoresComSorte = true;
+                        }
+                        case "Azarado" -> {
                             jogadores.add(new JogadorAzarado(String.valueOf(jogadorAtualCor.getValue()), jogadorAtualNome.getText()));
-                        default ->
-                            System.out.println("Não reconhecido. " + String.valueOf(jogadorAtualCor.getValue()) + ", " + jogadorAtualNome.getText());
+                            jogadoresAzarados = true;
+                        }
+                        default -> {
+                            System.out.println("Não reconhecido. " + String.valueOf(jogadorAtualCor.getValue()) + ", "
+                                    + jogadorAtualNome.getText());
+                            jogadoresAzarados = false;
+                            jogadoresComSorte = false;
+                            jogadoresNormais = false;
+                            return;
+                        }
                     }
                 }
             }

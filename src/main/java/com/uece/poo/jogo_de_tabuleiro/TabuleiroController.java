@@ -11,6 +11,9 @@ import com.uece.poo.jogo_de_tabuleiro.model.Casa;
 import com.uece.poo.jogo_de_tabuleiro.model.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -19,13 +22,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class TabuleiroController {
 
@@ -38,21 +49,13 @@ public class TabuleiroController {
     private boolean debugMode;
 
     @FXML
-    private Label player0Color;
-    @FXML
-    private Label player1Color;
-    @FXML
-    private Label player2Color;
-    @FXML
-    private Label player3Color;
-    @FXML
-    private Label currentPlayerDices;
-    @FXML
     private Label currentPlayer;
     @FXML
     private Button jogarDadosButton;
     @FXML
     private GridPane tabuleiroPane;
+    @FXML
+    AnchorPane gameAnchorPane;
 
     public void carregarTabuleiro(Tabuleiro tabuleiro, List<Jogador> jogadores, boolean debugMode) {
         this.tabuleiro = tabuleiro;
@@ -71,18 +74,15 @@ public class TabuleiroController {
 
     private void atualizarStats() {
         Platform.runLater(() -> {
-            // protege com tamanho mínimo
-            if (!jogadores.isEmpty() && jogadores.get(0) != null) {
-                player0Color.setText(infoJogador(0));
-            }
-            if (jogadores.size() > 1 && jogadores.get(1) != null) {
-                player1Color.setText(infoJogador(1));
-            }
-            if (jogadores.size() > 2 && jogadores.get(2) != null) {
-                player2Color.setText(infoJogador(2));
-            }
-            if (jogadores.size() > 3 && jogadores.get(3) != null) {
-                player3Color.setText(infoJogador(3));
+            AnchorPane playersAnchorPane = (AnchorPane) gameAnchorPane.lookup("#playersAnchorPane");
+            int i = 1;
+            for (Jogador jogadorAtual : jogadores) {
+                HBox jogadorAtualHBox = (HBox) playersAnchorPane.lookup("#playerInfo" + i);
+                jogadorAtualHBox.setDisable(false);
+                jogadorAtualHBox.setBackground(Background.fill(Paint.valueOf(jogadorAtual.getCor())));
+                Label jogadorAtualLabel = (Label) jogadorAtualHBox.lookup("#jogadorInfo" + i);
+                jogadorAtualLabel.setText(infoJogador(i - 1));
+                i++;
             }
             atualizarCasas();
         });
@@ -90,7 +90,7 @@ public class TabuleiroController {
 
     private String infoJogador(int idx) {
         Jogador j = jogadores.get(idx);
-        return "Cor: " + j.getCor() + " | Nome: " + j.getNome() + " | Posição: " + j.getPosicao();
+        return j.getNome() + " | Posição: " + j.getPosicao();
     }
 
     private void atualizarCasas() {
@@ -107,10 +107,11 @@ public class TabuleiroController {
 
         for (Jogador jogador : jogadores) {
             Pane casaAtual = (Pane) tabuleiroPane.lookup("#casa" + jogador.getPosicao());
-            if (casaAtual != null) {
+            FlowPane casaAtualFlowPane = (FlowPane) casaAtual.lookup("#casaFlowPane" + jogador.getPosicao());
+            if (casaAtualFlowPane != null) {
                 Circle circle = jogadoresIcons.get(jogador);
-                if (!casaAtual.getChildren().contains(circle)) {
-                    casaAtual.getChildren().add(circle);
+                if (!casaAtualFlowPane.getChildren().contains(circle)) {
+                    casaAtualFlowPane.getChildren().add(circle);
                 }
             }
         }
@@ -130,7 +131,7 @@ public class TabuleiroController {
                             currentPlayer.setText("Vez de " + current.getNome());
                             jogarDadosButton.setDisable(false);
                         });
-                        
+
                         try {
                             pauseSemaphore.acquire();
                         } catch (InterruptedException e) {
@@ -182,7 +183,6 @@ public class TabuleiroController {
                             jogador.setPosicao(jogador.getPosicao() + valorDados);
 
                             Platform.runLater(() -> {
-                                currentPlayerDices.setText("DEBUG: " + valorDados);
                                 atualizarStats();
                             });
 
@@ -197,11 +197,82 @@ public class TabuleiroController {
 
                         } else {
                             jogador.jogar();
+
                             Platform.runLater(() -> {
-                                currentPlayerDices.setText(jogador.getDados()[0] + " + " + jogador.getDados()[1]
-                                        + " = " + (jogador.getDados()[0] + jogador.getDados()[1]));
-                                atualizarStats();
+                                Stage popup = new Stage();
+                                Label plusSign = new Label("+");
+                                plusSign.setFont(Font.font(30));
+                                Label equalsSign = new Label("=");
+                                equalsSign.setFont(Font.font(30));
+                                Label total = new Label(String.valueOf(jogador.getDados()[0] + jogador.getDados()[1]));
+                                total.setFont(Font.font(30));
+                                popup.setTitle("Modo Normal - Valor dos Dados");
+
+                                HBox layout = new HBox(30);
+                                layout.setAlignment(Pos.CENTER);
+                                layout.setPadding(new Insets(20));
+                                layout.setAlignment(Pos.CENTER);
+                                Scene scene = new Scene(layout, 800, 300);
+                                popup.setScene(scene);
+                                popup.initModality(Modality.APPLICATION_MODAL);
+                                popup.show();
+
+                                Timeline timeline = new Timeline();
+                                int frame = 0;
+
+                                // 3 giros do dado (3 * 6 frames)
+                                for (int i = 0; i < 3; i++) {
+                                    for (int j = 1; j <= 6; j++) {
+                                        int finalJ = j;
+                                        timeline.getKeyFrames().add(new KeyFrame(
+                                                Duration.millis(200 * frame++),
+                                                e -> {
+                                                    layout.getChildren().clear();
+                                                    Image img = new Image(getClass().getResourceAsStream(
+                                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + finalJ + ".png"
+                                                    ), 200, 200, false, false);
+
+                                                    layout.getChildren().add(new ImageView(img));
+                                                    layout.getChildren().add(plusSign);
+                                                    layout.getChildren().add(new ImageView(img));
+
+                                                }
+                                        ));
+                                    }
+                                }
+
+                                timeline.setOnFinished(e -> {
+                                    layout.getChildren().clear();
+                                    Image dado1 = new Image(getClass().getResourceAsStream(
+                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + jogador.getDados()[0] + ".png"
+                                    ), 200, 200, false, false);
+                                    Image dado2 = new Image(getClass().getResourceAsStream(
+                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + jogador.getDados()[1] + ".png"
+                                    ), 200, 200, false, false);
+                                    layout.getChildren().add(new ImageView(dado1));
+                                    layout.getChildren().add(plusSign);
+                                    layout.getChildren().add(new ImageView(dado2));
+                                    layout.getChildren().add(equalsSign);
+                                    layout.getChildren().add(total);
+                                    // Espera 2 segundos antes de fechar (sem travar a interface)
+                                    PauseTransition wait = new PauseTransition(Duration.seconds(2));
+                                    wait.setOnFinished(ev -> {
+                                        popup.close();
+                                        atualizarStats();
+                                    });
+                                    wait.play();
+                                });
+
+                                timeline.play();
+
                             });
+                            
+                            try {
+                                Thread.sleep(4000);
+                            } catch (InterruptedException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
 
                             atualizarCasasSync();
 
@@ -239,8 +310,82 @@ public class TabuleiroController {
                             }
 
                             jogador.jogar();
-                            Platform.runLater(this::atualizarStats);
+                            Platform.runLater(() -> {
+                                Stage popup = new Stage();
+                                Label plusSign = new Label("+");
+                                plusSign.setFont(Font.font(30));
+                                Label equalsSign = new Label("=");
+                                equalsSign.setFont(Font.font(30));
+                                Label total = new Label(String.valueOf(jogador.getDados()[0] + jogador.getDados()[1]));
+                                total.setFont(Font.font(30));
+                                popup.setTitle("Modo Normal - Valor dos Dados");
 
+                                HBox layout = new HBox(30);
+                                layout.setAlignment(Pos.CENTER);
+                                layout.setPadding(new Insets(20));
+                                layout.setAlignment(Pos.CENTER);
+                                Scene scene = new Scene(layout, 800, 300);
+                                popup.setScene(scene);
+                                popup.initModality(Modality.APPLICATION_MODAL);
+                                popup.show();
+
+                                Timeline timeline = new Timeline();
+                                int frame = 0;
+
+                                // 3 giros do dado (3 * 6 frames)
+                                for (int i = 0; i < 3; i++) {
+                                    for (int j = 1; j <= 6; j++) {
+                                        int finalJ = j;
+                                        timeline.getKeyFrames().add(new KeyFrame(
+                                                Duration.millis(200 * frame++),
+                                                e -> {
+                                                    layout.getChildren().clear();
+                                                    Image img = new Image(getClass().getResourceAsStream(
+                                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + finalJ + ".png"
+                                                    ), 200, 200, false, false);
+
+                                                    layout.getChildren().add(new ImageView(img));
+                                                    layout.getChildren().add(plusSign);
+                                                    layout.getChildren().add(new ImageView(img));
+
+                                                }
+                                        ));
+                                    }
+                                }
+
+                                timeline.setOnFinished(e -> {
+                                    layout.getChildren().clear();
+                                    Image dado1 = new Image(getClass().getResourceAsStream(
+                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + jogador.getDados()[0] + ".png"
+                                    ), 200, 200, false, false);
+                                    Image dado2 = new Image(getClass().getResourceAsStream(
+                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + jogador.getDados()[1] + ".png"
+                                    ), 200, 200, false, false);
+                                    layout.getChildren().add(new ImageView(dado1));
+                                    layout.getChildren().add(plusSign);
+                                    layout.getChildren().add(new ImageView(dado2));
+                                    layout.getChildren().add(equalsSign);
+                                    layout.getChildren().add(total);
+                                    // Espera 2 segundos antes de fechar (sem travar a interface)
+                                    PauseTransition wait = new PauseTransition(Duration.seconds(2));
+                                    wait.setOnFinished(ev -> {
+                                        popup.close();
+                                        atualizarStats();
+                                    });
+                                    wait.play();
+                                });
+
+                                timeline.play();
+
+                            });
+
+                            try {
+                                Thread.sleep(4000);
+                            } catch (InterruptedException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            Platform.runLater(this::atualizarStats);
                             atualizarCasasSync();
 
                             Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
@@ -276,12 +421,10 @@ public class TabuleiroController {
     }
 
     private void atualizarCasasSync() {
-        // limpar jogadores de todas as casas
         for (Casa casa : tabuleiro.getCasas()) {
-            casa.clearJogadores(); // você já tem esse método
+            casa.clearJogadores();
         }
 
-        // repopular de acordo com a posição atual dos jogadores
         for (Jogador jogador : jogadores) {
             Casa casa = tabuleiro.getCasa(jogador.getPosicao());
             if (casa != null) {
