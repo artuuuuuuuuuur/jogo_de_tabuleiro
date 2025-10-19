@@ -1,8 +1,10 @@
 package com.uece.poo.jogo_de_tabuleiro;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Semaphore;
@@ -15,9 +17,13 @@ import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -223,18 +229,20 @@ public class TabuleiroController {
                                 // 3 giros do dado (3 * 6 frames)
                                 for (int i = 0; i < 3; i++) {
                                     for (int j = 1; j <= 6; j++) {
-                                        int finalJ = j;
                                         timeline.getKeyFrames().add(new KeyFrame(
                                                 Duration.millis(200 * frame++),
                                                 e -> {
                                                     layout.getChildren().clear();
-                                                    Image img = new Image(getClass().getResourceAsStream(
-                                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + finalJ + ".png"
+                                                    Image img1 = new Image(getClass().getResourceAsStream(
+                                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + ((new Random().nextInt(6)) + 1) + ".png"
+                                                    ), 200, 200, false, false);
+                                                    Image img2 = new Image(getClass().getResourceAsStream(
+                                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + ((new Random().nextInt(6)) + 1) + ".png"
                                                     ), 200, 200, false, false);
 
-                                                    layout.getChildren().add(new ImageView(img));
+                                                    layout.getChildren().add(new ImageView(img1));
                                                     layout.getChildren().add(plusSign);
-                                                    layout.getChildren().add(new ImageView(img));
+                                                    layout.getChildren().add(new ImageView(img2));
 
                                                 }
                                         ));
@@ -266,7 +274,7 @@ public class TabuleiroController {
                                 timeline.play();
 
                             });
-                            
+
                             try {
                                 Thread.sleep(4000);
                             } catch (InterruptedException e) {
@@ -292,6 +300,16 @@ public class TabuleiroController {
                                 currentPlayer.setText("🏆 " + jogadorVencedor.getNome() + " venceu!");
                                 jogarDadosButton.setDisable(true);
                                 atualizarStats();
+                                try {
+                                    Thread.sleep(2000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                };
+                                try {
+                                    switchToRank();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             });
                             break;
                         }
@@ -332,21 +350,22 @@ public class TabuleiroController {
                                 Timeline timeline = new Timeline();
                                 int frame = 0;
 
-                                // 3 giros do dado (3 * 6 frames)
                                 for (int i = 0; i < 3; i++) {
                                     for (int j = 1; j <= 6; j++) {
-                                        int finalJ = j;
                                         timeline.getKeyFrames().add(new KeyFrame(
                                                 Duration.millis(200 * frame++),
                                                 e -> {
                                                     layout.getChildren().clear();
-                                                    Image img = new Image(getClass().getResourceAsStream(
-                                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + finalJ + ".png"
+                                                    Image img1 = new Image(getClass().getResourceAsStream(
+                                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + ((new Random().nextInt(6)) + 1) + ".png"
+                                                    ), 200, 200, false, false);
+                                                    Image img2 = new Image(getClass().getResourceAsStream(
+                                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + ((new Random().nextInt(6)) + 1) + ".png"
                                                     ), 200, 200, false, false);
 
-                                                    layout.getChildren().add(new ImageView(img));
+                                                    layout.getChildren().add(new ImageView(img1));
                                                     layout.getChildren().add(plusSign);
-                                                    layout.getChildren().add(new ImageView(img));
+                                                    layout.getChildren().add(new ImageView(img2));
 
                                                 }
                                         ));
@@ -403,6 +422,16 @@ public class TabuleiroController {
                                     currentPlayer.setText("🏆 " + jogadorVencedor.getNome() + " venceu!");
                                     jogarDadosButton.setDisable(true);
                                     atualizarStats();
+                                    try {
+                                        Thread.sleep(2000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    };
+                                    try {
+                                        switchToRank();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 });
                                 break;
                             }
@@ -431,6 +460,16 @@ public class TabuleiroController {
                 casa.addJogador(jogador);
             }
         }
+    }
+    
+    private void switchToRank() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/final_rank.fxml"));
+        Parent root = loader.load();
+        FinalRankController finalRankController = loader.getController();
+        finalRankController.carregar(jogadores);
+        Stage stage = (Stage) gameAnchorPane.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     private void inicializar() {

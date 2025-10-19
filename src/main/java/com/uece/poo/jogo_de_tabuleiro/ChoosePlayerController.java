@@ -2,6 +2,8 @@ package com.uece.poo.jogo_de_tabuleiro;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.uece.poo.jogo_de_tabuleiro.model.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.JogadorAzarado;
@@ -9,21 +11,27 @@ import com.uece.poo.jogo_de_tabuleiro.model.JogadorComSorte;
 import com.uece.poo.jogo_de_tabuleiro.model.JogadorNormal;
 import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ChoosePlayerController {
@@ -34,6 +42,7 @@ public class ChoosePlayerController {
     private AnchorPane choosePLayerAnchorPane;
     private boolean modoDebug;
     private ArrayList<Jogador> jogadores = new ArrayList<>();
+    private Set<String> coresEscolhidas = new HashSet<>();
     private int quantidadeDeJogadores;
     private boolean jogadoresNormais = false;
     private boolean jogadoresComSorte = false;
@@ -64,6 +73,13 @@ public class ChoosePlayerController {
 
         criarJogadores();
 
+        for (Jogador jogador : jogadores) {
+            if (!coresEscolhidas.add(jogador.getCor())) {
+                exceptionModal("Dois jogadores não podem ter a mesma cor!");
+                return;
+            }
+        }
+
         int count = 0;
 
         if (jogadoresNormais) {
@@ -77,7 +93,7 @@ public class ChoosePlayerController {
         }
 
         if (count < 2) {
-            System.out.println("Erro");
+            exceptionModal("É necessário que ao menos dois jogadores sejam de tipos diferentes");
             return;
         }
 
@@ -90,8 +106,30 @@ public class ChoosePlayerController {
 
     }
 
-    private void criarJogadores() {
+    private void exceptionModal(String msg) {
+        Platform.runLater(() -> {
+            Stage alerta = new Stage();
+            alerta.setTitle("Erro");
+
+            Label message = new Label(msg);
+            message.setStyle("-fx-font-size: 16px; -fx-text-fill: red;");
+
+            Button ok = new Button("OK");
+            ok.setOnAction(e -> alerta.close());
+
+            VBox layout = new VBox(15, message, ok);
+            layout.setAlignment(Pos.CENTER);
+            layout.setPadding(new Insets(20));
+
+            alerta.setScene(new Scene(layout, 550, 150));
+            alerta.initModality(Modality.APPLICATION_MODAL);
+            alerta.showAndWait();
+        });
+    }
+
+    private void criarJogadores() throws IOException {
         jogadores.clear();
+        coresEscolhidas.clear();
         for (int i = 1; i <= 6; i++) {
             if (i <= quantidadeDeJogadores) {
                 Pane jogadorAtualPane = (Pane) choosePLayerAnchorPane.lookup("#jogador" + i);
@@ -100,11 +138,10 @@ public class ChoosePlayerController {
                     ColorPicker jogadorAtualCor = (ColorPicker) jogadorAtualPane.lookup("#jogadorCor" + i);
                     ComboBox jogadorAtualTipo = (ComboBox) jogadorAtualPane.lookup("#tipoJogador" + i);
 
-                    
                     if (jogadorAtualNome.getText().equals("")) {
                         jogadorAtualNome.setText("Jogador " + i);
                     }
-                    
+
                     switch (String.valueOf(jogadorAtualTipo.getValue())) {
                         case "Normal" -> {
                             jogadores.add(new JogadorNormal(String.valueOf(jogadorAtualCor.getValue()), jogadorAtualNome.getText()));
