@@ -138,44 +138,12 @@ public class TabuleiroController {
                             jogarDadosButton.setDisable(false);
                         });
 
-                        try {
-                            pauseSemaphore.acquire();
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt();
-                            return;
-                        }
+                        pause();
 
                         if (debugMode) {
                             CompletableFuture<Integer> resultadoDebug = new CompletableFuture<>();
 
-                            Platform.runLater(() -> {
-                                Stage popup = new Stage();
-                                popup.setTitle("Modo Debug - Valor dos Dados");
-
-                                Label label = new Label("Digite o valor que deseja andar: ");
-                                TextField input = new TextField();
-                                input.setPromptText("ex: 7");
-
-                                Button confirmar = new Button("Confirmar");
-
-                                confirmar.setOnAction(e -> {
-                                    try {
-                                        int valor = Integer.parseInt(input.getText());
-                                        resultadoDebug.complete(valor);
-                                        popup.close();
-                                    } catch (NumberFormatException ex) {
-                                        input.setStyle("-fx-border-color: red;");
-                                    }
-                                });
-
-                                VBox layout = new VBox(10, label, input, confirmar);
-                                layout.setAlignment(Pos.CENTER);
-                                layout.setPadding(new Insets(20));
-
-                                popup.setScene(new Scene(layout, 300, 150));
-                                popup.initModality(Modality.APPLICATION_MODAL);
-                                popup.show();
-                            });
+                            debugModePage(resultadoDebug);
 
                             int tempValorDados;
                             try {
@@ -199,80 +167,14 @@ public class TabuleiroController {
                                 casaAtual.executarAcaoEspecial(tabuleiro);
                             }
 
+                            atualizarCasasSync();
                             Platform.runLater(this::atualizarStats);
 
                         } else {
                             jogador.jogar();
 
                             Platform.runLater(() -> {
-                                Stage popup = new Stage();
-                                Label plusSign = new Label("+");
-                                plusSign.setFont(Font.font(30));
-                                Label equalsSign = new Label("=");
-                                equalsSign.setFont(Font.font(30));
-                                Label total = new Label(String.valueOf(jogador.getDados()[0] + jogador.getDados()[1]));
-                                total.setFont(Font.font(30));
-                                popup.setTitle("Modo Normal - Valor dos Dados");
-
-                                HBox layout = new HBox(30);
-                                layout.setAlignment(Pos.CENTER);
-                                layout.setPadding(new Insets(20));
-                                layout.setAlignment(Pos.CENTER);
-                                Scene scene = new Scene(layout, 800, 300);
-                                popup.setScene(scene);
-                                popup.initModality(Modality.APPLICATION_MODAL);
-                                popup.show();
-
-                                Timeline timeline = new Timeline();
-                                int frame = 0;
-
-                                // 3 giros do dado (3 * 6 frames)
-                                for (int i = 0; i < 3; i++) {
-                                    for (int j = 1; j <= 6; j++) {
-                                        timeline.getKeyFrames().add(new KeyFrame(
-                                                Duration.millis(200 * frame++),
-                                                e -> {
-                                                    layout.getChildren().clear();
-                                                    Image img1 = new Image(getClass().getResourceAsStream(
-                                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + ((new Random().nextInt(6)) + 1) + ".png"
-                                                    ), 200, 200, false, false);
-                                                    Image img2 = new Image(getClass().getResourceAsStream(
-                                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + ((new Random().nextInt(6)) + 1) + ".png"
-                                                    ), 200, 200, false, false);
-
-                                                    layout.getChildren().add(new ImageView(img1));
-                                                    layout.getChildren().add(plusSign);
-                                                    layout.getChildren().add(new ImageView(img2));
-
-                                                }
-                                        ));
-                                    }
-                                }
-
-                                timeline.setOnFinished(e -> {
-                                    layout.getChildren().clear();
-                                    Image dado1 = new Image(getClass().getResourceAsStream(
-                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + jogador.getDados()[0] + ".png"
-                                    ), 200, 200, false, false);
-                                    Image dado2 = new Image(getClass().getResourceAsStream(
-                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + jogador.getDados()[1] + ".png"
-                                    ), 200, 200, false, false);
-                                    layout.getChildren().add(new ImageView(dado1));
-                                    layout.getChildren().add(plusSign);
-                                    layout.getChildren().add(new ImageView(dado2));
-                                    layout.getChildren().add(equalsSign);
-                                    layout.getChildren().add(total);
-                                    // Espera 2 segundos antes de fechar (sem travar a interface)
-                                    PauseTransition wait = new PauseTransition(Duration.seconds(2));
-                                    wait.setOnFinished(ev -> {
-                                        popup.close();
-                                        atualizarStats();
-                                    });
-                                    wait.play();
-                                });
-
-                                timeline.play();
-
+                                rollDicesPage(jogador);
                             });
 
                             try {
@@ -287,32 +189,13 @@ public class TabuleiroController {
                             Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
                             if (casaAtual != null) {
                                 casaAtual.executarAcaoEspecial(tabuleiro);
+                                atualizarCasasSync();
                             }
 
                             Platform.runLater(this::atualizarStats);
                         }
 
-                        if (jogador.getPosicao() >= 40) {
-                            jogador.setPosicao(40);
-                            partidaTerminada = true;
-                            jogadorVencedor = jogador;
-                            Platform.runLater(() -> {
-                                currentPlayer.setText("🏆 " + jogadorVencedor.getNome() + " venceu!");
-                                jogarDadosButton.setDisable(true);
-                                atualizarStats();
-                                try {
-                                    Thread.sleep(2000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                };
-                                try {
-                                    switchToRank();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            });
-                            break;
-                        }
+                        checkWinner(jogador);
 
                         if (jogador.isDadosIguais() && !debugMode) {
                             Platform.runLater(() -> {
@@ -320,89 +203,16 @@ public class TabuleiroController {
                                 jogarDadosButton.setDisable(false);
                             });
 
-                            try {
-                                pauseSemaphore.acquire();
-                            } catch (InterruptedException e) {
-                                Thread.currentThread().interrupt();
-                                return;
-                            }
+                            pause();
 
                             jogador.jogar();
                             Platform.runLater(() -> {
-                                Stage popup = new Stage();
-                                Label plusSign = new Label("+");
-                                plusSign.setFont(Font.font(30));
-                                Label equalsSign = new Label("=");
-                                equalsSign.setFont(Font.font(30));
-                                Label total = new Label(String.valueOf(jogador.getDados()[0] + jogador.getDados()[1]));
-                                total.setFont(Font.font(30));
-                                popup.setTitle("Modo Normal - Valor dos Dados");
-
-                                HBox layout = new HBox(30);
-                                layout.setAlignment(Pos.CENTER);
-                                layout.setPadding(new Insets(20));
-                                layout.setAlignment(Pos.CENTER);
-                                Scene scene = new Scene(layout, 800, 300);
-                                popup.setScene(scene);
-                                popup.initModality(Modality.APPLICATION_MODAL);
-                                popup.show();
-
-                                Timeline timeline = new Timeline();
-                                int frame = 0;
-
-                                for (int i = 0; i < 3; i++) {
-                                    for (int j = 1; j <= 6; j++) {
-                                        timeline.getKeyFrames().add(new KeyFrame(
-                                                Duration.millis(200 * frame++),
-                                                e -> {
-                                                    layout.getChildren().clear();
-                                                    Image img1 = new Image(getClass().getResourceAsStream(
-                                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + ((new Random().nextInt(6)) + 1) + ".png"
-                                                    ), 200, 200, false, false);
-                                                    Image img2 = new Image(getClass().getResourceAsStream(
-                                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + ((new Random().nextInt(6)) + 1) + ".png"
-                                                    ), 200, 200, false, false);
-
-                                                    layout.getChildren().add(new ImageView(img1));
-                                                    layout.getChildren().add(plusSign);
-                                                    layout.getChildren().add(new ImageView(img2));
-
-                                                }
-                                        ));
-                                    }
-                                }
-
-                                timeline.setOnFinished(e -> {
-                                    layout.getChildren().clear();
-                                    Image dado1 = new Image(getClass().getResourceAsStream(
-                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + jogador.getDados()[0] + ".png"
-                                    ), 200, 200, false, false);
-                                    Image dado2 = new Image(getClass().getResourceAsStream(
-                                            "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + jogador.getDados()[1] + ".png"
-                                    ), 200, 200, false, false);
-                                    layout.getChildren().add(new ImageView(dado1));
-                                    layout.getChildren().add(plusSign);
-                                    layout.getChildren().add(new ImageView(dado2));
-                                    layout.getChildren().add(equalsSign);
-                                    layout.getChildren().add(total);
-                                    // Espera 2 segundos antes de fechar (sem travar a interface)
-                                    PauseTransition wait = new PauseTransition(Duration.seconds(2));
-                                    wait.setOnFinished(ev -> {
-                                        popup.close();
-                                        atualizarStats();
-                                    });
-                                    wait.play();
-                                });
-
-                                timeline.play();
-
+                                rollDicesPage(jogador);
                             });
 
                             try {
                                 Thread.sleep(4000);
                             } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
                             }
                             Platform.runLater(this::atualizarStats);
                             atualizarCasasSync();
@@ -414,27 +224,7 @@ public class TabuleiroController {
 
                             Platform.runLater(this::atualizarStats);
 
-                            if (jogador.getPosicao() >= 40) {
-                                jogador.setPosicao(40);
-                                partidaTerminada = true;
-                                jogadorVencedor = jogador;
-                                Platform.runLater(() -> {
-                                    currentPlayer.setText("🏆 " + jogadorVencedor.getNome() + " venceu!");
-                                    jogarDadosButton.setDisable(true);
-                                    atualizarStats();
-                                    try {
-                                        Thread.sleep(2000);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    };
-                                    try {
-                                        switchToRank();
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                });
-                                break;
-                            }
+                            checkWinner(jogador);
                         }
                     } else {
                         jogador.setAtivo(true);
@@ -449,6 +239,135 @@ public class TabuleiroController {
         pauseSemaphore.release();
     }
 
+    private void pause() {
+        try {
+            pauseSemaphore.acquire();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private void debugModePage(CompletableFuture<Integer> resultadoDebug) {
+        Platform.runLater(() -> {
+            Stage popup = new Stage();
+            popup.setTitle("Modo Debug - Valor dos Dados");
+
+            Label label = new Label("Digite o valor que deseja andar: ");
+            TextField input = new TextField();
+            input.setPromptText("ex: 7");
+
+            Button confirmar = new Button("Confirmar");
+
+            confirmar.setOnAction(e -> {
+                try {
+                    int valor = Integer.parseInt(input.getText());
+                    resultadoDebug.complete(valor);
+                    popup.close();
+                } catch (NumberFormatException ex) {
+                    input.setStyle("-fx-border-color: red;");
+                }
+            });
+
+            VBox layout = new VBox(10, label, input, confirmar);
+            layout.setAlignment(Pos.CENTER);
+            layout.setPadding(new Insets(20));
+
+            popup.setScene(new Scene(layout, 300, 150));
+            popup.initModality(Modality.APPLICATION_MODAL);
+            popup.show();
+        });
+    }
+
+    private void checkWinner(Jogador jogador) {
+        if (jogador.getPosicao() >= 40) {
+            jogador.setPosicao(40);
+            partidaTerminada = true;
+            jogadorVencedor = jogador;
+            Platform.runLater(() -> {
+                currentPlayer.setText("🏆 " + jogadorVencedor.getNome() + " venceu!");
+                jogarDadosButton.setDisable(true);
+                atualizarStats();
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                }
+                try {
+                    switchToRank();
+                } catch (IOException e) {
+                }
+            });
+        }
+    }
+
+    private void rollDicesPage(Jogador jogador) {
+        Stage popup = new Stage();
+        Label plusSign = new Label("+");
+        plusSign.setFont(Font.font(30));
+        Label equalsSign = new Label("=");
+        equalsSign.setFont(Font.font(30));
+        Label total = new Label(String.valueOf(jogador.getDados()[0] + jogador.getDados()[1]));
+        total.setFont(Font.font(30));
+        popup.setTitle("Modo Normal - Valor dos Dados");
+
+        HBox layout = new HBox(30);
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(20));
+        layout.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(layout, 800, 300);
+        popup.setScene(scene);
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.show();
+
+        Timeline timeline = new Timeline();
+        int frame = 0;
+
+        // 3 giros do dado (3 * 6 frames)
+        for (int i = 0; i < 3; i++) {
+            for (int j = 1; j <= 6; j++) {
+                timeline.getKeyFrames().add(new KeyFrame(
+                        Duration.millis(200 * frame++),
+                        e -> {
+                            layout.getChildren().clear();
+                            Image img1 = new Image(getClass().getResourceAsStream(
+                                    "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + ((new Random().nextInt(6)) + 1) + ".png"
+                            ), 200, 200, false, false);
+                            Image img2 = new Image(getClass().getResourceAsStream(
+                                    "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + ((new Random().nextInt(6)) + 1) + ".png"
+                            ), 200, 200, false, false);
+
+                            layout.getChildren().add(new ImageView(img1));
+                            layout.getChildren().add(plusSign);
+                            layout.getChildren().add(new ImageView(img2));
+
+                        }
+                ));
+            }
+        }
+
+        timeline.setOnFinished(e -> {
+            layout.getChildren().clear();
+            Image dado1 = new Image(getClass().getResourceAsStream(
+                    "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + jogador.getDados()[0] + ".png"
+            ), 200, 200, false, false);
+            Image dado2 = new Image(getClass().getResourceAsStream(
+                    "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + jogador.getDados()[1] + ".png"
+            ), 200, 200, false, false);
+            layout.getChildren().add(new ImageView(dado1));
+            layout.getChildren().add(plusSign);
+            layout.getChildren().add(new ImageView(dado2));
+            layout.getChildren().add(equalsSign);
+            layout.getChildren().add(total);
+            // Espera 2 segundos antes de fechar (sem travar a interface)
+            PauseTransition wait = new PauseTransition(Duration.seconds(2));
+            wait.setOnFinished(ev -> {
+                popup.close();
+                atualizarStats();
+            });
+            wait.play();
+        });
+        timeline.play();
+    }
+
     private void atualizarCasasSync() {
         for (Casa casa : tabuleiro.getCasas()) {
             casa.clearJogadores();
@@ -461,7 +380,7 @@ public class TabuleiroController {
             }
         }
     }
-    
+
     private void switchToRank() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/final_rank.fxml"));
         Parent root = loader.load();

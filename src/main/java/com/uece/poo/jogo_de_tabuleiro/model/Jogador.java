@@ -10,6 +10,7 @@ public abstract class Jogador {
     protected boolean ativo, jogarNovamente, dadosIguais;
     protected Jogador jogadorAlvo;
     protected int lastCasaEspecialIndex = -1;
+    protected String tipo;
 
     public Jogador(String cor, String nome) {
         this.cor = cor;
@@ -116,5 +117,9 @@ public abstract class Jogador {
 
     public boolean isDadosIguais() {
         return dadosIguais;
+    }
+
+    public String getTipo() {
+        return tipo;
     }
 }

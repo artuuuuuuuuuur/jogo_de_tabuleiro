@@ -4,10 +4,12 @@ public class JogadorAzarado extends Jogador {
 
     public JogadorAzarado(String cor, String nome) {
         super(cor, nome);
+        tipo = "Azarado";
     }
 
     public JogadorAzarado(boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas, boolean dadosIguais) {
         super(ativo, cor, nome, jogarNovamente, posicao, vezesJogadas, dadosIguais);
+        tipo = "Azarado";
     }
 
     @Override

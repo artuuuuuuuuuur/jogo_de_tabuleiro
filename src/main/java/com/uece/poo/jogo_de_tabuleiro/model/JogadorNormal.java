@@ -4,10 +4,12 @@ public class JogadorNormal extends Jogador {
 
     public JogadorNormal(String cor, String nome) {
         super(cor, nome);
+        tipo = "Normal";
     }
 
     public JogadorNormal(boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas, boolean dadosIguais) {
         super(ativo, cor, nome, jogarNovamente, posicao, vezesJogadas, dadosIguais);
+        tipo = "Normal";
     }
 
     @Override

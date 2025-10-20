@@ -3,7 +3,9 @@ package com.uece.poo.jogo_de_tabuleiro;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.uece.poo.jogo_de_tabuleiro.model.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.JogadorAzarado;
@@ -41,7 +43,7 @@ public class ChoosePlayerController {
     @FXML
     private AnchorPane choosePLayerAnchorPane;
     private boolean modoDebug;
-    private ArrayList<Jogador> jogadores = new ArrayList<>();
+    private List<Jogador> jogadores = new CopyOnWriteArrayList<>();
     private Set<String> coresEscolhidas = new HashSet<>();
     private int quantidadeDeJogadores;
     private boolean jogadoresNormais = false;
