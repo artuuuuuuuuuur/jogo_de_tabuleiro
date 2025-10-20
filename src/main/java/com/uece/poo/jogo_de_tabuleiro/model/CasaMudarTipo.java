@@ -87,6 +87,7 @@ public class CasaMudarTipo extends Casa {
             if (idx >= 0) {
                 listaGlobal.set(idx, r.newPlayer);
                 r.newPlayer.setLastCasaEspecialIndex(this.getIndex());
+                System.out.println(r.oldPlayer.getNome() + " mudou de tipo. Novo tipo: " + r.newPlayer.getClass());
                 Platform.runLater(() -> {
                     Stage popup = new Stage();
                     Label mudarTipoLabel = new Label("Escolha uma carta para mudar de tipo:");

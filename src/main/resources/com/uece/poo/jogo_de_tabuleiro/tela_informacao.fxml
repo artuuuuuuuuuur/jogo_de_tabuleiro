@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="600.0" style="-fx-background-color: #456AE5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.RulesScreenController">
+   <children>
+      <Button layoutX="477.0" layoutY="392.0" mnemonicParsing="false" onAction="#goBack" text="VOLTAR" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="52.0">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
+      <TextArea layoutX="53.0" layoutY="36.0" prefHeight="325.0" prefWidth="495.0" promptText="        REGRAS DO JOGO" text="#Até 6 participantes por partida. Mínimo: 2.&#10;&#10;#Tabuleiro com 40 casas numeradas de 0 (início) até 40 (meta).&#10;&#10;#Cada jogador tem uma cor que o identifica e armazena sua posição (começam todos na casa 0).&#10;&#10;#A cada jogada o jogador lança 2 dados e anda a soma dos dois valores. Se a soma fizer o jogador passar da casa 40, ele vence.&#10;&#10;#Existem 3 tipos de jogador:&#10;Sortudo: soma dos dados sempre ≥ 7;&#10;Azarado: soma dos dados sempre ≤ 6;&#10;Normal: soma pode variar livremente.&#10;&#10;#Há um modo Debug: em vez de rolar dados, o usuário pode inserir manualmente o número da casa para a qual o jogador irá.&#10;&#10;#Obrigatório haver pelo menos dois tipos diferentes entre os jogadores (ex.: não pode ser todos Normal — deve haver diversidade).&#10;&#10;&#10;#Casas 10, 25, 38 — “Pula a próxima”&#10;O jogador não joga a próxima rodada. Se ele obtiver par e ganhar jogada imediata, a jogada imediata ainda ocorre — o pulo vale só para a rodada seguinte.&#10;&#10;#Casa 13 — “Surpresa”&#10;Puxa-se 1 carta aleatória do baralho de Surpresa (veja §7). A carta altera o tipo do jogador (Sortudo / Azarado / Normal) conforme descrito na carta. Após usar a carta, ela pode ser descartada ou colocada no final do baralho (defina estratégia).&#10;&#10;#Casas 5, 15, 30 — “Casas da Sorte”&#10;Se o jogador não for Azarado, ele anda 3 casas para frente imediatamente. Se for Azarado, não recebe esse benefício. (Se o movimento extra o levar a outra casa especial, aplica-se o efeito dessa casa normalmente.)&#10;&#10;#Casas 17 e 27 — “Volta pro início” (ataque)&#10;O jogador que caiu aqui escolhe um competidor (outro jogador) para voltar à casa 0. Se o escolhido tinha pularProxima = true, esse status é mantido ou não? — recomendado: preservar flags só se fizer sentido; por simplicidade: reseta apenas a posição (voltar para 0), mantém outros estados. Se houver empate de escolha ou 1 único oponente, escolhe-se esse. Se desejar, peça confirmação do usuário.&#10;&#10;#Casas 20 e 35 — “Mágica (troca)”&#10;O jogador troca de lugar com o jogador que está mais atrás no tabuleiro.&#10;Se ele já for o último, não troca nada.&#10;Se houver empates pelo jogador mais atrás, escolha aleatoriamente entre os empatados (ou peça ao jogador que escolheu — defina no UI).&#10;Dobrados (par nos dados)&#10;Se o jogador tirar dois resultados iguais, ele:&#10;Anda a soma normalmente, aplica efeitos da casa onde parou.&#10;Ao final desse movimento, ganha o direito a jogar novamente imediatamente (a menos que tenha vencido o jogo). Mesmo que na parada tenha sofrido efeito de “pula próxima rodada”, este efeito atinge a próxima rodada — não impede a jogada extra imediata.&#10;Se na jogada extra também tirar par, o processo se repete (possíveis correntes de jogadas extras).&#10;&#10;&#10;#Vencedor e fim de jogo&#10;O jogador que alcançar ou ultrapassar a casa 40 vence imediatamente — o jogo termina e as estatísticas finais são exibidas.&#10;" wrapText="true" AnchorPane.bottomAnchor="91.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="36.0">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </TextArea>
+      <Label layoutX="218.0" layoutY="6.0" text="INFORMAÇÕES DO JOGO" textFill="#0a0000">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

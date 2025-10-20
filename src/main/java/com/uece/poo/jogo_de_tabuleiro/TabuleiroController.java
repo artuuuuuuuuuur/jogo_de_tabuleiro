@@ -145,6 +145,8 @@ public class TabuleiroController {
 
                             debugModePage(resultadoDebug);
 
+                            Platform.runLater(() -> atualizarCasas());
+
                             int tempValorDados;
                             try {
                                 tempValorDados = resultadoDebug.get();
@@ -183,19 +185,21 @@ public class TabuleiroController {
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
-
+                            Platform.runLater(() -> atualizarCasas());
                             atualizarCasasSync();
 
                             Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
                             if (casaAtual != null) {
                                 casaAtual.executarAcaoEspecial(tabuleiro);
                                 atualizarCasasSync();
+                                Platform.runLater(() -> atualizarCasas());
                             }
 
                             Platform.runLater(this::atualizarStats);
                         }
 
-                        checkWinner(jogador);
+                        Platform.runLater(() -> checkWinner(jogador));
+                        Platform.runLater(() -> atualizarCasas());
 
                         if (jogador.isDadosIguais() && !debugMode) {
                             Platform.runLater(() -> {
@@ -224,7 +228,8 @@ public class TabuleiroController {
 
                             Platform.runLater(this::atualizarStats);
 
-                            checkWinner(jogador);
+                            Platform.runLater(() -> checkWinner(jogador));
+                            Platform.runLater(() -> atualizarCasas());
                         }
                     } else {
                         jogador.setAtivo(true);
@@ -279,24 +284,28 @@ public class TabuleiroController {
     }
 
     private void checkWinner(Jogador jogador) {
-        if (jogador.getPosicao() >= 40) {
-            jogador.setPosicao(40);
-            partidaTerminada = true;
-            jogadorVencedor = jogador;
-            Platform.runLater(() -> {
-                currentPlayer.setText("🏆 " + jogadorVencedor.getNome() + " venceu!");
-                jogarDadosButton.setDisable(true);
-                atualizarStats();
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                }
-                try {
-                    switchToRank();
-                } catch (IOException e) {
-                }
-            });
-        }
+        Platform.runLater(this::atualizarStats);
+        Platform.runLater(() -> {
+            if (jogador.getPosicao() >= 40) {
+                jogador.setPosicao(40);
+                partidaTerminada = true;
+                jogadorVencedor = jogador;
+                Platform.runLater(() -> {
+                    currentPlayer.setText("🏆 " + jogadorVencedor.getNome() + " venceu!");
+                    jogarDadosButton.setDisable(true);
+                    atualizarStats();
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    pause.setOnFinished(e -> {
+                        try {
+                            switchToRank();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    });
+                    pause.play();
+                });
+            }
+        });
     }
 
     private void rollDicesPage(Jogador jogador) {
@@ -385,7 +394,7 @@ public class TabuleiroController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/final_rank.fxml"));
         Parent root = loader.load();
         FinalRankController finalRankController = loader.getController();
-        finalRankController.carregar(jogadores);
+        finalRankController.carregar(jogadores, debugMode);
         Stage stage = (Stage) gameAnchorPane.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
