@@ -12,11 +12,9 @@ public class CasaAndarTres extends Casa {
     @Override
     public void executarAcaoEspecial(Tabuleiro tabuleiro) {
         for (Jogador jogador : jogadores) {
-            if (jogador != null && !(jogador instanceof JogadorAzarado)) {
-                if(jogador.getPosicao() == index) {
+            if (jogador != null && !(jogador instanceof JogadorAzarado) && jogador.getPosicao() == index) {
                     jogador.andar(3);
                     System.out.println(jogador.getNome() + " andou 3 casas.");
-                }
             }
         }
     }
