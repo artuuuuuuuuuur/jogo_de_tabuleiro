@@ -9,6 +9,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Semaphore;
 
+import com.uece.poo.jogo_de_tabuleiro.config.Config;
 import com.uece.poo.jogo_de_tabuleiro.model.Casa;
 import com.uece.poo.jogo_de_tabuleiro.model.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
@@ -327,7 +328,8 @@ public class TabuleiroController {
 
         Timeline timeline = new Timeline();
         int frame = 0;
-        String dicesImagePath = "/com/uece/poo/jogo_de_tabuleiro/assets/dados/";
+        
+        String dicesImagePath = Config.get("dicesImagePath");
 
         for (int i = 0; i < 3; i++) {
             for (int j = 1; j <= 6; j++) {
