@@ -6,13 +6,17 @@ import java.util.Properties;
 
 public class Config {
 
+    private Config() {
+        throw new IllegalStateException("Config class.");
+    }
+
     private static Properties props = new Properties();
 
     static {
         try (InputStream input = Config.class.getResourceAsStream("/config.properties")) {
             props.load(input);
         } catch (IOException e) {
-            throw new RuntimeException("Could not load configuration file", e);
+            throw new IllegalArgumentException("Could not load configuration file", e);
         }
     }
 
