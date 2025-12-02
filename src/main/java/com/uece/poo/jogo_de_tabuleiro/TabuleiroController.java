@@ -149,8 +149,7 @@ public class TabuleiroController {
                             int tempValorDados;
                             try {
                                 tempValorDados = resultadoDebug.get();
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                            } catch (Exception _) {
                                 tempValorDados = 7;
                             }
                             final int valorDados = tempValorDados;
@@ -180,9 +179,7 @@ public class TabuleiroController {
 
                             try {
                                 Thread.sleep(4000);
-                            } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
+                            } catch (InterruptedException _) {
                             }
                             Platform.runLater(() -> atualizarCasas());
                             atualizarCasasSync();
@@ -215,7 +212,7 @@ public class TabuleiroController {
 
                             try {
                                 Thread.sleep(4000);
-                            } catch (InterruptedException e) {
+                            } catch (InterruptedException _) {
                             }
                             Platform.runLater(this::atualizarStats);
                             atualizarCasasSync();
@@ -328,7 +325,7 @@ public class TabuleiroController {
 
         Timeline timeline = new Timeline();
         int frame = 0;
-        
+
         String dicesImagePath = Config.get("dicesImagePath");
 
         for (int i = 0; i < 3; i++) {
@@ -338,7 +335,7 @@ public class TabuleiroController {
                         e -> {
                             layout.getChildren().clear();
                             Image img1 = new Image(getClass().getResourceAsStream(
-                                    dicesImagePath  + ((new Random().nextInt(6)) + 1) + ".png"
+                                    dicesImagePath + ((new Random().nextInt(6)) + 1) + ".png"
                             ), 200, 200, false, false);
                             Image img2 = new Image(getClass().getResourceAsStream(
                                     dicesImagePath + ((new Random().nextInt(6)) + 1) + ".png"
