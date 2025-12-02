@@ -123,117 +123,128 @@ public class TabuleiroController {
     }
 
     private void jogarPartida() {
-        new Thread(() -> {
+        Thread.ofVirtual().start(() -> {
             while (!partidaTerminada) {
                 for (Jogador jogador : jogadores) {
                     if (partidaTerminada) {
                         break;
                     }
-
-                    if (jogador.isAtivo()) {
-                        final Jogador current = jogador;
-                        Platform.runLater(() -> {
-                            currentPlayer.setText("Vez de " + current.getNome());
-                            jogarDadosButton.setDisable(false);
-                        });
-
-                        pause();
-
-                        if (debugMode) {
-                            CompletableFuture<Integer> resultadoDebug = new CompletableFuture<>();
-
-                            debugModePage(resultadoDebug);
-
-                            Platform.runLater(() -> atualizarCasas());
-
-                            int tempValorDados;
-                            try {
-                                tempValorDados = resultadoDebug.get();
-                            } catch (Exception _) {
-                                tempValorDados = 7;
-                            }
-                            final int valorDados = tempValorDados;
-
-                            jogador.setPosicao(jogador.getPosicao() + valorDados);
-
-                            Platform.runLater(() -> {
-                                atualizarStats();
-                            });
-
-                            atualizarCasasSync();
-
-                            Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
-                            if (casaAtual != null) {
-                                casaAtual.executarAcaoEspecial(tabuleiro);
-                            }
-
-                            atualizarCasasSync();
-                            Platform.runLater(this::atualizarStats);
-
-                        } else {
-                            jogador.jogar();
-
-                            Platform.runLater(() -> {
-                                rollDicesPage(jogador);
-                            });
-
-                            try {
-                                Thread.sleep(4000);
-                            } catch (InterruptedException _) {
-                            }
-                            Platform.runLater(() -> atualizarCasas());
-                            atualizarCasasSync();
-
-                            Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
-                            if (casaAtual != null) {
-                                casaAtual.executarAcaoEspecial(tabuleiro);
-                                atualizarCasasSync();
-                                Platform.runLater(() -> atualizarCasas());
-                            }
-
-                            Platform.runLater(this::atualizarStats);
-                        }
-
-                        Platform.runLater(() -> checkWinner(jogador));
-                        Platform.runLater(() -> atualizarCasas());
-
-                        if (jogador.isDadosIguais() && !debugMode) {
-                            Platform.runLater(() -> {
-                                currentPlayer.setText(jogador.getNome() + " tirou dados iguais! Joga novamente!");
-                                jogarDadosButton.setDisable(false);
-                            });
-
-                            pause();
-
-                            jogador.jogar();
-                            Platform.runLater(() -> {
-                                rollDicesPage(jogador);
-                            });
-
-                            try {
-                                Thread.sleep(4000);
-                            } catch (InterruptedException _) {
-                            }
-                            Platform.runLater(this::atualizarStats);
-                            atualizarCasasSync();
-
-                            Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
-                            if (casaAtual != null) {
-                                casaAtual.executarAcaoEspecial(tabuleiro);
-                            }
-
-                            Platform.runLater(this::atualizarStats);
-
-                            Platform.runLater(() -> checkWinner(jogador));
-                            Platform.runLater(() -> atualizarCasas());
-                        }
-                    } else {
-                        jogador.setAtivo(true);
-                        System.out.println(jogador.getNome() + " agora pode jogar.");
-                    }
+                    jogar(jogador);
                 }
             }
-        }, "Thread-Jogo").start();
+        });
+    }
+
+    private void jogar(Jogador jogador) {
+        if (!jogador.isAtivo()) {
+            jogador.setAtivo(true);
+            System.out.println(jogador.getNome() + " agora pode jogar.");
+            return;
+        }
+
+        final Jogador current = jogador;
+
+        Platform.runLater(() -> {
+            currentPlayer.setText("Vez de " + current.getNome());
+            jogarDadosButton.setDisable(false);
+        });
+
+        pause();
+
+        executarAcaoDoJogador(jogador);
+
+        Platform.runLater(() -> checkWinner(jogador));
+        Platform.runLater(() -> atualizarCasas());
+
+        if (jogador.isDadosIguais() && !debugMode) {
+            Platform.runLater(() -> {
+                currentPlayer.setText(jogador.getNome() + " tirou dados iguais! Joga novamente!");
+                jogarDadosButton.setDisable(false);
+            });
+
+            pause();
+
+            jogador.jogar();
+            Platform.runLater(() -> {
+                rollDicesPage(jogador);
+            });
+
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException _) {
+            }
+            Platform.runLater(this::atualizarStats);
+            atualizarCasasSync();
+
+            Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
+            if (casaAtual != null) {
+                casaAtual.executarAcaoEspecial(tabuleiro);
+            }
+
+            Platform.runLater(this::atualizarStats);
+
+            Platform.runLater(() -> checkWinner(jogador));
+            Platform.runLater(() -> atualizarCasas());
+        }
+    }
+
+    private void executarAcaoDoJogador(Jogador jogador) {
+        if (debugMode) {
+            CompletableFuture<Integer> resultadoDebug = new CompletableFuture<>();
+
+            debugModePage(resultadoDebug);
+
+            Platform.runLater(() -> atualizarCasas());
+
+            int tempValorDados;
+            try {
+                tempValorDados = resultadoDebug.get();
+            } catch (Exception _) {
+                tempValorDados = 7;
+            }
+            final int valorDados = tempValorDados;
+
+            jogador.setPosicao(jogador.getPosicao() + valorDados);
+
+            Platform.runLater(() -> {
+                atualizarStats();
+            });
+
+            atualizarCasasSync();
+
+            Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
+            if (casaAtual != null) {
+                casaAtual.executarAcaoEspecial(tabuleiro);
+            }
+
+            atualizarCasasSync();
+            Platform.runLater(this::atualizarStats);
+            return;
+
+        }
+        
+        jogador.jogar();
+
+        Platform.runLater(() -> {
+            rollDicesPage(jogador);
+        });
+
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException _) {
+        }
+        Platform.runLater(() -> atualizarCasas());
+        atualizarCasasSync();
+
+        Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
+        if (casaAtual != null) {
+            casaAtual.executarAcaoEspecial(tabuleiro);
+            atualizarCasasSync();
+            Platform.runLater(() -> atualizarCasas());
+        }
+
+        Platform.runLater(this::atualizarStats);
+
     }
 
     public void resume() {
