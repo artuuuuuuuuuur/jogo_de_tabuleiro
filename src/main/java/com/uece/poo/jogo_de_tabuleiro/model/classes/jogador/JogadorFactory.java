@@ -15,13 +15,13 @@ public class JogadorFactory {
         }
     }
     
-    public static Jogador getJogador(Class<? extends Jogador> jogadorType, boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas, boolean dadosIguais)  {
-        Jogador newJogador = getJogador(jogadorType, cor, nome);
-        newJogador.setAtivo(ativo);
-        newJogador.setJogarNovamente(jogarNovamente);
-        newJogador.setPosicao(posicao);
-        newJogador.setVezesJogadas(vezesJogadas);
-        newJogador.setDadosIguais(dadosIguais);
+    public static Jogador getJogador(Class<? extends Jogador> jogadorType, Jogador jogador)  {
+        Jogador newJogador = getJogador(jogadorType, jogador.getCor(), jogador.getNome());
+        newJogador.setAtivo(jogador.isAtivo());
+        newJogador.setJogarNovamente(jogador.isJogarNovamente());
+        newJogador.setPosicao(jogador.getPosicao());
+        newJogador.setVezesJogadas(jogador.getVezesJogadas());
+        newJogador.setDadosIguais(jogador.isDadosIguais());
         return newJogador;
     }
 }

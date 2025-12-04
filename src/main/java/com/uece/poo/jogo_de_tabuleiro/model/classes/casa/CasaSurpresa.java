@@ -1,6 +1,5 @@
 package com.uece.poo.jogo_de_tabuleiro.model.classes.casa;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,6 +7,7 @@ import java.util.Random;
 import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorAzarado;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorFactory;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorSortudo;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorNormal;
 
@@ -71,23 +71,8 @@ public class CasaSurpresa extends Casa {
         possiveisClasses.remove(jogador.getClass());
 
         return (tipo == 0)
-                ? criarJogador(possiveisClasses.get(0), jogador)
-                : criarJogador(possiveisClasses.get(1), jogador);
-    }
-
-    private Jogador criarJogador(Class<? extends Jogador> tipo, Jogador base) {
-        try {
-            return tipo.getConstructor(
-                    boolean.class, String.class, String.class, boolean.class,
-                    int.class, int.class, boolean.class
-            ).newInstance(
-                    base.isAtivo(), base.getCor(), base.getNome(),
-                    base.isJogarNovamente(), base.getPosicao(),
-                    base.getVezesJogadas(), base.isDadosIguais()
-            );
-        } catch (IllegalAccessException | IllegalArgumentException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
+                ? JogadorFactory.getJogador(possiveisClasses.get(0), jogador)
+                : JogadorFactory.getJogador(possiveisClasses.get(1), jogador);
     }
 
     private void executarTrocasDeTipo(List<Replacement> replacements, Tabuleiro tabuleiro) {

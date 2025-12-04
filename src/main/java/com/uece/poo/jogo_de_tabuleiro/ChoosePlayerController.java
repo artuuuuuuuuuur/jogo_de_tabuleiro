@@ -2,14 +2,17 @@ package com.uece.poo.jogo_de_tabuleiro;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorAzarado;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorFactory;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorSortudo;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorNormal;
 import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
@@ -50,6 +53,8 @@ public class ChoosePlayerController {
     private boolean jogadoresNormais = false;
     private boolean jogadoresComSorte = false;
     private boolean jogadoresAzarados = false;
+    private int quantidadeCasas;
+    private HashMap<Integer, Class<? extends Casa>> casasEspeciais;
 
     public void carregar(boolean modoDebug, int quantidadeDeJogadores) {
         this.modoDebug = modoDebug;
@@ -100,8 +105,8 @@ public class ChoosePlayerController {
             return;
         }
 
-        //Tabuleiro tabuleiro = new Tabuleiro(jogadores);
-        //tabuleiroController.carregarTabuleiro(tabuleiro, jogadores, modoDebug);
+        Tabuleiro tabuleiro = new Tabuleiro(jogadores, quantidadeCasas, casasEspeciais);
+        tabuleiroController.carregarTabuleiro(tabuleiro, jogadores, modoDebug);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
@@ -118,6 +123,7 @@ public class ChoosePlayerController {
                     TextField jogadorAtualNome = (TextField) jogadorAtualPane.lookup("#jogadorNome" + i);
                     ColorPicker jogadorAtualCor = (ColorPicker) jogadorAtualPane.lookup("#jogadorCor" + i);
                     ComboBox jogadorAtualTipo = (ComboBox) jogadorAtualPane.lookup("#tipoJogador" + i);
+                    Class<? extends Jogador> jogadorType;
 
                     if (jogadorAtualNome.getText().equals("")) {
                         jogadorAtualNome.setText("Jogador " + i);
@@ -125,15 +131,15 @@ public class ChoosePlayerController {
 
                     switch (String.valueOf(jogadorAtualTipo.getValue())) {
                         case "Normal" -> {
-                            jogadores.add(new JogadorNormal(String.valueOf(jogadorAtualCor.getValue()), jogadorAtualNome.getText()));
+                            jogadorType = JogadorNormal.class;
                             jogadoresNormais = true;
                         }
                         case "Com Sorte" -> {
-                            jogadores.add(new JogadorSortudo(String.valueOf(jogadorAtualCor.getValue()), jogadorAtualNome.getText()));
+                            jogadorType = JogadorSortudo.class;
                             jogadoresComSorte = true;
                         }
                         case "Azarado" -> {
-                            jogadores.add(new JogadorAzarado(String.valueOf(jogadorAtualCor.getValue()), jogadorAtualNome.getText()));
+                            jogadorType = JogadorAzarado.class;
                             jogadoresAzarados = true;
                         }
                         default -> {
@@ -145,6 +151,7 @@ public class ChoosePlayerController {
                             return;
                         }
                     }
+                    jogadores.add(JogadorFactory.getJogador(jogadorType, String.valueOf(jogadorAtualCor), jogadorAtualNome.getText()));
                 }
             }
         }
