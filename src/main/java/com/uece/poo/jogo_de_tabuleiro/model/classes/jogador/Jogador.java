@@ -126,4 +126,12 @@ public abstract class Jogador {
     public void setJogarNovamente(boolean jogarNovamente) {
         this.jogarNovamente = jogarNovamente;
     }
+
+    public void setVezesJogadas(int vezesJogadas) {
+        this.vezesJogadas = vezesJogadas;
+    }
+
+    public void setDadosIguais(boolean dadosIguais) {
+        this.dadosIguais = dadosIguais;
+    }
 }
