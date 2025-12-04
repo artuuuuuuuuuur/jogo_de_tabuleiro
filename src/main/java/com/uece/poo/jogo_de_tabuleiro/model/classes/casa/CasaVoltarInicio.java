@@ -12,7 +12,7 @@ public class CasaVoltarInicio extends Casa {
     }
 
     @Override
-    public void executarAcaoEspecial(Tabuleiro tabuleiro) {
+    public void aplicarRegra(Tabuleiro tabuleiro) {
         // iterar sobre copia dos jogadores da casa atual
         List<Jogador> presentes = List.copyOf(this.getJogadores());
         for (Jogador jogador : presentes) {

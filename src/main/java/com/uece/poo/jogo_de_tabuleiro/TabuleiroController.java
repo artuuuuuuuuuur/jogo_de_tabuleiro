@@ -166,7 +166,7 @@ public class TabuleiroController {
 
                             Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
                             if (casaAtual != null) {
-                                casaAtual.executarAcaoEspecial(tabuleiro);
+                                casaAtual.aplicarRegra(tabuleiro);
                             }
 
                             atualizarCasasSync();
@@ -190,7 +190,7 @@ public class TabuleiroController {
 
                             Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
                             if (casaAtual != null) {
-                                casaAtual.executarAcaoEspecial(tabuleiro);
+                                casaAtual.aplicarRegra(tabuleiro);
                                 atualizarCasasSync();
                                 Platform.runLater(() -> atualizarCasas());
                             }
@@ -223,7 +223,7 @@ public class TabuleiroController {
 
                             Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
                             if (casaAtual != null) {
-                                casaAtual.executarAcaoEspecial(tabuleiro);
+                                casaAtual.aplicarRegra(tabuleiro);
                             }
 
                             Platform.runLater(this::atualizarStats);

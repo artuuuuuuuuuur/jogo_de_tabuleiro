@@ -8,6 +8,7 @@ import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaAndarTres;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaDesativar;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaMudarTipo;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaSimples;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaTrocar;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaVoltarInicio;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
@@ -21,7 +22,7 @@ public class Tabuleiro {
 
     public Tabuleiro(List<Jogador> jogadoresIniciais) {
         casas = new ArrayList<>();
-        casas.add(0, new Casa(0, jogadoresIniciais));
+        casas.add(0, new CasaSimples(0, jogadoresIniciais));
         for (int i = 1; i < 41; i++) {
             switch (i) {
                 case 10, 25, 38 ->
@@ -35,7 +36,7 @@ public class Tabuleiro {
                 case 20, 35 ->
                     casas.add(new CasaTrocar(i, new ArrayList<>()));
                 default ->
-                    casas.add(new Casa(i, new ArrayList<>()));
+                    casas.add(new CasaSimples(i, new ArrayList<>()));
             }
         }
         rodadaAtual = 0;

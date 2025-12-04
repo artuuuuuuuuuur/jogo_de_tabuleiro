@@ -12,13 +12,13 @@ public class CasaTrocar extends Casa {
     }
 
     @Override
-    public void executarAcaoEspecial(Tabuleiro tabuleiro) {
+    public void aplicarRegra(Tabuleiro tabuleiro) {
         List<Jogador> jogadoresSnapshot = List.copyOf(jogadores);
         List<Casa> casasSnapshot = List.copyOf(tabuleiro.getCasas());
 
         for (Jogador jogadorUser : jogadoresSnapshot) {
             for (Casa casa : casasSnapshot) {
-                if(!casa.getJogadores().isEmpty()) {
+                if (!casa.getJogadores().isEmpty()) {
                     List<Jogador> jogadoresCasaSnapshot = List.copyOf(casa.getJogadores());
                     for (Jogador jogador : jogadoresCasaSnapshot) {
                         if (!jogador.equals(jogadorUser)) {
@@ -29,7 +29,7 @@ public class CasaTrocar extends Casa {
                         }
                         return;
                     }
-                } 
+                }
             }
         }
     }

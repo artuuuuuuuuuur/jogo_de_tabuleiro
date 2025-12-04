@@ -35,7 +35,7 @@ public class CasaMudarTipo extends Casa {
     }
 
     @Override
-    public void executarAcaoEspecial(Tabuleiro tabuleiro) {
+    public void aplicarRegra(Tabuleiro tabuleiro) {
         List<Jogador> copia = new ArrayList<>(this.getJogadores());
 
         List<Replacement> replacements = new ArrayList<>();

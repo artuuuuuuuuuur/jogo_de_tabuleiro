@@ -5,7 +5,7 @@ import java.util.List;
 import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
-public class Casa {
+public abstract class Casa {
 
     protected int index;
     protected List<Jogador> jogadores;
@@ -35,8 +35,7 @@ public class Casa {
         jogadores.remove(jogador);
     }
 
-    public void executarAcaoEspecial(Tabuleiro tabuleiro) {
-    }
+    public abstract void aplicarRegra(Tabuleiro tabuleiro);
 
     public void setJogadores(List<Jogador> jogadores) {
         this.jogadores = jogadores;
