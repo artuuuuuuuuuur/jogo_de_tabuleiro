@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
-import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaAndarTres;
-import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaDesativar;
-import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaMudarTipo;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaSorte;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaPrisao;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaSurpresa;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaSimples;
-import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaTrocar;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaReversa;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaVoltarInicio;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
@@ -26,15 +26,15 @@ public class Tabuleiro {
         for (int i = 1; i < 41; i++) {
             switch (i) {
                 case 10, 25, 38 ->
-                    casas.add(new CasaDesativar(i, new ArrayList<>()));
+                    casas.add(new CasaPrisao(i, new ArrayList<>()));
                 case 13 ->
-                    casas.add(new CasaMudarTipo(i, new ArrayList<>()));
+                    casas.add(new CasaSurpresa(i, new ArrayList<>()));
                 case 5, 15, 30 ->
-                    casas.add(new CasaAndarTres(i, new ArrayList<>()));
+                    casas.add(new CasaSorte(i, new ArrayList<>()));
                 case 17, 27 ->
                     casas.add(new CasaVoltarInicio(i, new ArrayList<>()));
                 case 20, 35 ->
-                    casas.add(new CasaTrocar(i, new ArrayList<>()));
+                    casas.add(new CasaReversa(i, new ArrayList<>()));
                 default ->
                     casas.add(new CasaSimples(i, new ArrayList<>()));
             }

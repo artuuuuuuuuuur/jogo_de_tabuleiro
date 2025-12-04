@@ -5,9 +5,9 @@ import java.util.List;
 import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
-public class CasaTrocar extends Casa {
+public class CasaReversa extends Casa {
 
-    public CasaTrocar(int index, List<Jogador> jogadores) {
+    public CasaReversa(int index, List<Jogador> jogadores) {
         super(index, jogadores);
     }
 

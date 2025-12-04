@@ -122,4 +122,8 @@ public abstract class Jogador {
     public String getTipo() {
         return tipo;
     }
+
+    public void setJogarNovamente(boolean jogarNovamente) {
+        this.jogarNovamente = jogarNovamente;
+    }
 }

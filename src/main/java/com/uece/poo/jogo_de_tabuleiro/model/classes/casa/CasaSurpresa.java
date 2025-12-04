@@ -9,7 +9,7 @@ import java.util.concurrent.Semaphore;
 import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorAzarado;
-import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorComSorte;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorSortudo;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorNormal;
 
 import javafx.animation.PauseTransition;
@@ -28,9 +28,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class CasaMudarTipo extends Casa {
+public class CasaSurpresa extends Casa {
 
-    public CasaMudarTipo(int index, List<Jogador> jogadores) {
+    public CasaSurpresa(int index, List<Jogador> jogadores) {
         super(index, jogadores);
     }
 
@@ -54,12 +54,12 @@ public class CasaMudarTipo extends Casa {
                         novo = new JogadorAzarado(jogador.isAtivo(), jogador.getCor(), jogador.getNome(),
                                 jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas(), jogador.isDadosIguais());
                     case 1 ->
-                        novo = new JogadorComSorte(jogador.isAtivo(), jogador.getCor(), jogador.getNome(),
+                        novo = new JogadorSortudo(jogador.isAtivo(), jogador.getCor(), jogador.getNome(),
                                 jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas(), jogador.isDadosIguais());
                     default ->
                         throw new AssertionError();
                 }
-            } else if (jogador instanceof JogadorComSorte) {
+            } else if (jogador instanceof JogadorSortudo) {
                 switch (tipo) {
                     case 0 ->
                         novo = new JogadorAzarado(jogador.isAtivo(), jogador.getCor(), jogador.getNome(),
@@ -73,7 +73,7 @@ public class CasaMudarTipo extends Casa {
             } else {
                 switch (tipo) {
                     case 0 ->
-                        novo = new JogadorComSorte(jogador.isAtivo(), jogador.getCor(), jogador.getNome(),
+                        novo = new JogadorSortudo(jogador.isAtivo(), jogador.getCor(), jogador.getNome(),
                                 jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas(), jogador.isDadosIguais());
                     case 1 ->
                         novo = new JogadorNormal(jogador.isAtivo(), jogador.getCor(), jogador.getNome(),

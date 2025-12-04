@@ -6,22 +6,26 @@ import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorAzarado;
 
-public class CasaAndarTres extends Casa {
+public class CasaSorte extends Casa {
 
-    public CasaAndarTres(int index, List<Jogador> jogadores) {
+    public CasaSorte(int index, List<Jogador> jogadores) {
         super(index, jogadores);
     }
 
     @Override
     public void aplicarRegra(Tabuleiro tabuleiro) {
         for (Jogador jogador : jogadores) {
-            if (jogador != null && !(jogador instanceof JogadorAzarado)) {
+            if (isNotAzarado(jogador)) {
                 if (jogador.getPosicao() == index) {
                     jogador.andar(3);
                     System.out.println(jogador.getNome() + " andou 3 casas.");
                 }
             }
         }
+    }
+
+    private static boolean isNotAzarado(Jogador jogador) {
+        return jogador != null && !(jogador instanceof JogadorAzarado);
     }
 
 }
