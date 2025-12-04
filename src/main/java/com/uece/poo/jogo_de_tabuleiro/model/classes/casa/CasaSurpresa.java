@@ -29,9 +29,14 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class CasaSurpresa extends Casa {
+    List<Class<?extends Jogador>> possiveisClasses;
 
     public CasaSurpresa(int index, List<Jogador> jogadores) {
         super(index, jogadores);
+        possiveisClasses = new ArrayList<>();
+        possiveisClasses.add(JogadorAzarado.class);
+        possiveisClasses.add(JogadorSortudo.class);
+        possiveisClasses.add(JogadorNormal.class);
     }
 
     @Override
@@ -39,53 +44,45 @@ public class CasaSurpresa extends Casa {
         List<Jogador> copia = new ArrayList<>(this.getJogadores());
 
         List<Replacement> replacements = new ArrayList<>();
-        Random random = new Random();
 
         for (Jogador jogador : copia) {
             if (jogador.getLastCasaEspecialIndex() == this.getIndex()) {
                 continue;
             }
 
-            int tipo = random.nextInt(2);
-            Jogador novo;
-            if (jogador instanceof JogadorNormal) {
-                switch (tipo) {
-                    case 0 ->
-                        novo = new JogadorAzarado(jogador.isAtivo(), jogador.getCor(), jogador.getNome(),
-                                jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas(), jogador.isDadosIguais());
-                    case 1 ->
-                        novo = new JogadorSortudo(jogador.isAtivo(), jogador.getCor(), jogador.getNome(),
-                                jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas(), jogador.isDadosIguais());
-                    default ->
-                        throw new AssertionError();
-                }
-            } else if (jogador instanceof JogadorSortudo) {
-                switch (tipo) {
-                    case 0 ->
-                        novo = new JogadorAzarado(jogador.isAtivo(), jogador.getCor(), jogador.getNome(),
-                                jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas(), jogador.isDadosIguais());
-                    case 1 ->
-                        novo = new JogadorNormal(jogador.isAtivo(), jogador.getCor(), jogador.getNome(),
-                                jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas(), jogador.isDadosIguais());
-                    default ->
-                        throw new AssertionError();
-                }
-            } else {
-                switch (tipo) {
-                    case 0 ->
-                        novo = new JogadorSortudo(jogador.isAtivo(), jogador.getCor(), jogador.getNome(),
-                                jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas(), jogador.isDadosIguais());
-                    case 1 ->
-                        novo = new JogadorNormal(jogador.isAtivo(), jogador.getCor(), jogador.getNome(),
-                                jogador.isJogarNovamente(), jogador.getPosicao(), jogador.getVezesJogadas(), jogador.isDadosIguais());
-                    default ->
-                        throw new AssertionError();
-                }
-            }
-
-            replacements.add(new Replacement(jogador, novo));
+            Jogador novoTipo = predefinirJogador(jogador);
+            replacements.add(new Replacement(jogador, novoTipo));
         }
+        executarTrocasDeTipo(replacements, tabuleiro);
+    }
 
+    private Jogador predefinirJogador(Jogador jogador) {
+        Random random = new Random();
+        int tipo = random.nextInt(2);
+
+        possiveisClasses.remove(jogador.getClass());
+
+        return (tipo == 0)
+                ? criarJogador(possiveisClasses.get(0), jogador)
+                : criarJogador(possiveisClasses.get(1), jogador);
+    }
+
+    private Jogador criarJogador(Class<? extends Jogador> tipo, Jogador base) {
+        try {
+            return tipo.getConstructor(
+                    boolean.class, String.class, String.class, boolean.class,
+                    int.class, int.class, boolean.class
+            ).newInstance(
+                    base.isAtivo(), base.getCor(), base.getNome(),
+                    base.isJogarNovamente(), base.getPosicao(),
+                    base.getVezesJogadas(), base.isDadosIguais()
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void executarTrocasDeTipo(List<Replacement> replacements, Tabuleiro tabuleiro) {
         for (Replacement r : replacements) {
             List<Jogador> listaGlobal = tabuleiro.getJogadoresGlobal();
 
@@ -94,56 +91,51 @@ public class CasaSurpresa extends Casa {
                 listaGlobal.set(idx, r.newPlayer);
                 r.newPlayer.setLastCasaEspecialIndex(this.getIndex());
                 System.out.println(r.oldPlayer.getNome() + " mudou de tipo. Novo tipo: " + r.newPlayer.getClass());
-                Platform.runLater(() -> {
-                    Stage popup = new Stage();
-                    Label mudarTipoLabel = new Label("Escolha uma carta para mudar de tipo:");
-                    mudarTipoLabel.setFont(Font.font(30));
-                    popup.setTitle("Mudança de Tipo");
-                    Button cardButton1 = new Button("", new ImageView(new Image(getClass().getResourceAsStream("/com/uece/poo/jogo_de_tabuleiro/assets/cartas/carta_default.png"))));
-                    Button cardButton2 = new Button("", new ImageView(new Image(getClass().getResourceAsStream("/com/uece/poo/jogo_de_tabuleiro/assets/cartas/carta_default.png"))));
-
-                    cardButton1.setOnAction(e -> {
-                        PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
-                        pause.setOnFinished(ev -> {
-                            cardButton1.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(
-                                    "/com/uece/poo/jogo_de_tabuleiro/assets/cartas/carta_" + r.newPlayer.getTipo().toLowerCase().replaceAll(" ", "") + ".png"
-                            ))));
-
-                            PauseTransition showCard = new PauseTransition(Duration.seconds(3));
-                            showCard.setOnFinished(ev2 -> popup.close());
-                            showCard.play();
-                        });
-                        pause.play();
-                    });
-                    cardButton2.setOnAction(e -> {
-                        PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
-                        pause.setOnFinished(ev -> {
-                            cardButton2.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(
-                                    "/com/uece/poo/jogo_de_tabuleiro/assets/cartas/carta_" + r.newPlayer.getTipo().toLowerCase().replaceAll(" ", "") + ".png"
-                            ))));
-
-                            PauseTransition showCard = new PauseTransition(Duration.seconds(3));
-                            showCard.setOnFinished(ev2 -> popup.close());
-                            showCard.play();
-                        });
-                        pause.play();
-                    });
-
-                    VBox layout = new VBox(30);
-                    HBox cartasBox = new HBox(40);
-                    layout.setAlignment(Pos.CENTER);
-                    layout.setPadding(new Insets(20));
-                    cartasBox.getChildren().add(cardButton1);
-                    cartasBox.getChildren().add(cardButton2);
-                    layout.getChildren().add(mudarTipoLabel);
-                    layout.getChildren().add(cartasBox);
-                    Scene scene = new Scene(layout, 800, 700);
-                    popup.setScene(scene);
-                    popup.initModality(Modality.APPLICATION_MODAL);
-                    popup.show();
-                });
+                abrirPopUpDeEscolha(r);
             }
         }
+    }
+
+    private void abrirPopUpDeEscolha(Replacement r) {
+        String cartasPath = "/com/uece/poo/jogo_de_tabuleiro/assets/cartas/carta_";
+        Platform.runLater(() -> {
+            Stage popup = new Stage();
+            Label mudarTipoLabel = new Label("Escolha uma carta para mudar de tipo:");
+            mudarTipoLabel.setFont(Font.font(30));
+            popup.setTitle("Mudança de Tipo");
+            List<Button> cardButtons = new ArrayList<>();
+            for (int i = 0; i < 2; i++) {
+                Button cardButton = new Button("", new ImageView(new Image(getClass().getResourceAsStream(cartasPath + "default.png"))));
+
+                cardButton.setOnAction(e -> {
+                    PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
+                    pause.setOnFinished(ev -> {
+                        cardButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(
+                                cartasPath + r.newPlayer.getTipo().toLowerCase().replaceAll(" ", "") + ".png"
+                        ))));
+
+                        PauseTransition showCard = new PauseTransition(Duration.seconds(3));
+                        showCard.setOnFinished(ev2 -> popup.close());
+                        showCard.play();
+                    });
+                    pause.play();
+                });
+                cardButtons.add(cardButton);
+            }
+
+            VBox layout = new VBox(30);
+            HBox cartasBox = new HBox(40);
+            layout.setAlignment(Pos.CENTER);
+            layout.setPadding(new Insets(20));
+            cartasBox.getChildren().add(cardButtons.get(0));
+            cartasBox.getChildren().add(cardButtons.get(1));
+            layout.getChildren().add(mudarTipoLabel);
+            layout.getChildren().add(cartasBox);
+            Scene scene = new Scene(layout, 800, 700);
+            popup.setScene(scene);
+            popup.initModality(Modality.APPLICATION_MODAL);
+            popup.show();
+        });
     }
 
     private static class Replacement {

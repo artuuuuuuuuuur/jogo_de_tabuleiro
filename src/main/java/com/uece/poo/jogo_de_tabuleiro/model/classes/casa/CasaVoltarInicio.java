@@ -16,7 +16,6 @@ public class CasaVoltarInicio extends Casa {
         // iterar sobre copia dos jogadores da casa atual
         List<Jogador> presentes = List.copyOf(this.getJogadores());
         for (Jogador jogador : presentes) {
-            // supondo jogadorUser é quem causa o efeito (pode ser o próprio presente)
             Jogador alvo = jogador.getJogadorAlvo();
             if (alvo != null && alvo.getLastCasaEspecialIndex() != this.getIndex()) {
                 alvo.setPosicao(0);

@@ -65,8 +65,7 @@ public class Tabuleiro {
     }
 
     public Casa getCasa(int i) {
-        Casa casa = casas.get(i);
-        return casa;
+        return casas.get(i);
     }
 
     public void moverJogador(Jogador jogador, int numCasas) {

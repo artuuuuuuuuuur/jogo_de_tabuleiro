@@ -1,14 +1,15 @@
 package com.uece.poo.jogo_de_tabuleiro;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Semaphore;
 
+import com.uece.poo.jogo_de_tabuleiro.config.Config;
 import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
@@ -17,12 +18,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -124,120 +123,128 @@ public class TabuleiroController {
     }
 
     private void jogarPartida() {
-        new Thread(() -> {
+        Thread.ofVirtual().start(() -> {
             while (!partidaTerminada) {
                 for (Jogador jogador : jogadores) {
                     if (partidaTerminada) {
                         break;
                     }
-
-                    if (jogador.isAtivo()) {
-                        final Jogador current = jogador;
-                        Platform.runLater(() -> {
-                            currentPlayer.setText("Vez de " + current.getNome());
-                            jogarDadosButton.setDisable(false);
-                        });
-
-                        pause();
-
-                        if (debugMode) {
-                            CompletableFuture<Integer> resultadoDebug = new CompletableFuture<>();
-
-                            debugModePage(resultadoDebug);
-
-                            Platform.runLater(() -> atualizarCasas());
-
-                            int tempValorDados;
-                            try {
-                                tempValorDados = resultadoDebug.get();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                tempValorDados = 7;
-                            }
-                            final int valorDados = tempValorDados;
-
-                            jogador.setPosicao(jogador.getPosicao() + valorDados);
-
-                            Platform.runLater(() -> {
-                                atualizarStats();
-                            });
-
-                            atualizarCasasSync();
-
-                            Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
-                            if (casaAtual != null) {
-                                casaAtual.aplicarRegra(tabuleiro);
-                            }
-
-                            atualizarCasasSync();
-                            Platform.runLater(this::atualizarStats);
-
-                        } else {
-                            jogador.jogar();
-
-                            Platform.runLater(() -> {
-                                rollDicesPage(jogador);
-                            });
-
-                            try {
-                                Thread.sleep(4000);
-                            } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                            Platform.runLater(() -> atualizarCasas());
-                            atualizarCasasSync();
-
-                            Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
-                            if (casaAtual != null) {
-                                casaAtual.aplicarRegra(tabuleiro);
-                                atualizarCasasSync();
-                                Platform.runLater(() -> atualizarCasas());
-                            }
-
-                            Platform.runLater(this::atualizarStats);
-                        }
-
-                        Platform.runLater(() -> checkWinner(jogador));
-                        Platform.runLater(() -> atualizarCasas());
-
-                        if (jogador.isDadosIguais() && !debugMode) {
-                            Platform.runLater(() -> {
-                                currentPlayer.setText(jogador.getNome() + " tirou dados iguais! Joga novamente!");
-                                jogarDadosButton.setDisable(false);
-                            });
-
-                            pause();
-
-                            jogador.jogar();
-                            Platform.runLater(() -> {
-                                rollDicesPage(jogador);
-                            });
-
-                            try {
-                                Thread.sleep(4000);
-                            } catch (InterruptedException e) {
-                            }
-                            Platform.runLater(this::atualizarStats);
-                            atualizarCasasSync();
-
-                            Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
-                            if (casaAtual != null) {
-                                casaAtual.aplicarRegra(tabuleiro);
-                            }
-
-                            Platform.runLater(this::atualizarStats);
-
-                            Platform.runLater(() -> checkWinner(jogador));
-                            Platform.runLater(() -> atualizarCasas());
-                        }
-                    } else {
-                        jogador.setAtivo(true);
-                        System.out.println(jogador.getNome() + " agora pode jogar.");
-                    }
+                    jogar(jogador);
                 }
             }
-        }, "Thread-Jogo").start();
+        });
+    }
+
+    private void jogar(Jogador jogador) {
+        if (!jogador.isAtivo()) {
+            jogador.setAtivo(true);
+            System.out.println(jogador.getNome() + " agora pode jogar.");
+            return;
+        }
+
+        final Jogador current = jogador;
+
+        Platform.runLater(() -> {
+            currentPlayer.setText("Vez de " + current.getNome());
+            jogarDadosButton.setDisable(false);
+        });
+
+        pause();
+
+        executarAcaoDoJogador(jogador);
+
+        Platform.runLater(() -> checkWinner(jogador));
+        Platform.runLater(() -> atualizarCasas());
+
+        if (jogador.isDadosIguais() && !debugMode) {
+            Platform.runLater(() -> {
+                currentPlayer.setText(jogador.getNome() + " tirou dados iguais! Joga novamente!");
+                jogarDadosButton.setDisable(false);
+            });
+
+            pause();
+
+            jogador.jogar();
+            Platform.runLater(() -> {
+                rollDicesPage(jogador);
+            });
+
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException _) {
+            }
+            Platform.runLater(this::atualizarStats);
+            atualizarCasasSync();
+
+            Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
+            if (casaAtual != null) {
+                casaAtual.aplicarRegra(tabuleiro);
+            }
+
+            Platform.runLater(this::atualizarStats);
+
+            Platform.runLater(() -> checkWinner(jogador));
+            Platform.runLater(() -> atualizarCasas());
+        }
+    }
+
+    private void executarAcaoDoJogador(Jogador jogador) {
+        if (debugMode) {
+            CompletableFuture<Integer> resultadoDebug = new CompletableFuture<>();
+
+            debugModePage(resultadoDebug);
+
+            Platform.runLater(() -> atualizarCasas());
+
+            int tempValorDados;
+            try {
+                tempValorDados = resultadoDebug.get();
+            } catch (Exception _) {
+                tempValorDados = 7;
+            }
+            final int valorDados = tempValorDados;
+
+            jogador.setPosicao(jogador.getPosicao() + valorDados);
+
+            Platform.runLater(() -> {
+                atualizarStats();
+            });
+
+            atualizarCasasSync();
+
+            Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
+            if (casaAtual != null) {
+                casaAtual.aplicarRegra(tabuleiro);
+            }
+
+            atualizarCasasSync();
+            Platform.runLater(this::atualizarStats);
+            return;
+
+        }
+        
+        jogador.jogar();
+
+        Platform.runLater(() -> {
+            rollDicesPage(jogador);
+        });
+
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException _) {
+        }
+        Platform.runLater(() -> atualizarCasas());
+        atualizarCasasSync();
+
+        Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
+        if (casaAtual != null) {
+            casaAtual.aplicarRegra(tabuleiro);
+            atualizarCasasSync();
+            Platform.runLater(() -> atualizarCasas());
+        }
+
+        Platform.runLater(this::atualizarStats);
+
     }
 
     public void resume() {
@@ -330,7 +337,8 @@ public class TabuleiroController {
         Timeline timeline = new Timeline();
         int frame = 0;
 
-        // 3 giros do dado (3 * 6 frames)
+        String dicesImagePath = Config.get("dicesImagePath");
+
         for (int i = 0; i < 3; i++) {
             for (int j = 1; j <= 6; j++) {
                 timeline.getKeyFrames().add(new KeyFrame(
@@ -338,10 +346,10 @@ public class TabuleiroController {
                         e -> {
                             layout.getChildren().clear();
                             Image img1 = new Image(getClass().getResourceAsStream(
-                                    "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + ((new Random().nextInt(6)) + 1) + ".png"
+                                    dicesImagePath + ((new Random().nextInt(6)) + 1) + ".png"
                             ), 200, 200, false, false);
                             Image img2 = new Image(getClass().getResourceAsStream(
-                                    "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + ((new Random().nextInt(6)) + 1) + ".png"
+                                    dicesImagePath + ((new Random().nextInt(6)) + 1) + ".png"
                             ), 200, 200, false, false);
 
                             layout.getChildren().add(new ImageView(img1));
@@ -356,10 +364,10 @@ public class TabuleiroController {
         timeline.setOnFinished(e -> {
             layout.getChildren().clear();
             Image dado1 = new Image(getClass().getResourceAsStream(
-                    "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + jogador.getDados()[0] + ".png"
+                    dicesImagePath + jogador.getDados()[0] + ".png"
             ), 200, 200, false, false);
             Image dado2 = new Image(getClass().getResourceAsStream(
-                    "/com/uece/poo/jogo_de_tabuleiro/assets/dados/" + jogador.getDados()[1] + ".png"
+                    dicesImagePath + jogador.getDados()[1] + ".png"
             ), 200, 200, false, false);
             layout.getChildren().add(new ImageView(dado1));
             layout.getChildren().add(plusSign);

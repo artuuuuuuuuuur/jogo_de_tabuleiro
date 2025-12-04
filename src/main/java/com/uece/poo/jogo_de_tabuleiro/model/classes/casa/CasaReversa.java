@@ -27,7 +27,6 @@ public class CasaReversa extends Casa {
                             jogadorUser.setPosicao(posTemp);
                             System.out.println(jogadorUser.getNome() + " trocou com " + jogador.getNome());
                         }
-                        return;
                     }
                 }
             }
