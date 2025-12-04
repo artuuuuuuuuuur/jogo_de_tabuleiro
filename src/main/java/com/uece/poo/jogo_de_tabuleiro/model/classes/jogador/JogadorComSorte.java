@@ -1,15 +1,15 @@
-package com.uece.poo.jogo_de_tabuleiro.model;
+package com.uece.poo.jogo_de_tabuleiro.model.classes.jogador;
 
-public class JogadorAzarado extends Jogador {
-
-    public JogadorAzarado(String cor, String nome) {
+public class JogadorComSorte extends Jogador {
+    
+    public JogadorComSorte(String cor, String nome) {
         super(cor, nome);
-        tipo = "Azarado";
+        tipo = "Com sorte";
     }
 
-    public JogadorAzarado(boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas, boolean dadosIguais) {
+    public JogadorComSorte(boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas, boolean dadosIguais) {
         super(ativo, cor, nome, jogarNovamente, posicao, vezesJogadas, dadosIguais);
-        tipo = "Azarado";
+        tipo = "Com sorte";
     }
 
     @Override
@@ -19,7 +19,8 @@ public class JogadorAzarado extends Jogador {
             while (jogarNovamente) {
                 jogarNovamente = false;
                 rolarDados();
-                if (dados[0] + dados[1] <= 6) {
+
+                if (dados[0] + dados[1] >= 7) {
                     andar(dados[0] + dados[1]);
                     vezesJogadas++;
                     System.out.println(nome + " jogou!");
@@ -27,9 +28,11 @@ public class JogadorAzarado extends Jogador {
                 } else {
                     jogarNovamente = true;
                 }
+
                 if (dados[0] == dados[1]) {
                     dadosIguais = true;
                 }
+
             }
         } else {
             ativo = true;

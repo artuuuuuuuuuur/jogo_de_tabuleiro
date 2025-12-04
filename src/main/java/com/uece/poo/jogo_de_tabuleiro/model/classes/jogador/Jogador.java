@@ -1,4 +1,4 @@
-package com.uece.poo.jogo_de_tabuleiro.model;
+package com.uece.poo.jogo_de_tabuleiro.model.classes.jogador;
 
 import java.util.Random;
 
@@ -79,7 +79,7 @@ public abstract class Jogador {
         return jogarNovamente;
     }
 
-    protected void andar(int numCasas) {
+    public void andar(int numCasas) {
         posicao = posicao + numCasas;
         if (posicao > 40) {
             posicao = 40;

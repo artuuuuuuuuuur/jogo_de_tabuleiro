@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.uece.poo.jogo_de_tabuleiro.model.Jogador;
-import com.uece.poo.jogo_de_tabuleiro.model.JogadorAzarado;
-import com.uece.poo.jogo_de_tabuleiro.model.JogadorComSorte;
-import com.uece.poo.jogo_de_tabuleiro.model.JogadorNormal;
 import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorAzarado;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorComSorte;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorNormal;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;

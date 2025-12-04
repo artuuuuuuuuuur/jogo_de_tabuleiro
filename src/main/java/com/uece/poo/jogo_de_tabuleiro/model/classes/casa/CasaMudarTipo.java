@@ -1,10 +1,16 @@
-package com.uece.poo.jogo_de_tabuleiro.model;
+package com.uece.poo.jogo_de_tabuleiro.model.classes.casa;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
+
+import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorAzarado;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorComSorte;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorNormal;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;

@@ -1,6 +1,9 @@
-package com.uece.poo.jogo_de_tabuleiro.model;
+package com.uece.poo.jogo_de_tabuleiro.model.classes.casa;
 
 import java.util.List;
+
+import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
 public class Casa {
 

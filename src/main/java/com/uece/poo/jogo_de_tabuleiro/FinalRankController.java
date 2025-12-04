@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.uece.poo.jogo_de_tabuleiro.model.Jogador;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

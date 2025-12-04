@@ -9,9 +9,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Semaphore;
 
-import com.uece.poo.jogo_de_tabuleiro.model.Casa;
-import com.uece.poo.jogo_de_tabuleiro.model.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;

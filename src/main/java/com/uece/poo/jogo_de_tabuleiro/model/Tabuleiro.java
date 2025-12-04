@@ -4,12 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaAndarTres;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaDesativar;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaMudarTipo;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaTrocar;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaVoltarInicio;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
+
 public class Tabuleiro {
 
     private final ArrayList<Casa> casas;
     private int rodadaAtual;
     private final int quantidadeJogadores;
-    private final List<Jogador> jogadoresGlobal;
+    private final List<Jogador> jogadores;
 
     public Tabuleiro(List<Jogador> jogadoresIniciais) {
         casas = new ArrayList<>();
@@ -32,7 +40,7 @@ public class Tabuleiro {
         }
         rodadaAtual = 0;
         this.quantidadeJogadores = jogadoresIniciais.size();
-        this.jogadoresGlobal = new CopyOnWriteArrayList<>(jogadoresIniciais);
+        this.jogadores = new CopyOnWriteArrayList<>(jogadoresIniciais);
     }
 
     public List<Casa> getCasas() {
@@ -40,7 +48,7 @@ public class Tabuleiro {
     }
     
     public List<Jogador> getJogadoresGlobal() {
-        return jogadoresGlobal;
+        return jogadores;
     }
 
     public int getRodadaAtual() {
