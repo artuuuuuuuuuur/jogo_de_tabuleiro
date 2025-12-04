@@ -99,8 +99,8 @@ public class ChoosePlayerController {
             return;
         }
 
-        Tabuleiro tabuleiro = new Tabuleiro(jogadores);
-        tabuleiroController.carregarTabuleiro(tabuleiro, jogadores, modoDebug);
+        //Tabuleiro tabuleiro = new Tabuleiro(jogadores);
+        //tabuleiroController.carregarTabuleiro(tabuleiro, jogadores, modoDebug);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));

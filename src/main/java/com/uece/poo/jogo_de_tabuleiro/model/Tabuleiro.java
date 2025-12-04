@@ -1,53 +1,38 @@
 package com.uece.poo.jogo_de_tabuleiro.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
-import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaSorte;
-import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaPrisao;
-import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaSurpresa;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaFactory;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaSimples;
-import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaReversa;
-import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaVoltarInicio;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
 public class Tabuleiro {
 
-    private final ArrayList<Casa> casas;
+    private final List<Casa> casas;
     private int rodadaAtual;
     private final int quantidadeJogadores;
     private final List<Jogador> jogadores;
+    private final int quantidadeCasas;
+    private final HashMap<Integer, Class<? extends Casa>> casasEspeciais;
 
-    public Tabuleiro(List<Jogador> jogadoresIniciais) {
-        casas = new ArrayList<>();
-        casas.add(0, new CasaSimples(0, jogadoresIniciais));
-        for (int i = 1; i < 41; i++) {
-            switch (i) {
-                case 10, 25, 38 ->
-                    casas.add(new CasaPrisao(i, new ArrayList<>()));
-                case 13 ->
-                    casas.add(new CasaSurpresa(i, new ArrayList<>()));
-                case 5, 15, 30 ->
-                    casas.add(new CasaSorte(i, new ArrayList<>()));
-                case 17, 27 ->
-                    casas.add(new CasaVoltarInicio(i, new ArrayList<>()));
-                case 20, 35 ->
-                    casas.add(new CasaReversa(i, new ArrayList<>()));
-                default ->
-                    casas.add(new CasaSimples(i, new ArrayList<>()));
-            }
-        }
-        rodadaAtual = 0;
-        this.quantidadeJogadores = jogadoresIniciais.size();
+    public Tabuleiro(List<Jogador> jogadoresIniciais, int quantidadeCasas, HashMap<Integer, Class<? extends Casa>> casasEspeciais) {
+        this.quantidadeCasas = quantidadeCasas;
+        this.casasEspeciais = casasEspeciais;
         this.jogadores = new CopyOnWriteArrayList<>(jogadoresIniciais);
+        this.quantidadeJogadores = jogadoresIniciais.size();
+        casas = new CopyOnWriteArrayList<>();
+        criarCasas(jogadores);
+        rodadaAtual = 0;
     }
 
     public List<Casa> getCasas() {
         return casas;
     }
-    
+
     public List<Jogador> getJogadoresGlobal() {
         return jogadores;
     }
@@ -77,6 +62,17 @@ public class Tabuleiro {
                     casa.removeJogador(jogadorAtual);
                 }
             }
+        }
+    }
+    
+    private void criarCasas(List<Jogador> jogadores) {
+        casas.add(0, new CasaSimples(0, jogadores));
+        for (int i = 1; i < quantidadeCasas + 1; i++) {
+            if (casasEspeciais.containsKey(i)) {
+                casas.add(CasaFactory.getCasa(casasEspeciais.get(i), i));
+                continue;
+            }
+            casas.add(CasaFactory.getCasa(CasaSimples.class, i));
         }
     }
 }
