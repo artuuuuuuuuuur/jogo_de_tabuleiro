@@ -11,6 +11,10 @@ public class CasaVoltarInicio extends Casa {
         super(index, jogadores);
     }
 
+    public CasaVoltarInicio(int index) {
+        super(index);
+    }
+
     @Override
     public void aplicarRegra(Tabuleiro tabuleiro) {
         // iterar sobre copia dos jogadores da casa atual

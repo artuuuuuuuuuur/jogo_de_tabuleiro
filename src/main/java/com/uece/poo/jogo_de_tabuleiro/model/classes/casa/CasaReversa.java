@@ -11,6 +11,10 @@ public class CasaReversa extends Casa {
         super(index, jogadores);
     }
 
+    public CasaReversa(int index) {
+        super(index);
+    }
+
     @Override
     public void aplicarRegra(Tabuleiro tabuleiro) {
         List<Jogador> jogadoresSnapshot = List.copyOf(jogadores);

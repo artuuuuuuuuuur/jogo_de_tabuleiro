@@ -11,6 +11,10 @@ public class CasaAzar extends Casa {
     public CasaAzar(int index, List<Jogador> jogadores) {
         super(index, jogadores);
     }
+
+    public CasaAzar(int index) {
+        super(index);
+    }
     
     @Override
     public void aplicarRegra(Tabuleiro tabuleiro) {

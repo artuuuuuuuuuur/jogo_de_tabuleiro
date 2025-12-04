@@ -30,9 +30,17 @@ import javafx.util.Duration;
 
 public class CasaSurpresa extends Casa {
     List<Class<?extends Jogador>> possiveisClasses;
+    
 
     public CasaSurpresa(int index, List<Jogador> jogadores) {
         super(index, jogadores);
+    }
+
+    public CasaSurpresa(int index) {
+        super(index);
+    }
+    
+    private void setPossiveisClasses() {
         possiveisClasses = new ArrayList<>();
         possiveisClasses.add(JogadorAzarado.class);
         possiveisClasses.add(JogadorSortudo.class);
@@ -59,6 +67,7 @@ public class CasaSurpresa extends Casa {
     private Jogador predefinirJogador(Jogador jogador) {
         Random random = new Random();
         int tipo = random.nextInt(2);
+        setPossiveisClasses();
 
         possiveisClasses.remove(jogador.getClass());
 

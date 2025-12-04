@@ -9,7 +9,10 @@ public class CasaSimples extends Casa {
     public CasaSimples(int index, List<Jogador> jogadores) {
         super(index, jogadores);
     }
-    
+
+    public CasaSimples(int index) {
+        super(index);
+    }
     @Override
     public void aplicarRegra(Tabuleiro tabuleiro) {
         // Não faz nada
