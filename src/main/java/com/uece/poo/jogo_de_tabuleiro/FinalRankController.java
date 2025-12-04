@@ -1,16 +1,13 @@
 package com.uece.poo.jogo_de_tabuleiro;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
+import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -38,8 +35,7 @@ public class FinalRankController {
             try {
                 goToFinalScreen();
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+                ExceptionModal.popUp(e1.getMessage());
             }
         });
         int i = 1;

@@ -1,10 +1,9 @@
 package com.uece.poo.jogo_de_tabuleiro.model.classes.casa;
 
-import java.io.FileInputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.Semaphore;
 
 import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
@@ -86,7 +85,7 @@ public class CasaSurpresa extends Casa {
                     base.isJogarNovamente(), base.getPosicao(),
                     base.getVezesJogadas(), base.isDadosIguais()
             );
-        } catch (Exception e) {
+        } catch (IllegalAccessException | IllegalArgumentException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }

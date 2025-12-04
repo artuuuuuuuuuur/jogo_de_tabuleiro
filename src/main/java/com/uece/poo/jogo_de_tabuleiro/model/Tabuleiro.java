@@ -1,6 +1,5 @@
 package com.uece.poo.jogo_de_tabuleiro.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

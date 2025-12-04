@@ -12,6 +12,7 @@ import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorAzarado;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorSortudo;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorNormal;
+import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -77,7 +78,7 @@ public class ChoosePlayerController {
 
         for (Jogador jogador : jogadores) {
             if (!coresEscolhidas.add(jogador.getCor())) {
-                exceptionModal("Dois jogadores não podem ter a mesma cor!");
+                ExceptionModal.popUp("Dois jogadores não podem ter a mesma cor!");
                 return;
             }
         }
@@ -95,38 +96,16 @@ public class ChoosePlayerController {
         }
 
         if (count < 2) {
-            exceptionModal("É necessário que ao menos dois jogadores sejam de tipos diferentes");
+            ExceptionModal.popUp("É necessário que ao menos dois jogadores sejam de tipos diferentes");
             return;
         }
 
         //Tabuleiro tabuleiro = new Tabuleiro(jogadores);
         //tabuleiroController.carregarTabuleiro(tabuleiro, jogadores, modoDebug);
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
 
-    }
-
-    private void exceptionModal(String msg) {
-        Platform.runLater(() -> {
-            Stage alerta = new Stage();
-            alerta.setTitle("Erro");
-
-            Label message = new Label(msg);
-            message.setStyle("-fx-font-size: 16px; -fx-text-fill: red;");
-
-            Button ok = new Button("OK");
-            ok.setOnAction(e -> alerta.close());
-
-            VBox layout = new VBox(15, message, ok);
-            layout.setAlignment(Pos.CENTER);
-            layout.setPadding(new Insets(20));
-
-            alerta.setScene(new Scene(layout, 550, 150));
-            alerta.initModality(Modality.APPLICATION_MODAL);
-            alerta.showAndWait();
-        });
     }
 
     private void criarJogadores() throws IOException {

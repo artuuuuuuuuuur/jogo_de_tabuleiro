@@ -4,23 +4,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
+import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class HomeController implements Initializable {
@@ -57,26 +53,6 @@ public class HomeController implements Initializable {
         stage.show();
     }
 
-    private void exceptionModal() {
-        Platform.runLater(() -> {
-            Stage alerta = new Stage();
-            alerta.setTitle("Erro");
-
-            Label message = new Label("Preencha a quantidade de jogadores.");
-            message.setStyle("-fx-font-size: 16px; -fx-text-fill: red;");
-
-            Button ok = new Button("OK");
-            ok.setOnAction(e -> alerta.close());
-
-            VBox layout = new VBox(15, message, ok);
-            layout.setAlignment(Pos.CENTER);
-            layout.setPadding(new Insets(20));
-
-            alerta.setScene(new Scene(layout, 550, 150));
-            alerta.initModality(Modality.APPLICATION_MODAL);
-            alerta.showAndWait();
-        });
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -90,7 +66,7 @@ public class HomeController implements Initializable {
                 buildChoosePlayer(e);
             } catch (IOException e1) {
             } catch (NullPointerException e2) {
-                exceptionModal();
+                ExceptionModal.popUp("Preencha a quantidade de jogadores.");
             }
         });
         modoNormalButton.setOnAction(e -> {
@@ -99,9 +75,8 @@ public class HomeController implements Initializable {
                 buildChoosePlayer(e);
             } catch (IOException e1) {
             } catch (NullPointerException e2) {
-                exceptionModal();
+                ExceptionModal.popUp("Preencha a quantidade de Jogadores.");
             }
         });
-
     }
 }
