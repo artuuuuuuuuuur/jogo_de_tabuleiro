@@ -1,5 +1,6 @@
 package com.uece.poo.jogo_de_tabuleiro.model.classes;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,6 +11,10 @@ import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
 
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
+import javafx.util.Duration;
+
 public class Jogo {
 
     private boolean modoDebug;
@@ -17,6 +22,7 @@ public class Jogo {
     private HashMap<Integer, Class<? extends Casa>> casasEspeciais;
     private int numCasas;
     private List<Jogador> jogadores;
+    private Jogador jogadorVencedor;
     private Set<String> coresEscolhidas;
     private boolean jogadoresNormais;
     private boolean jogadoresComSorte;
@@ -34,12 +40,24 @@ public class Jogo {
         if (quantidadeCasas <= 0) {
             throw new IllegalArgumentException("A quantidade de casas deve ser maior que 0.");
         }
-
         this.numCasas = quantidadeCasas;
         this.casasEspeciais = casasEspeciais;
     }
-    
-    public void configJogadores(int numJogadores) throws  IllegalArgumentException {
+
+    public void configJogadores(List<Jogador> jogadores) throws IllegalArgumentException {
+        validarJogadores(jogadores);
+        this.numJogadores = jogadores.size();
+        this.jogadores = jogadores;
+    }
+
+    public boolean startGame() {
+        while(!isGameOver) {
+            
+        }
+        return true;
+    }
+
+    private void validarJogadores(List<Jogador> jogadores) throws IllegalArgumentException {
         int count = 0;
 
         if (jogadoresNormais) {
@@ -53,9 +71,23 @@ public class Jogo {
         }
 
         if (count < 2) {
-            throw  new IllegalArgumentException("É necessário que ao menos dois jogadores sejam de tipos diferentes");
+            throw new IllegalArgumentException("É necessário que ao menos dois jogadores sejam de tipos diferentes");
         }
-        
-        this.numJogadores = numJogadores;
+
+        for (Jogador jogador : jogadores) {
+            if (!coresEscolhidas.add(jogador.getCor())) {
+                throw new IllegalArgumentException("Dois jogadores não podem ter a mesma cor!");
+            }
+        }
+    }
+    
+    private boolean isGameOver() {
+        for (Jogador jogador : jogadores) {
+            if (jogador.getPosicao() >= 40) {
+                jogadorVencedor = jogador;
+                return true;
+            }
+        }
+        return false;
     }
 }

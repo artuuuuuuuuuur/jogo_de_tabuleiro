@@ -81,12 +81,7 @@ public class ChoosePlayerController {
 
         criarJogadores();
 
-        for (Jogador jogador : jogadores) {
-            if (!coresEscolhidas.add(jogador.getCor())) {
-                ExceptionModal.popUp("Dois jogadores não podem ter a mesma cor!");
-                return;
-            }
-        }
+        
 
         int count = 0;
 
