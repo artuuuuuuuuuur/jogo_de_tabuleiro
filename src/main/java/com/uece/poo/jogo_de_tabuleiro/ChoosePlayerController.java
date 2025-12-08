@@ -105,7 +105,7 @@ public class ChoosePlayerController {
             return;
         }
 
-        Tabuleiro tabuleiro = new Tabuleiro(jogadores, quantidadeCasas, casasEspeciais);
+        Tabuleiro tabuleiro = Tabuleiro.getInstance(jogadores, quantidadeCasas, casasEspeciais);
         tabuleiroController.carregarTabuleiro(tabuleiro, jogadores, modoDebug);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
@@ -151,7 +151,7 @@ public class ChoosePlayerController {
                             return;
                         }
                     }
-                    jogadores.add(JogadorFactory.getJogador(jogadorType, String.valueOf(jogadorAtualCor), jogadorAtualNome.getText()));
+                    jogadores.add(JogadorFactory.getJogador(jogadorType, String.valueOf(jogadorAtualCor.getValue()), jogadorAtualNome.getText()));
                 }
             }
         }

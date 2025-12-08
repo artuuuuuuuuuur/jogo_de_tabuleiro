@@ -17,8 +17,9 @@ public class Tabuleiro {
     private final List<Jogador> jogadores;
     private final int quantidadeCasas;
     private final HashMap<Integer, Class<? extends Casa>> casasEspeciais;
+    private static Tabuleiro thisTabuleiro;
 
-    public Tabuleiro(List<Jogador> jogadoresIniciais, int quantidadeCasas, HashMap<Integer, Class<? extends Casa>> casasEspeciais) {
+    private Tabuleiro(List<Jogador> jogadoresIniciais, int quantidadeCasas, HashMap<Integer, Class<? extends Casa>> casasEspeciais) {
         this.quantidadeCasas = quantidadeCasas;
         this.casasEspeciais = casasEspeciais;
         this.jogadores = new CopyOnWriteArrayList<>(jogadoresIniciais);
@@ -26,6 +27,13 @@ public class Tabuleiro {
         casas = new CopyOnWriteArrayList<>();
         criarCasas(jogadores);
         rodadaAtual = 0;
+    }
+
+    public static Tabuleiro getInstance(List<Jogador> jogadoresIniciais, int quantidadeCasas, HashMap<Integer, Class<? extends Casa>> casasEspeciais) {
+        if (thisTabuleiro == null) {
+            thisTabuleiro = new Tabuleiro(jogadoresIniciais, quantidadeCasas, casasEspeciais);
+        }
+        return thisTabuleiro;
     }
 
     public List<Casa> getCasas() {
@@ -63,7 +71,7 @@ public class Tabuleiro {
             }
         }
     }
-    
+
     private void criarCasas(List<Jogador> jogadores) {
         casas.add(0, new CasaSimples(0, jogadores));
         for (int i = 1; i < quantidadeCasas + 1; i++) {
