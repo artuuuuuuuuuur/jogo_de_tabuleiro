@@ -10,6 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Semaphore;
 
 import com.uece.poo.jogo_de_tabuleiro.config.Config;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.Jogo;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
@@ -54,6 +55,7 @@ public class TabuleiroController implements JogoListener {
     private Jogador jogadorVencedor;
     private final Map<Jogador, Circle> jogadoresIcons = new HashMap<>();
     private boolean debugMode;
+    private Jogo jogo;
 
     @FXML
     private Label currentPlayer;
@@ -64,8 +66,9 @@ public class TabuleiroController implements JogoListener {
     @FXML
     AnchorPane gameAnchorPane;
 
-    public void carregarTabuleiro(Tabuleiro tabuleiro, List<Jogador> jogadores, boolean debugMode) {
-        this.tabuleiro = tabuleiro;
+    public void carregarTabuleiro(Jogo jogo, boolean debugMode) {
+        this.jogo = jogo;
+        this.tabuleiro = jogo.getTabuleiro();
         this.jogadores = new CopyOnWriteArrayList<>(jogadores);
 
         this.debugMode = debugMode;

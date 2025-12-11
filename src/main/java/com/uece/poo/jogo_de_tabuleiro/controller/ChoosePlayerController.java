@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.uece.poo.jogo_de_tabuleiro.model.classes.Jogo;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
@@ -74,34 +75,21 @@ public class ChoosePlayerController {
     }
 
     public void buildTabletop(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/tabuleiro.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/config_tabuleiro.fxml"));
         Parent root = loader.load();
 
-        TabuleiroController tabuleiroController = loader.getController();
+        ConfigTabuleiroController controller = loader.getController();
 
         criarJogadores();
 
-        
-
-        int count = 0;
-
-        if (jogadoresNormais) {
-            count++;
-        }
-        if (jogadoresComSorte) {
-            count++;
-        }
-        if (jogadoresAzarados) {
-            count++;
-        }
-
-        if (count < 2) {
-            ExceptionModal.popUp("É necessário que ao menos dois jogadores sejam de tipos diferentes");
+        Jogo jogo = new Jogo();
+        try {
+            jogo.configJogadores(jogadores);
+        } catch (IllegalArgumentException e) {
+            ExceptionModal.popUp(e.getMessage());
             return;
         }
-
-        Tabuleiro tabuleiro = Tabuleiro.getInstance(jogadores, quantidadeCasas, casasEspeciais);
-        tabuleiroController.carregarTabuleiro(tabuleiro, jogadores, modoDebug);
+        controller.load(jogo, modoDebug);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();

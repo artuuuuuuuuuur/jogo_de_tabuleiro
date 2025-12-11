@@ -11,6 +11,9 @@ import java.util.concurrent.ExecutionException;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorAzarado;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorNormal;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorSortudo;
 import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
 import com.uece.poo.jogo_de_tabuleiro.model.util.JogoListener;
 
@@ -25,7 +28,7 @@ public class Jogo {
     private Jogador jogadorVencedor;
     private Set<String> coresEscolhidas;
     private boolean jogadoresNormais;
-    private boolean jogadoresComSorte;
+    private boolean jogadoresSortudos;
     private boolean jogadoresAzarados;
     private Jogador jogadorAtual;
     private JogoListener listener;
@@ -37,7 +40,7 @@ public class Jogo {
         coresEscolhidas = new HashSet<>();
         jogadoresNormais = false;
         jogadoresAzarados = false;
-        jogadoresComSorte = false;
+        jogadoresSortudos = false;
     }
 
     public void configTabuleiro(int quantidadeCasas, HashMap<Integer, Class<? extends Casa>> casasEspeciais) throws IllegalArgumentException {
@@ -58,6 +61,10 @@ public class Jogo {
     public boolean start() {
         Thread.ofVirtual().start(this::loopJogo);
         return true;
+    }
+
+    public Tabuleiro getTabuleiro() {
+        return tabuleiro;
     }
 
     private void loopJogo() {
@@ -105,11 +112,12 @@ public class Jogo {
 
     private void validarJogadores(List<Jogador> jogadores) throws IllegalArgumentException {
         int count = 0;
+        verificarTipos(jogadores);
 
         if (jogadoresNormais) {
             count++;
         }
-        if (jogadoresComSorte) {
+        if (jogadoresSortudos) {
             count++;
         }
         if (jogadoresAzarados) {
@@ -123,6 +131,17 @@ public class Jogo {
         for (Jogador jogador : jogadores) {
             if (!coresEscolhidas.add(jogador.getCor())) {
                 throw new IllegalArgumentException("Dois jogadores não podem ter a mesma cor!");
+            }
+        }
+    }
+
+    private void verificarTipos(List<Jogador> jogadores) {
+        for (Jogador jogador : jogadores) {
+            switch (jogador) {
+                case JogadorNormal _ -> jogadoresNormais = true;
+                case JogadorAzarado _ -> jogadoresAzarados = true;
+                case JogadorSortudo _ -> jogadoresSortudos = true;
+                default -> {}
             }
         }
     }
