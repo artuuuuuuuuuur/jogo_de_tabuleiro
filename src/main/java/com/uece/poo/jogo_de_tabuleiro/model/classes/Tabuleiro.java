@@ -1,4 +1,4 @@
-package com.uece.poo.jogo_de_tabuleiro.model;
+package com.uece.poo.jogo_de_tabuleiro.model.classes;
 
 import java.util.HashMap;
 import java.util.List;

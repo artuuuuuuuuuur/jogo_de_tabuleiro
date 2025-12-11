@@ -33,6 +33,7 @@ public class JogadorAzarado extends Jogador {
             }
         } else {
             ativo = true;
+            System.out.println(nome + " agora pode jogar.");
         }
     }
 

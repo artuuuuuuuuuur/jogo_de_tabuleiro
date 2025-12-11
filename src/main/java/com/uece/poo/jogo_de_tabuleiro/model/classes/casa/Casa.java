@@ -3,7 +3,7 @@ package com.uece.poo.jogo_de_tabuleiro.model.classes.casa;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
 public abstract class Casa {

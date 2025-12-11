@@ -1,4 +1,4 @@
-package com.uece.poo.jogo_de_tabuleiro;
+package com.uece.poo.jogo_de_tabuleiro.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,10 +10,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Semaphore;
 
 import com.uece.poo.jogo_de_tabuleiro.config.Config;
-import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
+import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
+import com.uece.poo.jogo_de_tabuleiro.model.util.JogoListener;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -43,7 +45,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class TabuleiroController {
+public class TabuleiroController implements JogoListener {
 
     private Tabuleiro tabuleiro;
     private List<Jogador> jogadores;
@@ -183,33 +185,35 @@ public class TabuleiroController {
 
             Platform.runLater(this::atualizarStats);
 
-            Platform.runLater(() -> checkWinner(jogador));
-            Platform.runLater(() -> atualizarCasas());
+
         }
     }
 
-    private void executarAcaoDoJogador(Jogador jogador) {
-        if (debugMode) {
-            CompletableFuture<Integer> resultadoDebug = new CompletableFuture<>();
+    private void mostrarJogadorAtual(Jogador jogador) {
 
-            debugModePage(resultadoDebug);
+        executarAcaoDoJogador(jogador);
 
-            Platform.runLater(() -> atualizarCasas());
+        Platform.runLater(() -> checkWinner(jogador));
+        Platform.runLater(() -> atualizarCasas());
 
-            int tempValorDados;
-            try {
-                tempValorDados = resultadoDebug.get();
-            } catch (Exception _) {
-                tempValorDados = 7;
-            }
-            final int valorDados = tempValorDados;
-
-            jogador.setPosicao(jogador.getPosicao() + valorDados);
-
+        if (jogador.isDadosIguais() && !debugMode) {
             Platform.runLater(() -> {
-                atualizarStats();
+                currentPlayer.setText(jogador.getNome() + " tirou dados iguais! Joga novamente!");
+                jogarDadosButton.setDisable(false);
             });
 
+            pause();
+
+            jogador.jogar();
+            Platform.runLater(() -> {
+                rollDicesPage(jogador);
+            });
+
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException _) {
+            }
+            Platform.runLater(this::atualizarStats);
             atualizarCasasSync();
 
             Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
@@ -217,30 +221,27 @@ public class TabuleiroController {
                 casaAtual.aplicarRegra(tabuleiro);
             }
 
-            atualizarCasasSync();
             Platform.runLater(this::atualizarStats);
-            return;
+
+            Platform.runLater(() -> checkWinner(jogador));
+            Platform.runLater(() -> atualizarCasas());
+        }
+    }
+
+    private void executarAcaoDoJogador(Jogador jogador) {
+        if (debugMode) {
+
 
         }
         
         jogador.jogar();
 
-        Platform.runLater(() -> {
-            rollDicesPage(jogador);
-        });
 
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException _) {
-        }
-        Platform.runLater(() -> atualizarCasas());
-        atualizarCasasSync();
 
         Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
         if (casaAtual != null) {
             casaAtual.aplicarRegra(tabuleiro);
-            atualizarCasasSync();
-            Platform.runLater(() -> atualizarCasas());
+
         }
 
         Platform.runLater(this::atualizarStats);
@@ -411,5 +412,71 @@ public class TabuleiroController {
     private void inicializar() {
         atualizarStats();
         jogarPartida();
+    }
+
+    @Override
+    public void onTurnoIniciado(Jogador jogador) {
+        Platform.runLater(() -> {
+            currentPlayer.setText("Vez de " + jogador.getNome());
+            jogarDadosButton.setDisable(false);
+        });
+        pause();
+    }
+
+    @Override
+    public void onDepoisDeJogarDados(Jogador jogador) {
+        Platform.runLater(() -> {
+            rollDicesPage(jogador);
+        });
+
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException _) {
+        }
+        Platform.runLater(() -> atualizarCasas());
+        atualizarCasasSync();
+    }
+
+    @Override
+    public void onDebugMode(Jogador jogador, CompletableFuture<Integer> resultadoDebug) {
+        debugModePage(resultadoDebug);
+
+        Platform.runLater(this::atualizarCasas);
+
+        int tempValorDados;
+        try {
+            tempValorDados = resultadoDebug.get();
+        } catch (Exception _) {
+            tempValorDados = 7;
+        }
+        final int valorDados = tempValorDados;
+
+        jogador.setPosicao(jogador.getPosicao() + valorDados);
+
+        Platform.runLater(this::atualizarStats);
+
+        atualizarCasasSync();
+    }
+
+    @Override
+    public void onMovimentoConcluido(Jogador jogador) {
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e){
+            ExceptionModal.popUp(e.getMessage());
+        }
+    }
+
+    @Override
+    public void onCasaAplicada(Jogador jogador, Casa casa) {
+        // Adicionar log na UI
+        atualizarCasasSync();
+        Platform.runLater(() -> atualizarCasas());
+    }
+
+    @Override
+    public void onVitoria(Jogador jogador) {
+        Platform.runLater(() -> checkWinner(jogador));
+        Platform.runLater(() -> atualizarCasas());
     }
 }

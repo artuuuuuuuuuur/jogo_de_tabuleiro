@@ -1,19 +1,19 @@
 package com.uece.poo.jogo_de_tabuleiro.model.classes;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutionException;
 
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
-import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
 
-import javafx.animation.PauseTransition;
-import javafx.application.Platform;
-import javafx.util.Duration;
+import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
+import com.uece.poo.jogo_de_tabuleiro.model.util.JogoListener;
+
 
 public class Jogo {
 
@@ -27,6 +27,10 @@ public class Jogo {
     private boolean jogadoresNormais;
     private boolean jogadoresComSorte;
     private boolean jogadoresAzarados;
+    private Jogador jogadorAtual;
+    private JogoListener listener;
+    private Tabuleiro tabuleiro;
+    
 
     public Jogo() {
         jogadores = new CopyOnWriteArrayList<>();
@@ -42,6 +46,7 @@ public class Jogo {
         }
         this.numCasas = quantidadeCasas;
         this.casasEspeciais = casasEspeciais;
+        this.tabuleiro = Tabuleiro.getInstance(jogadores, quantidadeCasas, casasEspeciais);
     }
 
     public void configJogadores(List<Jogador> jogadores) throws IllegalArgumentException {
@@ -50,11 +55,52 @@ public class Jogo {
         this.jogadores = jogadores;
     }
 
-    public boolean startGame() {
-        while(!isGameOver) {
-            
-        }
+    public boolean start() {
+        Thread.ofVirtual().start(this::loopJogo);
         return true;
+    }
+
+    private void loopJogo() {
+        int index = 0;
+        while (!isGameOver()) {
+            Jogador jogador = jogadores.get(index);
+            jogarTurno(jogador);
+            if (isGameOver()) {
+                listener.onVitoria(jogador);
+                break;
+            }
+            index = (index + 1) % jogadores.size();
+
+        }
+    }
+
+    private void jogarTurno(Jogador jogador) {
+        listener.onTurnoIniciado(jogador);
+        int valor = jogarDados(jogador);
+        listener.onDepoisDeJogarDados(jogador);
+
+        jogador.setPosicao(jogador.getPosicao() + valor);
+        listener.onMovimentoConcluido(jogador);
+
+        aplicarCasa(jogador);
+        if(jogador.isDadosIguais()) {
+            jogarTurno(jogador);
+        }
+    }
+
+    private Integer jogarDados(Jogador jogador) {
+        if (modoDebug) {
+            CompletableFuture<Integer> resultadoDebug = new CompletableFuture<>();
+            listener.onDebugMode(jogador, resultadoDebug);
+
+            try{
+                return resultadoDebug.get();
+            } catch (ExecutionException | InterruptedException e) {
+                ExceptionModal.popUp(e.getMessage());
+            }
+        }
+        jogador.jogar();
+        return (jogador.getDados()[0] + jogador.getDados()[1]);
     }
 
     private void validarJogadores(List<Jogador> jogadores) throws IllegalArgumentException {
@@ -80,7 +126,15 @@ public class Jogo {
             }
         }
     }
-    
+
+    private void aplicarCasa(Jogador jogador) {
+        Casa casa = tabuleiro.getCasa(jogador.getPosicao());
+        if (casa != null) {
+            casa.aplicarRegra(tabuleiro);
+            listener.onCasaAplicada(jogador, casa);
+        }
+    }
+
     private boolean isGameOver() {
         for (Jogador jogador : jogadores) {
             if (jogador.getPosicao() >= 40) {

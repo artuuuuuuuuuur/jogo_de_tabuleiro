@@ -2,7 +2,7 @@ package com.uece.poo.jogo_de_tabuleiro.model.classes.casa;
 
 import java.util.List;
 
-import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
 public class CasaVoltarInicio extends Casa {

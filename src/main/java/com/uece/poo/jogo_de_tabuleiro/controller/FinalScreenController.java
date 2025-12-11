@@ -1,9 +1,9 @@
-package com.uece.poo.jogo_de_tabuleiro;
+package com.uece.poo.jogo_de_tabuleiro.controller;
 
 import java.io.IOException;
 import java.util.List;
 
-import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
 import javafx.event.Event;
