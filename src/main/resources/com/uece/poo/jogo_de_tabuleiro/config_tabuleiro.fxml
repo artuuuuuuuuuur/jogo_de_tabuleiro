@@ -50,7 +50,7 @@
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" style="-fx-border-color: yellow; -fx-border-radius: 20px;" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button fx:id="addCasaEspecialButton" mnemonicParsing="false" text="Adicionar casa especial">
+                        <Button mnemonicParsing="false" onAction="#abrirTelaDeEscolha" text="Adicionar casa especial">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -75,7 +75,7 @@
             <Insets left="20.0" right="20.0" />
          </padding>
       </HBox>
-      <Button fx:id="iniciarPartidaButton" layoutX="385.0" layoutY="570.0" mnemonicParsing="false" text="Iniciar Partida" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="385.0" AnchorPane.rightAnchor="355.0">
+      <Button layoutX="385.0" layoutY="570.0" mnemonicParsing="false" onAction="#iniciarPartida" text="Iniciar Partida" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="385.0" AnchorPane.rightAnchor="355.0">
          <font>
             <Font size="16.0" />
          </font>
