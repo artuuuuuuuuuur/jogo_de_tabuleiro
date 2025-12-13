@@ -3,29 +3,21 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="gameAnchorPane" prefHeight="919.0" prefWidth="2153.0" style="-fx-background-color: transparent;" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.controller.TabuleiroController">
-   <children>
-      <Pane prefHeight="919.0" prefWidth="2566.0" style="-fx-background-color: #54FF9F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-446.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+<ScrollPane prefHeight="893.0" prefWidth="1359.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.controller.TabuleiroController">
+   <content>
+      <AnchorPane fx:id="gameAnchorPane" prefHeight="877.0" prefWidth="1482.0" style="-fx-background-color: #54FF9F;">
          <children>
-            <Button fx:id="jogarDadosButton" layoutX="1785.0" layoutY="694.0" mnemonicParsing="false" onAction="#resume" prefHeight="58.0" prefWidth="259.0" style="-fx-background-color: #1f613c;" text="JOGAR DADOS" textFill="WHITE">
-               <font>
-                  <Font size="30.0" />
-               </font></Button>
-            <Label fx:id="currentPlayer" alignment="CENTER" contentDisplay="CENTER" layoutX="1504.0" layoutY="42.0" prefHeight="58.0" prefWidth="979.0" textFill="#00a130">
-               <font>
-                  <Font name="Arial Narrow Bold" size="35.0" />
-               </font></Label>
-            <AnchorPane fx:id="playersAnchorPane" layoutX="1874.0" layoutY="329.0" prefHeight="262.0" prefWidth="400.0" style="-fx-background-color: #00c26b;">
+            <AnchorPane fx:id="playersAnchorPane" layoutX="75.0" layoutY="505.0" prefHeight="262.0" prefWidth="400.0" style="-fx-background-color: #00c26b;" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="75.0">
                <children>
                   <Label layoutX="153.0" layoutY="4.0" text="Jogadores">
                      <font>
@@ -118,7 +110,17 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <GridPane fx:id="tabuleiroGrid" alignment="CENTER" hgap="1.0" layoutX="522.0" layoutY="79.0" prefHeight="81.0" prefWidth="127.0" vgap="1.0">
+            <Button fx:id="jogarDadosButton" layoutX="75.0" layoutY="782.0" mnemonicParsing="false" onAction="#resume" prefHeight="65.0" prefWidth="400.0" style="-fx-background-color: #1f613c;" text="JOGAR DADOS" textFill="WHITE" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="75.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Button>
+            <Label fx:id="currentPlayer" contentDisplay="CENTER" layoutX="503.0" layoutY="505.0" prefHeight="58.0" prefWidth="979.0" textFill="#00a130" AnchorPane.bottomAnchor="314.0" AnchorPane.leftAnchor="503.0">
+               <font>
+                  <Font name="Arial Narrow Bold" size="35.0" />
+               </font>
+            </Label>
+            <GridPane fx:id="tabuleiroGrid" alignment="CENTER" hgap="1.0" layoutX="75.0" layoutY="53.0" prefHeight="81.0" prefWidth="127.0" vgap="1.0" AnchorPane.leftAnchor="75.0" AnchorPane.topAnchor="53.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="100.0" prefWidth="114.0" />
                </columnConstraints>
@@ -129,31 +131,27 @@
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </opaqueInsets>
             </GridPane>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaf05fc" height="164.0" layoutX="1193.0" layoutY="520.0" stroke="BLACK" strokeType="INSIDE" width="140.0" />
-            <Label layoutX="1184.0" layoutY="520.0" prefHeight="18.0" prefWidth="159.0" text="  GRANDE CAMPEÃO">
-               <font>
-                  <Font name="Arial Black" size="12.0" />
-               </font>
-            </Label>
-            <FlowPane fx:id="casaFlowPane40" alignment="CENTER" hgap="7.0" layoutX="1205.0" layoutY="548.0" prefHeight="123.0" prefWidth="118.0" vgap="7.0">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </FlowPane>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1094.0" layoutY="727.0" prefHeight="20.0" prefWidth="90.0" text="Início">
-               <font>
-                  <Font name="System Bold" size="23.0" />
-               </font>
-            </Label>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00e4e0fc" height="111.0" layoutX="1121.0" layoutY="732.0" stroke="BLACK" strokeType="INSIDE" width="165.0" />
-            <FlowPane fx:id="casaFlowPane0" alignment="CENTER" hgap="5.0" layoutX="1044.0" layoutY="762.0" prefHeight="81.0" prefWidth="159.0" vgap="5.0">
-               <padding>
-                  <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
-               </padding>
-            </FlowPane>
-         </children></Pane>
-   </children>
-   <opaqueInsets>
-      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-   </opaqueInsets>
-</AnchorPane>
+            <ScrollPane layoutX="503.0" layoutY="582.0" prefHeight="267.0" prefWidth="443.0" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="503.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="265.0" prefWidth="441.0" style="-fx-background-color: #1f613c;">
+                     <children>
+                        <VBox fx:id="eventLogVBox" prefHeight="266.0" prefWidth="441.0" spacing="10.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="35.0" prefWidth="456.0" text="Eventos" textAlignment="JUSTIFY" textFill="#fcfcfc">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </children>
+         <opaqueInsets>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </opaqueInsets>
+      </AnchorPane>
+   </content>
+</ScrollPane>
