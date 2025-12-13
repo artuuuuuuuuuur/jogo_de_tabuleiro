@@ -57,7 +57,7 @@ public class TabuleiroController implements JogoListener {
     @FXML
     private Button jogarDadosButton;
     @FXML
-    private GridPane tabuleiroPane;
+    private GridPane tabuleiroGrid;
     @FXML
     AnchorPane gameAnchorPane;
 
@@ -114,27 +114,33 @@ public class TabuleiroController implements JogoListener {
     }
 
     private void renderizarCasas() {
-        int quantLinhas = tabuleiro.getCasas().size() % 2;
-        for (int i = 0; i < quantLinhas; i++) {
-            tabuleiroPane.getRowConstraints().add(new RowConstraints(100, 70, Double.MAX_VALUE));
-        }
-
         for (Casa casa : tabuleiro.getCasas()) {
             int i = casa.getIndex();
-            Pane casaPane = CasaRender.renderCasa(!(casa instanceof CasaSimples), i);
-            tabuleiroPane.add(casaPane, i, 0);
-        }
-
-        for (Jogador jogador : jogadores) {
-            Pane casaAtual = (Pane) tabuleiroPane.lookup("#casa" + jogador.getPosicao());
-            FlowPane casaAtualFlowPane = (FlowPane) casaAtual.lookup("#casaFlowPane" + jogador.getPosicao());
-            if (casaAtualFlowPane != null) {
-                Circle circle = jogadoresIcons.get(jogador);
-                if (!casaAtualFlowPane.getChildren().contains(circle)) {
-                    casaAtualFlowPane.getChildren().add(circle);
+            Pane casaPane;
+            if(i == 0) {
+                casaPane = CasaRender.renderCasaInicio();
+            } else if (i == tabuleiro.getCasas().size()-1) {
+                casaPane = CasaRender.renderCasaChegada(i);
+            } else {
+                casaPane = CasaRender.renderCasa(!(casa instanceof CasaSimples), i);
+            }
+            for (Jogador jogador : jogadores) {
+                if (jogador.getPosicao() == i) {
+                    FlowPane casaFlowPane = (FlowPane) casaPane.lookup("#casaFlowPane"+i);
+                    Circle circle = jogadoresIcons.get(jogador);
+                    if (!casaFlowPane.getChildren().contains(circle)) {
+                        casaFlowPane.getChildren().add(circle);
+                    }
                 }
             }
+            if ((i / 6) % 2 == 0) {
+                tabuleiroGrid.add(casaPane, i / 6, (i % 6));
+            } else {
+                tabuleiroGrid.add(casaPane, i / 6, (5 - (i % 6)));
+            }
         }
+
+
     }
 
 
@@ -333,7 +339,14 @@ public class TabuleiroController implements JogoListener {
 
     @Override
     public void onNormalMode(Jogador jogador) {
-        Platform.runLater(() -> rollDicesPage(jogador));
+        Platform.runLater(() -> {
+            rollDicesPage(jogador);
+            });
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e){
+            ExceptionModal.popUp(e.getMessage());
+        }
     }
 
     @Override
@@ -347,16 +360,12 @@ public class TabuleiroController implements JogoListener {
 
     @Override
     public void onMovimentoConcluido(Jogador jogador) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e){
-            ExceptionModal.popUp(e.getMessage());
-        }
         Platform.runLater(() -> {
             atualizarCasas();
+            atualizarCasasSync();
             atualizarStats();
         });
-            atualizarCasasSync();
+
     }
 
     @Override
