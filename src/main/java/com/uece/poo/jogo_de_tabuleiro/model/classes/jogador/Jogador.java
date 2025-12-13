@@ -11,8 +11,9 @@ public abstract class Jogador {
     protected Jogador jogadorAlvo;
     protected int lastCasaEspecialIndex = -1;
     protected String tipo;
+    protected int quantCasas;
 
-    public Jogador(String cor, String nome) {
+    public Jogador(String cor, String nome, int quantCasas) {
         this.cor = cor;
         this.ativo = true;
         this.posicao = 0;
@@ -20,9 +21,10 @@ public abstract class Jogador {
         this.jogarNovamente = true;
         this.nome = nome;
         this.dadosIguais = false;
+        this.quantCasas = quantCasas;
     }
 
-    public Jogador(boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas, boolean dadosIguais) {
+    public Jogador(boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas, boolean dadosIguais, int quantCasas) {
         this.ativo = ativo;
         this.cor = cor;
         this.jogarNovamente = jogarNovamente;
@@ -30,6 +32,11 @@ public abstract class Jogador {
         this.vezesJogadas = vezesJogadas;
         this.nome = nome;
         this.dadosIguais = dadosIguais;
+        this.quantCasas = quantCasas;
+    }
+
+    public int getQuantCasas() {
+        return quantCasas;
     }
 
     public int getLastCasaEspecialIndex() {
@@ -81,8 +88,8 @@ public abstract class Jogador {
 
     public void andar(int numCasas) {
         posicao = posicao + numCasas;
-        if (posicao > 40) {
-            posicao = 40;
+        if(posicao >= quantCasas-1) {
+            posicao = quantCasas-1;
         }
     }
 
@@ -133,5 +140,9 @@ public abstract class Jogador {
 
     public void setDadosIguais(boolean dadosIguais) {
         this.dadosIguais = dadosIguais;
+    }
+
+    public void setQuantCasas(int quantCasas) {
+        this.quantCasas = quantCasas;
     }
 }

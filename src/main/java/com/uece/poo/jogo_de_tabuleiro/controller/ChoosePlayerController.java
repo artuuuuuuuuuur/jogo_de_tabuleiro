@@ -54,11 +54,11 @@ public class ChoosePlayerController {
     private boolean jogadoresNormais = false;
     private boolean jogadoresComSorte = false;
     private boolean jogadoresAzarados = false;
-    private int quantidadeCasas;
-    private HashMap<Integer, Class<? extends Casa>> casasEspeciais;
+    private Jogo jogo;
 
-    public void carregar(boolean modoDebug, int quantidadeDeJogadores) {
-        this.modoDebug = modoDebug;
+    public void carregar(Jogo jogo, int quantidadeDeJogadores) {
+        this.modoDebug = jogo.isModoDebug();
+        this.jogo = jogo;
         this.quantidadeDeJogadores = quantidadeDeJogadores;
         for (int i = 1; i <= 6; i++) {
             if (i <= quantidadeDeJogadores) {
@@ -75,21 +75,20 @@ public class ChoosePlayerController {
     }
 
     public void buildTabletop(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/config_tabuleiro.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/tabuleiro.fxml"));
         Parent root = loader.load();
 
-        ConfigTabuleiroController controller = loader.getController();
+        TabuleiroController controller = loader.getController();
 
         criarJogadores();
 
-        Jogo jogo = new Jogo();
         try {
             jogo.configJogadores(jogadores);
         } catch (IllegalArgumentException e) {
             ExceptionModal.popUp(e.getMessage());
             return;
         }
-        controller.load(jogo, modoDebug);
+        controller.carregarTabuleiro(jogo);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
@@ -134,7 +133,7 @@ public class ChoosePlayerController {
                             return;
                         }
                     }
-                    jogadores.add(JogadorFactory.getJogador(jogadorType, String.valueOf(jogadorAtualCor.getValue()), jogadorAtualNome.getText()));
+                    jogadores.add(JogadorFactory.getJogador(jogadorType, String.valueOf(jogadorAtualCor.getValue()), jogadorAtualNome.getText(), jogo.getTabuleiro().getCasas().size()));
                 }
             }
         }

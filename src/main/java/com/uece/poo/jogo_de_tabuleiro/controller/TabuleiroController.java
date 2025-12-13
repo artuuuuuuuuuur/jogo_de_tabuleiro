@@ -66,12 +66,12 @@ public class TabuleiroController implements JogoListener {
     @FXML
     AnchorPane gameAnchorPane;
 
-    public void carregarTabuleiro(Jogo jogo, boolean debugMode) {
+    public void carregarTabuleiro(Jogo jogo) {
         this.jogo = jogo;
         this.tabuleiro = jogo.getTabuleiro();
-        this.jogadores = new CopyOnWriteArrayList<>(jogadores);
+        this.jogadores = jogo.getJogadores();
 
-        this.debugMode = debugMode;
+        this.debugMode = jogo.isModoDebug();
 
         for (Jogador jogador : this.jogadores) {
             Circle jogadorCircle = new Circle(10);
@@ -297,8 +297,8 @@ public class TabuleiroController implements JogoListener {
     private void checkWinner(Jogador jogador) {
         Platform.runLater(this::atualizarStats);
         Platform.runLater(() -> {
-            if (jogador.getPosicao() >= 40) {
-                jogador.setPosicao(40);
+            if (jogador.getPosicao() >= jogo.getTabuleiro().getCasas().size()) {
+                jogador.setPosicao(jogo.getTabuleiro().getCasas().size());
                 partidaTerminada = true;
                 jogadorVencedor = jogador;
                 Platform.runLater(() -> {

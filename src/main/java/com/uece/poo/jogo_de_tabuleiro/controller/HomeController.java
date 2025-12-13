@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.uece.poo.jogo_de_tabuleiro.model.classes.Jogo;
 import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
 
 import javafx.collections.FXCollections;
@@ -31,14 +32,14 @@ public class HomeController implements Initializable {
     private ObservableList quantJogadoresList = FXCollections.observableArrayList();
     private boolean modoDebug;
 
-    public void buildChoosePlayer(Event event) throws IOException {
+    public void configTabuleiro(Event event) throws IOException {
         int valor = Integer.valueOf(quantJogadoresComboBox.getValue().toString());
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/choose_player.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/config_tabuleiro.fxml"));
         Parent root = loader.load();
-        ChoosePlayerController choosePlayerController = loader.getController();
+        ConfigTabuleiroController controller = loader.getController();
 
-        choosePlayerController.carregar(modoDebug, valor);
+        controller.load(new Jogo(), modoDebug, valor);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
@@ -63,7 +64,7 @@ public class HomeController implements Initializable {
         modoDebugButton.setOnAction(e -> {
             modoDebug = true;
             try {
-                buildChoosePlayer(e);
+                configTabuleiro(e);
             } catch (IOException e1) {
             } catch (NullPointerException e2) {
                 ExceptionModal.popUp("Preencha a quantidade de jogadores.");
@@ -72,7 +73,7 @@ public class HomeController implements Initializable {
         modoNormalButton.setOnAction(e -> {
             modoDebug = false;
             try {
-                buildChoosePlayer(e);
+                configTabuleiro(e);
             } catch (IOException e1) {
             } catch (NullPointerException e2) {
                 ExceptionModal.popUp("Preencha a quantidade de Jogadores.");

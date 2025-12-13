@@ -75,7 +75,7 @@
             <Insets left="20.0" right="20.0" />
          </padding>
       </HBox>
-      <Button layoutX="385.0" layoutY="570.0" mnemonicParsing="false" onAction="#iniciarPartida" text="Iniciar Partida" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="385.0" AnchorPane.rightAnchor="355.0">
+      <Button layoutX="385.0" layoutY="570.0" mnemonicParsing="false" onAction="#abrirEscolhaDeJogadores" text="Continuar" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="385.0" AnchorPane.rightAnchor="355.0">
          <font>
             <Font size="16.0" />
          </font>

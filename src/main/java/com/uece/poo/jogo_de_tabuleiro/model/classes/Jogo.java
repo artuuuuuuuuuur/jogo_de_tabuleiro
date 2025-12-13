@@ -33,7 +33,7 @@ public class Jogo {
     private Jogador jogadorAtual;
     private JogoListener listener;
     private Tabuleiro tabuleiro;
-    
+
 
     public Jogo() {
         jogadores = new CopyOnWriteArrayList<>();
@@ -43,19 +43,24 @@ public class Jogo {
         jogadoresSortudos = false;
     }
 
-    public void configTabuleiro(int quantidadeCasas, HashMap<Integer, Class<? extends Casa>> casasEspeciais) throws IllegalArgumentException {
+    public void configTabuleiro(int quantidadeCasas, HashMap<Integer, Class<? extends Casa>> casasEspeciais, boolean modoDebug) throws IllegalArgumentException {
         if (quantidadeCasas <= 0) {
             throw new IllegalArgumentException("A quantidade de casas deve ser maior que 0.");
         }
         this.numCasas = quantidadeCasas;
         this.casasEspeciais = casasEspeciais;
         this.tabuleiro = Tabuleiro.getInstance(jogadores, quantidadeCasas, casasEspeciais);
+        this.modoDebug = modoDebug;
     }
 
     public void configJogadores(List<Jogador> jogadores) throws IllegalArgumentException {
         validarJogadores(jogadores);
         this.numJogadores = jogadores.size();
         this.jogadores = jogadores;
+    }
+
+    public boolean isModoDebug() {
+        return modoDebug;
     }
 
     public boolean start() {
@@ -79,6 +84,10 @@ public class Jogo {
             index = (index + 1) % jogadores.size();
 
         }
+    }
+
+    public List<Jogador> getJogadores() {
+        return jogadores;
     }
 
     private void jogarTurno(Jogador jogador) {
