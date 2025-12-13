@@ -14,6 +14,7 @@ import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorAzarado;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorNormal;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorSortudo;
+import com.uece.poo.jogo_de_tabuleiro.model.util.CasaListener;
 import com.uece.poo.jogo_de_tabuleiro.model.util.view.ExceptionModal;
 import com.uece.poo.jogo_de_tabuleiro.model.util.JogoListener;
 
@@ -154,8 +155,8 @@ public class Jogo {
     private void aplicarCasa(Jogador jogador) {
         Casa casa = tabuleiro.getCasa(jogador.getPosicao());
         if (casa != null) {
+            casa.setListener((CasaListener) listener);
             casa.aplicarRegra(tabuleiro);
-            listener.onCasaAplicada(jogador, casa);
         }
     }
 

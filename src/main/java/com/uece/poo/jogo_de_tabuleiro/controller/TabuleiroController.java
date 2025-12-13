@@ -15,9 +15,11 @@ import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaSimples;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
+import com.uece.poo.jogo_de_tabuleiro.model.util.CasaListener;
 import com.uece.poo.jogo_de_tabuleiro.model.util.view.CasaRender;
 import com.uece.poo.jogo_de_tabuleiro.model.util.view.ExceptionModal;
 import com.uece.poo.jogo_de_tabuleiro.model.util.JogoListener;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -41,7 +43,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class TabuleiroController implements JogoListener {
+public class TabuleiroController implements JogoListener, CasaListener {
 
     private Tabuleiro tabuleiro;
     private List<Jogador> jogadores;
@@ -52,14 +54,11 @@ public class TabuleiroController implements JogoListener {
     private boolean debugMode;
     private Jogo jogo;
 
-    @FXML
-    private Label currentPlayer;
-    @FXML
-    private Button jogarDadosButton;
-    @FXML
-    private GridPane tabuleiroGrid;
-    @FXML
-    AnchorPane gameAnchorPane;
+    @FXML private Label currentPlayer;
+    @FXML private Button jogarDadosButton;
+    @FXML private GridPane tabuleiroGrid;
+    @FXML private AnchorPane gameAnchorPane;
+    @FXML private VBox eventLogVBox;
 
     public void carregarTabuleiro(Jogo jogo) {
         this.jogo = jogo;
@@ -67,6 +66,8 @@ public class TabuleiroController implements JogoListener {
         this.jogadores = jogo.getJogadores();
 
         this.debugMode = jogo.isModoDebug();
+
+        Logger.bind(this::logNaTela);
 
         for (Jogador jogador : this.jogadores) {
             Circle jogadorCircle = new Circle(10);
@@ -317,6 +318,15 @@ public class TabuleiroController implements JogoListener {
         jogo.start();
     }
 
+    private void logNaTela(String efeito) {
+        Platform.runLater(() -> {
+            Label label = new Label(efeito);
+            label.setTextFill(Paint.valueOf("white"));
+            label.setFont(Font.font(14));
+            eventLogVBox.getChildren().add(label);
+        });
+    }
+
     @Override
     public void onTurnoIniciado(Jogador jogador) {
         Platform.runLater(() -> {
@@ -369,8 +379,8 @@ public class TabuleiroController implements JogoListener {
     }
 
     @Override
-    public void onCasaAplicada(Jogador jogador, Casa casa) {
-        // Adicionar log na UI
+    public void onCasaAplicada(String efeito) {
+        logNaTela(efeito);
         atualizarCasasSync();
         Platform.runLater(() -> atualizarCasas());
     }

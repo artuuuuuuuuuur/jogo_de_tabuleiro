@@ -20,7 +20,7 @@ public class CasaPrisao extends Casa {
         for (Jogador jogador : jogadores) {
             if (jogador.isAtivo()) {
                 jogador.setAtivo(false);
-                System.out.println(jogador.getNome() + " está inativo por 1 rodada.");
+                listener.onCasaAplicada(jogador.getNome() + " está inativo por 1 rodada.");
             } else {
                 jogador.jogar();
             }

@@ -83,7 +83,7 @@ public class CasaSurpresa extends Casa {
             if (idx >= 0) {
                 listaGlobal.set(idx, r.newPlayer);
                 r.newPlayer.setLastCasaEspecialIndex(this.getIndex());
-                System.out.println(r.oldPlayer.getNome() + " mudou de tipo. Novo tipo: " + r.newPlayer.getClass());
+                listener.onCasaAplicada(r.oldPlayer.getNome() + " mudou de tipo. Novo tipo: " + r.newPlayer.getClass());
                 abrirPopUpDeEscolha(r);
             }
         }

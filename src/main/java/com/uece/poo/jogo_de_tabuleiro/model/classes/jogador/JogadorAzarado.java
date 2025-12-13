@@ -1,5 +1,7 @@
 package com.uece.poo.jogo_de_tabuleiro.model.classes.jogador;
 
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.Logger;
+
 public class JogadorAzarado extends Jogador {
 
     public JogadorAzarado(String cor, String nome, int quantCasas) {
@@ -22,7 +24,6 @@ public class JogadorAzarado extends Jogador {
                 if (dados[0] + dados[1] <= 6) {
                     andar(dados[0] + dados[1]);
                     vezesJogadas++;
-                    System.out.println(nome + " jogou!");
                     dadosIguais = false;
                 } else {
                     jogarNovamente = true;
@@ -35,7 +36,7 @@ public class JogadorAzarado extends Jogador {
             ativo = true;
             dados[0] = 0;
             dados[1] = 0;
-            System.out.println(nome + " agora pode jogar.");
+            Logger.log(nome + " agora pode jogar.");
         }
     }
 

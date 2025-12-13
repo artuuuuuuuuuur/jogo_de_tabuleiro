@@ -24,7 +24,7 @@ public class CasaVoltarInicio extends Casa {
             if (alvo != null && alvo.getLastCasaEspecialIndex() != this.getIndex()) {
                 alvo.setPosicao(0);
                 alvo.setLastCasaEspecialIndex(this.getIndex());
-                System.out.println(alvo.getNome() + " voltou para o início.");
+                listener.onCasaAplicada(alvo.getNome() + " voltou para o início.");
             }
         }
     }

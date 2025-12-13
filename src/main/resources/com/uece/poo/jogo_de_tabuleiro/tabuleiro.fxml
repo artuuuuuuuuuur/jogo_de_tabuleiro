@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <ScrollPane prefHeight="893.0" prefWidth="1359.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.controller.TabuleiroController">
    <content>
       <AnchorPane fx:id="gameAnchorPane" prefHeight="877.0" prefWidth="1482.0" style="-fx-background-color: #54FF9F;">
@@ -143,6 +142,9 @@
                                  </font>
                               </Label>
                            </children>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
                         </VBox>
                      </children>
                   </AnchorPane>

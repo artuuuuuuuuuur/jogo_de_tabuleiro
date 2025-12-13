@@ -1,5 +1,7 @@
 package com.uece.poo.jogo_de_tabuleiro.model.classes.jogador;
 
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.Logger;
+
 public class JogadorNormal extends Jogador {
 
     public JogadorNormal(String cor, String nome, int quantCasas) {
@@ -22,18 +24,13 @@ public class JogadorNormal extends Jogador {
                 rolarDados();
                 andar(dados[0] + dados[1]);
                 vezesJogadas++;
-                System.out.println(nome + " jogou!");
                 dadosIguais = false;
-
-                if (dados[0] == dados[1]) {
-                    dadosIguais = true;
-                }
             }
         } else {
             dados[0] = 0;
             dados[1] = 0;
             ativo = true;
-            System.out.println(nome + " agora pode jogar.");
+            Logger.log(nome + " agora pode jogar.");
         }
 
     }

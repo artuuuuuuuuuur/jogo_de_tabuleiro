@@ -22,7 +22,7 @@ public class CasaSorte extends Casa {
             if (isNotAzarado(jogador)) {
                 if (jogador.getPosicao() == index) {
                     jogador.andar(3);
-                    System.out.println(jogador.getNome() + " andou 3 casas.");
+                    listener.onCasaAplicada(jogador.getNome() + " andou 3 casas.");
                 }
             }
         }

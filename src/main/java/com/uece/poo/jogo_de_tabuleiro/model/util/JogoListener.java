@@ -11,6 +11,5 @@ public interface JogoListener {
         void onNormalMode(Jogador jogador);
         void onDebugMode(Jogador jogador, CompletableFuture<Integer> resultadoDebug);
         void onMovimentoConcluido(Jogador jogador);
-        void onCasaAplicada(Jogador jogador, Casa casa);
         void onVitoria(Jogador jogador);
 }
