@@ -6,16 +6,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Semaphore;
 
 import com.uece.poo.jogo_de_tabuleiro.config.Config;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.Jogo;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaSimples;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
-import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.CasaRender;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.ExceptionModal;
 import com.uece.poo.jogo_de_tabuleiro.model.util.JogoListener;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
@@ -32,13 +33,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
@@ -100,7 +95,7 @@ public class TabuleiroController implements JogoListener {
 
     private String infoJogador(int idx) {
         Jogador j = jogadores.get(idx);
-        return j.getNome() + " | Posição: " + j.getPosicao();
+        return j.getNome() + " | Posição: " + j.getPosicao() + " | Moedas: 0";
     }
 
     private void atualizarCasas() {
@@ -115,6 +110,21 @@ public class TabuleiroController implements JogoListener {
             }
         }
 
+        renderizarCasas();
+    }
+
+    private void renderizarCasas() {
+        int quantLinhas = tabuleiro.getCasas().size() % 2;
+        for (int i = 0; i < quantLinhas; i++) {
+            tabuleiroPane.getRowConstraints().add(new RowConstraints(100, 70, Double.MAX_VALUE));
+        }
+
+        for (Casa casa : tabuleiro.getCasas()) {
+            int i = casa.getIndex();
+            Pane casaPane = CasaRender.renderCasa(!(casa instanceof CasaSimples), i);
+            tabuleiroPane.add(casaPane, i, 0);
+        }
+
         for (Jogador jogador : jogadores) {
             Pane casaAtual = (Pane) tabuleiroPane.lookup("#casa" + jogador.getPosicao());
             FlowPane casaAtualFlowPane = (FlowPane) casaAtual.lookup("#casaFlowPane" + jogador.getPosicao());
@@ -127,128 +137,12 @@ public class TabuleiroController implements JogoListener {
         }
     }
 
-    private void jogarPartida() {
-        Thread.ofVirtual().start(() -> {
-            while (!partidaTerminada) {
-                for (Jogador jogador : jogadores) {
-                    if (partidaTerminada) {
-                        break;
-                    }
-                    jogar(jogador);
-                }
-            }
-        });
-    }
-
-    private void jogar(Jogador jogador) {
-        if (!jogador.isAtivo()) {
-            jogador.setAtivo(true);
-            System.out.println(jogador.getNome() + " agora pode jogar.");
-            return;
-        }
-
-        final Jogador current = jogador;
-
-        Platform.runLater(() -> {
-            currentPlayer.setText("Vez de " + current.getNome());
-            jogarDadosButton.setDisable(false);
-        });
-
-        pause();
-
-        executarAcaoDoJogador(jogador);
-
-        Platform.runLater(() -> checkWinner(jogador));
-        Platform.runLater(() -> atualizarCasas());
-
-        if (jogador.isDadosIguais() && !debugMode) {
-            Platform.runLater(() -> {
-                currentPlayer.setText(jogador.getNome() + " tirou dados iguais! Joga novamente!");
-                jogarDadosButton.setDisable(false);
-            });
-
-            pause();
-
-            jogador.jogar();
-            Platform.runLater(() -> {
-                rollDicesPage(jogador);
-            });
-
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException _) {
-            }
-            Platform.runLater(this::atualizarStats);
-            atualizarCasasSync();
-
-            Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
-            if (casaAtual != null) {
-                casaAtual.aplicarRegra(tabuleiro);
-            }
-
-            Platform.runLater(this::atualizarStats);
-
-
-        }
-    }
 
     private void mostrarJogadorAtual(Jogador jogador) {
-
-        executarAcaoDoJogador(jogador);
-
-        Platform.runLater(() -> checkWinner(jogador));
-        Platform.runLater(() -> atualizarCasas());
-
-        if (jogador.isDadosIguais() && !debugMode) {
-            Platform.runLater(() -> {
-                currentPlayer.setText(jogador.getNome() + " tirou dados iguais! Joga novamente!");
-                jogarDadosButton.setDisable(false);
-            });
-
-            pause();
-
-            jogador.jogar();
-            Platform.runLater(() -> {
-                rollDicesPage(jogador);
-            });
-
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException _) {
-            }
-            Platform.runLater(this::atualizarStats);
-            atualizarCasasSync();
-
-            Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
-            if (casaAtual != null) {
-                casaAtual.aplicarRegra(tabuleiro);
-            }
-
-            Platform.runLater(this::atualizarStats);
-
-            Platform.runLater(() -> checkWinner(jogador));
-            Platform.runLater(() -> atualizarCasas());
-        }
-    }
-
-    private void executarAcaoDoJogador(Jogador jogador) {
-        if (debugMode) {
-
-
-        }
-        
-        jogador.jogar();
-
-
-
-        Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
-        if (casaAtual != null) {
-            casaAtual.aplicarRegra(tabuleiro);
-
-        }
-
-        Platform.runLater(this::atualizarStats);
-
+        Platform.runLater(() -> {
+            currentPlayer.setText(jogador.getNome() + " jogou.");
+            atualizarCasas();
+        });
     }
 
     public void resume() {
@@ -414,7 +308,7 @@ public class TabuleiroController implements JogoListener {
 
     private void inicializar() {
         atualizarStats();
-        jogarPartida();
+        jogo.start();
     }
 
     @Override
@@ -427,13 +321,10 @@ public class TabuleiroController implements JogoListener {
     }
 
     @Override
-    public void onDepoisDeJogarDados(Jogador jogador) {
-        Platform.runLater(() -> {
-            rollDicesPage(jogador);
-        });
-
+    public void onDepoisDeJogarDados(Jogador jogador, CompletableFuture<Integer> resultadoDebug) {
+        mostrarJogadorAtual(jogador);
         try {
-            Thread.sleep(4000);
+            Thread.sleep(2000);
         } catch (InterruptedException _) {
         }
         Platform.runLater(() -> atualizarCasas());
@@ -441,33 +332,31 @@ public class TabuleiroController implements JogoListener {
     }
 
     @Override
+    public void onNormalMode(Jogador jogador) {
+        Platform.runLater(() -> rollDicesPage(jogador));
+    }
+
+    @Override
     public void onDebugMode(Jogador jogador, CompletableFuture<Integer> resultadoDebug) {
         debugModePage(resultadoDebug);
 
         Platform.runLater(this::atualizarCasas);
-
-        int tempValorDados;
-        try {
-            tempValorDados = resultadoDebug.get();
-        } catch (Exception _) {
-            tempValorDados = 7;
-        }
-        final int valorDados = tempValorDados;
-
-        jogador.setPosicao(jogador.getPosicao() + valorDados);
-
         Platform.runLater(this::atualizarStats);
-
         atualizarCasasSync();
     }
 
     @Override
     public void onMovimentoConcluido(Jogador jogador) {
         try {
-            Thread.sleep(4000);
+            Thread.sleep(1000);
         } catch (InterruptedException e){
             ExceptionModal.popUp(e.getMessage());
         }
+        Platform.runLater(() -> {
+            atualizarCasas();
+            atualizarStats();
+        });
+            atualizarCasasSync();
     }
 
     @Override

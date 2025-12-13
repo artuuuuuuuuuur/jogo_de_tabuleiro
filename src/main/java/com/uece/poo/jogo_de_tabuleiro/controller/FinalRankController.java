@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
-import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.ExceptionModal;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

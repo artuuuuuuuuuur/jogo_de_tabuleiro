@@ -1,4 +1,4 @@
-package com.uece.poo.jogo_de_tabuleiro.model.util;
+package com.uece.poo.jogo_de_tabuleiro.model.util.view;
 
 import javafx.application.Platform;
 import javafx.geometry.Insets;

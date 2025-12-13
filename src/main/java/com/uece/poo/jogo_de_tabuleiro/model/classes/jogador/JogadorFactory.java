@@ -2,7 +2,7 @@ package com.uece.poo.jogo_de_tabuleiro.model.classes.jogador;
 
 import java.lang.reflect.InvocationTargetException;
 
-import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.ExceptionModal;
 
 public class JogadorFactory {
 

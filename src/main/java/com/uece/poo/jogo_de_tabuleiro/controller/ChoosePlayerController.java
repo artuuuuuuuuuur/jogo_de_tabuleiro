@@ -1,44 +1,34 @@
 package com.uece.poo.jogo_de_tabuleiro.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.uece.poo.jogo_de_tabuleiro.model.classes.Jogo;
-import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
-import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorAzarado;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorFactory;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorSortudo;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorNormal;
-import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.ExceptionModal;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ChoosePlayerController {
@@ -88,6 +78,7 @@ public class ChoosePlayerController {
             ExceptionModal.popUp(e.getMessage());
             return;
         }
+        jogo.setListener(controller);
         controller.carregarTabuleiro(jogo);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));

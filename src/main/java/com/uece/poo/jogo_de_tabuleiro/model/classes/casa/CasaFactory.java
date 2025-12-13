@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
-import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.ExceptionModal;
 
 public class CasaFactory {
 

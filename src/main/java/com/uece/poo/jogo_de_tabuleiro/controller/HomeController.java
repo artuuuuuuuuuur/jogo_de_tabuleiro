@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.uece.poo.jogo_de_tabuleiro.model.classes.Jogo;
-import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.ExceptionModal;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

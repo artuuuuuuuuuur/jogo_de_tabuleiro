@@ -35,7 +35,10 @@ public class JogadorSortudo extends Jogador {
 
             }
         } else {
+            dados[0] = 0;
+            dados[1] = 0;
             ativo = true;
+            System.out.println(nome + " agora pode jogar.");
         }
     }
 

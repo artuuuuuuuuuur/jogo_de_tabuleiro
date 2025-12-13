@@ -14,7 +14,7 @@ import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorAzarado;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorNormal;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorSortudo;
-import com.uece.poo.jogo_de_tabuleiro.model.util.ExceptionModal;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.ExceptionModal;
 import com.uece.poo.jogo_de_tabuleiro.model.util.JogoListener;
 
 
@@ -63,9 +63,8 @@ public class Jogo {
         return modoDebug;
     }
 
-    public boolean start() {
+    public void start() {
         Thread.ofVirtual().start(this::loopJogo);
-        return true;
     }
 
     public Tabuleiro getTabuleiro() {
@@ -91,24 +90,20 @@ public class Jogo {
     }
 
     private void jogarTurno(Jogador jogador) {
+        CompletableFuture<Integer> resultadoDebug = new CompletableFuture<>();
         listener.onTurnoIniciado(jogador);
-        int valor = jogarDados(jogador);
-        listener.onDepoisDeJogarDados(jogador);
+        int valor = jogarDados(jogador, resultadoDebug);
+        listener.onDepoisDeJogarDados(jogador, resultadoDebug);
 
         jogador.setPosicao(jogador.getPosicao() + valor);
         listener.onMovimentoConcluido(jogador);
 
         aplicarCasa(jogador);
-        if(jogador.isDadosIguais()) {
-            jogarTurno(jogador);
-        }
     }
 
-    private Integer jogarDados(Jogador jogador) {
+    private Integer jogarDados(Jogador jogador, CompletableFuture<Integer> resultadoDebug) {
         if (modoDebug) {
-            CompletableFuture<Integer> resultadoDebug = new CompletableFuture<>();
             listener.onDebugMode(jogador, resultadoDebug);
-
             try{
                 return resultadoDebug.get();
             } catch (ExecutionException | InterruptedException e) {
@@ -116,6 +111,7 @@ public class Jogo {
             }
         }
         jogador.jogar();
+        listener.onNormalMode(jogador);
         return (jogador.getDados()[0] + jogador.getDados()[1]);
     }
 
@@ -165,11 +161,15 @@ public class Jogo {
 
     private boolean isGameOver() {
         for (Jogador jogador : jogadores) {
-            if (jogador.getPosicao() >= 40) {
+            if (jogador.getPosicao() >= tabuleiro.getCasas().size()) {
                 jogadorVencedor = jogador;
                 return true;
             }
         }
         return false;
+    }
+
+    public void setListener(JogoListener listener) {
+        this.listener = listener;
     }
 }

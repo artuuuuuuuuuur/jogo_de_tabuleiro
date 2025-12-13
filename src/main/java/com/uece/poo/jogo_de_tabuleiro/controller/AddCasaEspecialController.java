@@ -8,7 +8,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AddCasaEspecialController {
