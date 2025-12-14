@@ -11,6 +11,7 @@ import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorFactory;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorSortudo;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorNormal;
 
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.Logger;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -83,7 +84,7 @@ public class CasaSurpresa extends Casa {
             if (idx >= 0) {
                 listaGlobal.set(idx, r.newPlayer);
                 r.newPlayer.setLastCasaEspecialIndex(this.getIndex());
-                listener.onCasaAplicada(r.oldPlayer.getNome() + " mudou de tipo. Novo tipo: " + r.newPlayer.getClass());
+                Logger.log((r.oldPlayer.getNome() + " mudou de tipo. Novo tipo: " + r.newPlayer.getClass()));
                 abrirPopUpDeEscolha(r);
             }
         }

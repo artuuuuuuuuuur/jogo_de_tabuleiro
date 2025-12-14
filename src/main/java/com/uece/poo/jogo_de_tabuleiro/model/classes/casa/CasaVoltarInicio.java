@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.Logger;
 
 public class CasaVoltarInicio extends Casa {
 
@@ -22,7 +23,7 @@ public class CasaVoltarInicio extends Casa {
         if (alvo != null && alvo.getLastCasaEspecialIndex() != this.getIndex()) {
             alvo.setPosicao(0);
             alvo.setLastCasaEspecialIndex(this.getIndex());
-            listener.onCasaAplicada(alvo.getNome() + " voltou para o início.");
+            Logger.log((alvo.getNome() + " voltou para o início."));
         }
     }
 }

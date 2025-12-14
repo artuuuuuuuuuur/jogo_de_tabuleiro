@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.Logger;
 
 public class CasaPrisao extends Casa {
 
@@ -19,7 +20,7 @@ public class CasaPrisao extends Casa {
     public void aplicarRegra(Tabuleiro tabuleiro, Jogador jogador) {
         if (jogador.isAtivo()) {
             jogador.setAtivo(false);
-            listener.onCasaAplicada(jogador.getNome() + " está inativo por 1 rodada.");
+            Logger.log((jogador.getNome() + " está inativo por 1 rodada."));
         } else {
             jogador.jogar();
         }

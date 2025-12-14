@@ -60,18 +60,6 @@ public class Tabuleiro {
         return casas.get(i);
     }
 
-    public void moverJogador(Jogador jogador, int numCasas) {
-        for (Casa casa : casas) {
-            for (Jogador jogadorAtual : casa.getJogadores()) {
-                if (jogador.equals(jogadorAtual)) {
-                    jogadorAtual.andar(numCasas);
-                    casas.get(jogadorAtual.getPosicao()).addJogador(jogadorAtual);
-                    casa.removeJogador(jogadorAtual);
-                }
-            }
-        }
-    }
-
     public void atualizarJogadores(List<Jogador> jogadores) {
         for (Casa casa : this.getCasas()) {
             casa.clearJogadores();

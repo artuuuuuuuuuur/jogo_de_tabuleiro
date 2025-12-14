@@ -188,7 +188,7 @@ public class TabuleiroController implements JogoListener, CasaListener {
     private void checkWinner(Jogador jogador) {
         Platform.runLater(this::atualizarStats);
         Platform.runLater(() -> {
-            if (jogador.getPosicao() >= jogo.getTabuleiro().getCasas().size()) {
+            if (jogador.getPosicao() >= jogo.getTabuleiro().getCasas().size()-1) {
                 jogador.setPosicao(jogo.getTabuleiro().getCasas().size());
                 partidaTerminada = true;
                 jogadorVencedor = jogador;

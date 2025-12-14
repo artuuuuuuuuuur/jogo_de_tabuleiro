@@ -5,6 +5,7 @@ import java.util.List;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorAzarado;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.Logger;
 
 public class CasaSorte extends Casa {
 
@@ -21,7 +22,7 @@ public class CasaSorte extends Casa {
         if (isNotAzarado(jogador)) {
             if (jogador.getPosicao() == index) {
                 jogador.andar(3);
-                listener.onCasaAplicada(jogador.getNome() + " andou 3 casas.");
+                Logger.log((jogador.getNome() + " andou 3 casas."));
             }
         }
     }

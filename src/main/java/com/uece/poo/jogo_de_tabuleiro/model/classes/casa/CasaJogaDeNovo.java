@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.Logger;
 
 public class CasaJogaDeNovo extends Casa{
 
@@ -18,6 +19,6 @@ public class CasaJogaDeNovo extends Casa{
     @Override
     public void aplicarRegra(Tabuleiro tabuleiro, Jogador jogador) {
         jogador.setTentarNovamente(true);
-        listener.onCasaAplicada(jogador.getNome() + " irá jogar novamente.");
+        Logger.log((jogador.getNome() + " irá jogar novamente."));
     }
 }
