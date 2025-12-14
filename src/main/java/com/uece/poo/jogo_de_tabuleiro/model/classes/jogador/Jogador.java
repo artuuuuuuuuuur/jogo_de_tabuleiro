@@ -7,31 +7,32 @@ public abstract class Jogador {
     protected int posicao, vezesJogadas;
     protected int[] dados = new int[2];
     protected String cor, nome;
-    protected boolean ativo, jogarNovamente, dadosIguais;
+    protected boolean ativo, tentarNovamente, jogarNovamente;
     protected Jogador jogadorAlvo;
     protected int lastCasaEspecialIndex = -1;
     protected String tipo;
     protected int quantCasas;
+    protected int moedas;
 
     public Jogador(String cor, String nome, int quantCasas) {
         this.cor = cor;
         this.ativo = true;
         this.posicao = 0;
         this.vezesJogadas = 0;
-        this.jogarNovamente = true;
+        this.tentarNovamente = true;
         this.nome = nome;
-        this.dadosIguais = false;
+        this.jogarNovamente = false;
         this.quantCasas = quantCasas;
     }
 
-    public Jogador(boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas, boolean dadosIguais, int quantCasas) {
+    public Jogador(boolean ativo, String cor, String nome, boolean tentarNovamente, int posicao, int vezesJogadas, boolean jogarNovamente, int quantCasas) {
         this.ativo = ativo;
         this.cor = cor;
-        this.jogarNovamente = jogarNovamente;
+        this.tentarNovamente = tentarNovamente;
         this.posicao = posicao;
         this.vezesJogadas = vezesJogadas;
         this.nome = nome;
-        this.dadosIguais = dadosIguais;
+        this.jogarNovamente = jogarNovamente;
         this.quantCasas = quantCasas;
     }
 
@@ -82,8 +83,8 @@ public abstract class Jogador {
         this.ativo = ativo;
     }
 
-    public boolean isJogarNovamente() {
-        return jogarNovamente;
+    public boolean isTentarNovamente() {
+        return tentarNovamente;
     }
 
     public void andar(int numCasas) {
@@ -98,6 +99,12 @@ public abstract class Jogador {
         for (int i = 0; i < dados.length; i++) {
             dados[i] = random.nextInt(6) + 1;
         }
+    }
+
+    public int getMoedas() {return moedas;}
+
+    public void setMoedas(int moedas) {
+        this.moedas = moedas;
     }
 
     public void voltarAoInicio() {
@@ -122,24 +129,24 @@ public abstract class Jogador {
         this.nome = nome;
     }
 
-    public boolean isDadosIguais() {
-        return dadosIguais;
+    public boolean isJogarNovamente() {
+        return jogarNovamente;
     }
 
     public String getTipo() {
         return tipo;
     }
 
-    public void setJogarNovamente(boolean jogarNovamente) {
-        this.jogarNovamente = jogarNovamente;
+    public void setTentarNovamente(boolean tentarNovamente) {
+        this.tentarNovamente = tentarNovamente;
     }
 
     public void setVezesJogadas(int vezesJogadas) {
         this.vezesJogadas = vezesJogadas;
     }
 
-    public void setDadosIguais(boolean dadosIguais) {
-        this.dadosIguais = dadosIguais;
+    public void setJogarNovamente(boolean jogarNovamente) {
+        this.jogarNovamente = jogarNovamente;
     }
 
     public void setQuantCasas(int quantCasas) {

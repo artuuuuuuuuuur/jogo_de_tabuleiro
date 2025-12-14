@@ -17,17 +17,16 @@ public class JogadorSortudo extends Jogador {
     @Override
     public void jogar() {
         if (ativo) {
-            jogarNovamente = true;
-            while (jogarNovamente) {
-                jogarNovamente = false;
+            tentarNovamente = true;
+            while (tentarNovamente) {
+                tentarNovamente = false;
                 rolarDados();
 
                 if (dados[0] + dados[1] >= 7) {
-                    andar(dados[0] + dados[1]);
                     vezesJogadas++;
-                    dadosIguais = false;
+                    jogarNovamente = false;
                 } else {
-                    jogarNovamente = true;
+                    tentarNovamente = true;
                 }
             }
         } else {

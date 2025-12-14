@@ -47,19 +47,19 @@ public class CasaSurpresa extends Casa {
     }
 
     @Override
-    public void aplicarRegra(Tabuleiro tabuleiro) {
+    public void aplicarRegra(Tabuleiro tabuleiro, Jogador jogador) {
         List<Jogador> copia = new ArrayList<>(this.getJogadores());
 
         List<Replacement> replacements = new ArrayList<>();
 
-        for (Jogador jogador : copia) {
-            if (jogador.getLastCasaEspecialIndex() == this.getIndex()) {
-                continue;
-            }
 
-            Jogador novoTipo = predefinirJogador(jogador);
-            replacements.add(new Replacement(jogador, novoTipo));
+        if (jogador.getLastCasaEspecialIndex() == this.getIndex()) {
+            return;
         }
+
+        Jogador novoTipo = predefinirJogador(jogador);
+        replacements.add(new Replacement(jogador, novoTipo));
+
         executarTrocasDeTipo(replacements, tabuleiro);
     }
 

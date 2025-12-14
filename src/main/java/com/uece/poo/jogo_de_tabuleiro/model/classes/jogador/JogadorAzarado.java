@@ -17,19 +17,15 @@ public class JogadorAzarado extends Jogador {
     @Override
     public void jogar() {
         if (ativo) {
-            jogarNovamente = true;
-            while (jogarNovamente) {
-                jogarNovamente = false;
+            tentarNovamente = true;
+            while (tentarNovamente) {
+                tentarNovamente = false;
                 rolarDados();
                 if (dados[0] + dados[1] <= 6) {
-                    andar(dados[0] + dados[1]);
                     vezesJogadas++;
-                    dadosIguais = false;
+                    jogarNovamente = false;
                 } else {
-                    jogarNovamente = true;
-                }
-                if (dados[0] == dados[1]) {
-                    dadosIguais = true;
+                    tentarNovamente = true;
                 }
             }
         } else {

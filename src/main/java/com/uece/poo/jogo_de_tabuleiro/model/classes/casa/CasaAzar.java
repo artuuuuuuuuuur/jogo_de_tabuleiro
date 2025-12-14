@@ -17,13 +17,11 @@ public class CasaAzar extends Casa {
     }
     
     @Override
-    public void aplicarRegra(Tabuleiro tabuleiro) {
-        for (Jogador jogador : jogadores) {
-            if (isNotSortudo(jogador)) {
-                if (jogador.getPosicao() == index) {
-                    jogador.andar(3);
-                    listener.onCasaAplicada(jogador.getNome() + " voltou 3 casas.");
-                }
+    public void aplicarRegra(Tabuleiro tabuleiro, Jogador jogador) {
+        if (isNotSortudo(jogador)) {
+            if (jogador.getPosicao() == index) {
+                jogador.andar(3);
+                listener.onCasaAplicada(jogador.getNome() + " voltou 3 casas.");
             }
         }
     }

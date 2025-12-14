@@ -72,6 +72,19 @@ public class Tabuleiro {
         }
     }
 
+    public void atualizarJogadores(List<Jogador> jogadores) {
+        for (Casa casa : this.getCasas()) {
+            casa.clearJogadores();
+        }
+
+        for (Jogador jogador : jogadores) {
+            Casa casa = this.getCasa(jogador.getPosicao());
+            if (casa != null) {
+                casa.addJogador(jogador);
+            }
+        }
+    }
+
     private void criarCasas(List<Jogador> jogadores) {
         casas.add(0, new CasaSimples(0, jogadores));
         for (int i = 1; i <= quantidadeCasas; i++) {

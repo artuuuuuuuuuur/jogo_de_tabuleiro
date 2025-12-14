@@ -18,10 +18,10 @@ public class JogadorFactory {
     public static Jogador getJogador(Class<? extends Jogador> jogadorType, Jogador jogador)  {
         Jogador newJogador = getJogador(jogadorType, jogador.getCor(), jogador.getNome(), jogador.getQuantCasas());
         newJogador.setAtivo(jogador.isAtivo());
-        newJogador.setJogarNovamente(jogador.isJogarNovamente());
+        newJogador.setTentarNovamente(jogador.isTentarNovamente());
         newJogador.setPosicao(jogador.getPosicao());
         newJogador.setVezesJogadas(jogador.getVezesJogadas());
-        newJogador.setDadosIguais(jogador.isDadosIguais());
+        newJogador.setJogarNovamente(jogador.isJogarNovamente());
         newJogador.setQuantCasas(jogador.getQuantCasas());
         return newJogador;
     }

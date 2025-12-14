@@ -96,21 +96,11 @@ public class TabuleiroController implements JogoListener, CasaListener {
 
     private String infoJogador(int idx) {
         Jogador j = jogadores.get(idx);
-        return j.getNome() + " | Posição: " + j.getPosicao() + " | Moedas: 0";
+        return j.getNome() + " | Posição: " + j.getPosicao() + " | Moedas: " + j.getMoedas();
     }
 
     private void atualizarCasas() {
-        for (Casa casa : tabuleiro.getCasas()) {
-            casa.clearJogadores();
-        }
-
-        for (Jogador jogador : jogadores) {
-            Casa casa = tabuleiro.getCasa(jogador.getPosicao());
-            if (casa != null) {
-                casa.addJogador(jogador);
-            }
-        }
-
+        tabuleiro.atualizarJogadores(jogadores);
         renderizarCasas();
     }
 
@@ -375,14 +365,15 @@ public class TabuleiroController implements JogoListener, CasaListener {
             atualizarCasasSync();
             atualizarStats();
         });
-
     }
 
     @Override
     public void onCasaAplicada(String efeito) {
-        logNaTela(efeito);
-        atualizarCasasSync();
-        Platform.runLater(() -> atualizarCasas());
+        Platform.runLater(() -> {
+            logNaTela(efeito);
+            atualizarCasasSync();
+            atualizarCasas();
+        });
     }
 
     @Override

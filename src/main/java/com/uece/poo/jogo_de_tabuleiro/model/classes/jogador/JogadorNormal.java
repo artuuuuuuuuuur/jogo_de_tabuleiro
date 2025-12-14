@@ -17,14 +17,13 @@ public class JogadorNormal extends Jogador {
     @Override
     public void jogar() {
         if (ativo) {
-            jogarNovamente = true;
-            while (jogarNovamente) {
-                jogarNovamente = false;
+            tentarNovamente = true;
+            while (tentarNovamente) {
+                tentarNovamente = false;
 
                 rolarDados();
-                andar(dados[0] + dados[1]);
                 vezesJogadas++;
-                dadosIguais = false;
+                jogarNovamente = false;
             }
         } else {
             dados[0] = 0;

@@ -49,7 +49,7 @@ public abstract class Casa {
         jogadores.remove(jogador);
     }
 
-    public abstract void aplicarRegra(Tabuleiro tabuleiro);
+    public abstract void aplicarRegra(Tabuleiro tabuleiro, Jogador jogador);
 
     public void setJogadores(List<Jogador> jogadores) {
         this.jogadores = jogadores;

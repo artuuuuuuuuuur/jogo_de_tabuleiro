@@ -16,10 +16,8 @@ public class CasaJogaDeNovo extends Casa{
     }
     
     @Override
-    public void aplicarRegra(Tabuleiro tabuleiro) {
-        for (Jogador jogador : jogadores) {
-            jogador.setJogarNovamente(true);
-            listener.onCasaAplicada(jogador.getNome() + " irá jogar novamente.");
-        }
+    public void aplicarRegra(Tabuleiro tabuleiro, Jogador jogador) {
+        jogador.setTentarNovamente(true);
+        listener.onCasaAplicada(jogador.getNome() + " irá jogar novamente.");
     }
 }

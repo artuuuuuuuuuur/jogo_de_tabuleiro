@@ -54,11 +54,13 @@ public class Jogo {
         this.modoDebug = modoDebug;
     }
 
-    public void configJogadores(List<Jogador> jogadores) throws IllegalArgumentException {
+    public void configJogadores(List<Jogador> jogadores) {
         validarJogadores(jogadores);
         this.numJogadores = jogadores.size();
-        this.jogadores = jogadores;
+        this.jogadores.clear();
+        this.jogadores.addAll(jogadores);
     }
+
 
     public boolean isModoDebug() {
         return modoDebug;
@@ -74,17 +76,27 @@ public class Jogo {
 
     private void loopJogo() {
         int index = 0;
+
         while (!isGameOver()) {
             Jogador jogador = jogadores.get(index);
-            jogarTurno(jogador);
-            if (isGameOver()) {
-                listener.onVitoria(jogador);
-                break;
-            }
-            index = (index + 1) % jogadores.size();
 
+            if (!jogador.isAtivo()) {
+                index = (index + 1) % jogadores.size();
+                continue;
+            }
+
+            do {
+                jogarTurno(jogador);
+                if (isGameOver()) {
+                    listener.onVitoria(jogador);
+                    return;
+                }
+            } while (jogador.isJogarNovamente());
+
+            index = (index + 1) % jogadores.size();
         }
     }
+
 
     public List<Jogador> getJogadores() {
         return jogadores;
@@ -92,15 +104,19 @@ public class Jogo {
 
     private void jogarTurno(Jogador jogador) {
         CompletableFuture<Integer> resultadoDebug = new CompletableFuture<>();
+
         listener.onTurnoIniciado(jogador);
+
         int valor = jogarDados(jogador, resultadoDebug);
-        listener.onDepoisDeJogarDados(jogador, resultadoDebug);
 
-        jogador.setPosicao(jogador.getPosicao() + valor);
-        listener.onMovimentoConcluido(jogador);
-
+        int novaPosicao = jogador.getPosicao() + valor;
+        novaPosicao = Math.min(novaPosicao, tabuleiro.getCasas().size() - 1);
+        jogador.setPosicao(novaPosicao);
+        tabuleiro.atualizarJogadores(jogadores);
         aplicarCasa(jogador);
+        listener.onMovimentoConcluido(jogador);
     }
+
 
     private Integer jogarDados(Jogador jogador, CompletableFuture<Integer> resultadoDebug) {
         if (modoDebug) {
@@ -156,7 +172,7 @@ public class Jogo {
         Casa casa = tabuleiro.getCasa(jogador.getPosicao());
         if (casa != null) {
             casa.setListener((CasaListener) listener);
-            casa.aplicarRegra(tabuleiro);
+            casa.aplicarRegra(tabuleiro, jogador);
         }
     }
 

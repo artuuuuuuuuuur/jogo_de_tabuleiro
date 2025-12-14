@@ -16,14 +16,12 @@ public class CasaPrisao extends Casa {
     }
 
     @Override
-    public void aplicarRegra(Tabuleiro tabuleiro) {
-        for (Jogador jogador : jogadores) {
-            if (jogador.isAtivo()) {
-                jogador.setAtivo(false);
-                listener.onCasaAplicada(jogador.getNome() + " está inativo por 1 rodada.");
-            } else {
-                jogador.jogar();
-            }
+    public void aplicarRegra(Tabuleiro tabuleiro, Jogador jogador) {
+        if (jogador.isAtivo()) {
+            jogador.setAtivo(false);
+            listener.onCasaAplicada(jogador.getNome() + " está inativo por 1 rodada.");
+        } else {
+            jogador.jogar();
         }
     }
 }

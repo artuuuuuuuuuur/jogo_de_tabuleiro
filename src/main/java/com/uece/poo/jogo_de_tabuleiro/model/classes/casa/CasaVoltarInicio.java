@@ -16,16 +16,13 @@ public class CasaVoltarInicio extends Casa {
     }
 
     @Override
-    public void aplicarRegra(Tabuleiro tabuleiro) {
-        // iterar sobre copia dos jogadores da casa atual
+    public void aplicarRegra(Tabuleiro tabuleiro, Jogador jogador) {
         List<Jogador> presentes = List.copyOf(this.getJogadores());
-        for (Jogador jogador : presentes) {
-            Jogador alvo = jogador.getJogadorAlvo();
-            if (alvo != null && alvo.getLastCasaEspecialIndex() != this.getIndex()) {
-                alvo.setPosicao(0);
-                alvo.setLastCasaEspecialIndex(this.getIndex());
-                listener.onCasaAplicada(alvo.getNome() + " voltou para o início.");
-            }
+        Jogador alvo = jogador.getJogadorAlvo();
+        if (alvo != null && alvo.getLastCasaEspecialIndex() != this.getIndex()) {
+            alvo.setPosicao(0);
+            alvo.setLastCasaEspecialIndex(this.getIndex());
+            listener.onCasaAplicada(alvo.getNome() + " voltou para o início.");
         }
     }
 }

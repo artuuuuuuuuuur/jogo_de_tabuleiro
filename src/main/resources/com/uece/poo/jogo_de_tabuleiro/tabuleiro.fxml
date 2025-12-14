@@ -132,7 +132,7 @@
             </GridPane>
             <ScrollPane layoutX="503.0" layoutY="582.0" prefHeight="267.0" prefWidth="443.0" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="503.0">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="265.0" prefWidth="441.0" style="-fx-background-color: #1f613c;">
+                <AnchorPane minHeight="0.0" minWidth="0.0" style="-fx-background-color: #1f613c;">
                      <children>
                         <VBox fx:id="eventLogVBox" prefHeight="266.0" prefWidth="441.0" spacing="10.0">
                            <children>

@@ -16,25 +16,22 @@ public class CasaReversa extends Casa {
     }
 
     @Override
-    public void aplicarRegra(Tabuleiro tabuleiro) {
+    public void aplicarRegra(Tabuleiro tabuleiro, Jogador jogador) {
         List<Jogador> jogadoresSnapshot = List.copyOf(jogadores);
         List<Casa> casasSnapshot = List.copyOf(tabuleiro.getCasas());
-
-        for (Jogador jogadorUser : jogadoresSnapshot) {
-            for (Casa casa : casasSnapshot) {
-                if (!casa.getJogadores().isEmpty()) {
-                    List<Jogador> jogadoresCasaSnapshot = List.copyOf(casa.getJogadores());
-                    for (Jogador jogador : jogadoresCasaSnapshot) {
-                        if (!jogador.equals(jogadorUser)) {
-                            int posTemp = jogador.getPosicao();
-                            jogador.setPosicao(jogadorUser.getPosicao());
-                            jogadorUser.setPosicao(posTemp);
-                            listener.onCasaAplicada(jogadorUser.getNome() + " trocou com " + jogador.getNome());
-                        }
+        for (Casa casa : casasSnapshot) {
+            if (!casa.getJogadores().isEmpty()) {
+                List<Jogador> jogadoresCasaSnapshot = List.copyOf(casa.getJogadores());
+                for (Jogador jogadorAlvo : jogadoresCasaSnapshot) {
+                    if (!jogadorAlvo.equals(jogador)) {
+                        int posTemp = jogadorAlvo.getPosicao();
+                        jogadorAlvo.setPosicao(jogador.getPosicao());
+                        jogador.setPosicao(posTemp);
+                        listener.onCasaAplicada(jogador.getNome() + " trocou com " + jogadorAlvo.getNome());
                     }
                 }
             }
+
         }
     }
-
 }
