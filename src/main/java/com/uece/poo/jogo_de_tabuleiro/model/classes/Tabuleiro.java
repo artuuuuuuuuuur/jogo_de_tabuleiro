@@ -40,7 +40,7 @@ public class Tabuleiro {
         return casas;
     }
 
-    public List<Jogador> getJogadoresGlobal() {
+    public List<Jogador> getJogadores() {
         return jogadores;
     }
 

@@ -20,7 +20,6 @@ public class JogadorNormal extends Jogador {
             tentarNovamente = true;
             while (tentarNovamente) {
                 tentarNovamente = false;
-
                 rolarDados();
                 vezesJogadas++;
                 jogarNovamente = false;

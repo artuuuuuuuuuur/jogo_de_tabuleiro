@@ -18,12 +18,8 @@ public class CasaVoltarInicio extends Casa {
 
     @Override
     public void aplicarRegra(Tabuleiro tabuleiro, Jogador jogador) {
-        List<Jogador> presentes = List.copyOf(this.getJogadores());
-        Jogador alvo = jogador.getJogadorAlvo();
-        if (alvo != null && alvo.getLastCasaEspecialIndex() != this.getIndex()) {
-            alvo.setPosicao(0);
-            alvo.setLastCasaEspecialIndex(this.getIndex());
-            Logger.log((alvo.getNome() + " voltou para o início."));
-        }
+        jogador.setPosicao(0);
+        jogador.setLastCasaEspecialIndex(this.getIndex());
+        Logger.log((jogador.getNome() + " voltou para o início."));
     }
 }

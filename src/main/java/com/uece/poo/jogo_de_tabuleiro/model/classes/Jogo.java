@@ -81,6 +81,7 @@ public class Jogo {
             Jogador jogador = jogadores.get(index);
 
             if (!jogador.isAtivo()) {
+                jogador.jogar();
                 index = (index + 1) % jogadores.size();
                 continue;
             }
@@ -110,8 +111,10 @@ public class Jogo {
         int valor = jogarDados(jogador, resultadoDebug);
 
         int novaPosicao = jogador.getPosicao() + valor;
-        novaPosicao = Math.min(novaPosicao, tabuleiro.getCasas().size() - 1);
+        novaPosicao = Math.min(novaPosicao, (tabuleiro.getCasas().size() - 1));
         jogador.setPosicao(novaPosicao);
+        jogador.setJogarNovamente(false);
+        jogador.setVezesJogadas(jogador.getVezesJogadas()+1);
         tabuleiro.atualizarJogadores(jogadores);
         aplicarCasa(jogador);
         listener.onMovimentoConcluido(jogador);
@@ -178,7 +181,7 @@ public class Jogo {
 
     private boolean isGameOver() {
         for (Jogador jogador : jogadores) {
-            if (jogador.getPosicao() >= tabuleiro.getCasas().size()) {
+            if (jogador.getPosicao() >= tabuleiro.getCasas().size()-1) {
                 jogadorVencedor = jogador;
                 return true;
             }

@@ -49,19 +49,8 @@ public class CasaSurpresa extends Casa {
 
     @Override
     public void aplicarRegra(Tabuleiro tabuleiro, Jogador jogador) {
-        List<Jogador> copia = new ArrayList<>(this.getJogadores());
-
-        List<Replacement> replacements = new ArrayList<>();
-
-
-        if (jogador.getLastCasaEspecialIndex() == this.getIndex()) {
-            return;
-        }
-
         Jogador novoTipo = predefinirJogador(jogador);
-        replacements.add(new Replacement(jogador, novoTipo));
-
-        executarTrocasDeTipo(replacements, tabuleiro);
+        executarTrocasDeTipo(new Replacement(jogador, novoTipo), tabuleiro);
     }
 
     private Jogador predefinirJogador(Jogador jogador) {
@@ -76,18 +65,14 @@ public class CasaSurpresa extends Casa {
                 : JogadorFactory.getJogador(possiveisClasses.get(1), jogador);
     }
 
-    private void executarTrocasDeTipo(List<Replacement> replacements, Tabuleiro tabuleiro) {
-        for (Replacement r : replacements) {
-            List<Jogador> listaGlobal = tabuleiro.getJogadoresGlobal();
-
-            int idx = listaGlobal.indexOf(r.oldPlayer);
-            if (idx >= 0) {
-                listaGlobal.set(idx, r.newPlayer);
-                r.newPlayer.setLastCasaEspecialIndex(this.getIndex());
-                Logger.log((r.oldPlayer.getNome() + " mudou de tipo. Novo tipo: " + r.newPlayer.getClass()));
-                abrirPopUpDeEscolha(r);
-            }
-        }
+    private void executarTrocasDeTipo(Replacement replacement, Tabuleiro tabuleiro) {
+        tabuleiro.getJogadores().add(replacement.newPlayer);
+        tabuleiro.getJogadores().remove(replacement.oldPlayer);
+        replacement.newPlayer.setLastCasaEspecialIndex(this.getIndex());
+        Logger.log((replacement.oldPlayer.getNome() + " mudou de tipo. Novo tipo: " + replacement.newPlayer.getTipo()));
+        Platform.runLater(() -> {
+            abrirPopUpDeEscolha(replacement);
+        });
     }
 
     private void abrirPopUpDeEscolha(Replacement r) {

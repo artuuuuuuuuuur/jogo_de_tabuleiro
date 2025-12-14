@@ -21,7 +21,6 @@ public class JogadorSortudo extends Jogador {
             while (tentarNovamente) {
                 tentarNovamente = false;
                 rolarDados();
-
                 if (dados[0] + dados[1] >= 7) {
                     vezesJogadas++;
                     jogarNovamente = false;

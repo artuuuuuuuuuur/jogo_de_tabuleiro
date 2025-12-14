@@ -18,7 +18,7 @@ public class CasaJogaDeNovo extends Casa{
     
     @Override
     public void aplicarRegra(Tabuleiro tabuleiro, Jogador jogador) {
-        jogador.setTentarNovamente(true);
+        jogador.setJogarNovamente(true);
         Logger.log((jogador.getNome() + " irá jogar novamente."));
     }
 }
