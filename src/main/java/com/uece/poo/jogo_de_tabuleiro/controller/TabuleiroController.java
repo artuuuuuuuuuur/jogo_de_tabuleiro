@@ -136,7 +136,6 @@ public class TabuleiroController implements JogoListener, CasaListener {
         }
     }
 
-
     private void mostrarJogadorAtual(Jogador jogador) {
         Platform.runLater(() -> {
             currentPlayer.setText(jogador.getNome() + " jogou.");
