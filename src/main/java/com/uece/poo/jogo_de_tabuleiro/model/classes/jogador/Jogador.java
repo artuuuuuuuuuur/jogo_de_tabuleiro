@@ -1,35 +1,47 @@
-package com.uece.poo.jogo_de_tabuleiro.model;
+package com.uece.poo.jogo_de_tabuleiro.model.classes.jogador;
 
 import java.util.Random;
 
 public abstract class Jogador {
 
-    protected int posicao, vezesJogadas;
+    protected int posicao;
+    protected int vezesJogadas;
     protected int[] dados = new int[2];
-    protected String cor, nome;
-    protected boolean ativo, jogarNovamente, dadosIguais;
+    protected String cor;
+    protected String nome;
+    protected boolean ativo;
+    protected boolean tentarNovamente;
+    protected boolean jogarNovamente;
     protected Jogador jogadorAlvo;
     protected int lastCasaEspecialIndex = -1;
     protected String tipo;
+    protected int quantCasas;
+    protected int moedas;
 
-    public Jogador(String cor, String nome) {
+    protected Jogador(String cor, String nome, int quantCasas) {
         this.cor = cor;
         this.ativo = true;
         this.posicao = 0;
         this.vezesJogadas = 0;
-        this.jogarNovamente = true;
+        this.tentarNovamente = true;
         this.nome = nome;
-        this.dadosIguais = false;
+        this.jogarNovamente = false;
+        this.quantCasas = quantCasas;
     }
 
-    public Jogador(boolean ativo, String cor, String nome, boolean jogarNovamente, int posicao, int vezesJogadas, boolean dadosIguais) {
+    protected Jogador(boolean ativo, String cor, String nome, boolean tentarNovamente, int posicao, int vezesJogadas, boolean jogarNovamente, int quantCasas) {
         this.ativo = ativo;
         this.cor = cor;
-        this.jogarNovamente = jogarNovamente;
+        this.tentarNovamente = tentarNovamente;
         this.posicao = posicao;
         this.vezesJogadas = vezesJogadas;
         this.nome = nome;
-        this.dadosIguais = dadosIguais;
+        this.jogarNovamente = jogarNovamente;
+        this.quantCasas = quantCasas;
+    }
+
+    public int getQuantCasas() {
+        return quantCasas;
     }
 
     public int getLastCasaEspecialIndex() {
@@ -75,14 +87,14 @@ public abstract class Jogador {
         this.ativo = ativo;
     }
 
-    public boolean isJogarNovamente() {
-        return jogarNovamente;
+    public boolean isTentarNovamente() {
+        return tentarNovamente;
     }
 
-    protected void andar(int numCasas) {
+    public void andar(int numCasas) {
         posicao = posicao + numCasas;
-        if (posicao > 40) {
-            posicao = 40;
+        if(posicao >= quantCasas-1) {
+            posicao = quantCasas-1;
         }
     }
 
@@ -91,6 +103,12 @@ public abstract class Jogador {
         for (int i = 0; i < dados.length; i++) {
             dados[i] = random.nextInt(6) + 1;
         }
+    }
+
+    public int getMoedas() {return moedas;}
+
+    public void setMoedas(int moedas) {
+        this.moedas = moedas;
     }
 
     public void voltarAoInicio() {
@@ -115,11 +133,27 @@ public abstract class Jogador {
         this.nome = nome;
     }
 
-    public boolean isDadosIguais() {
-        return dadosIguais;
+    public boolean isJogarNovamente() {
+        return jogarNovamente;
     }
 
     public String getTipo() {
         return tipo;
+    }
+
+    public void setTentarNovamente(boolean tentarNovamente) {
+        this.tentarNovamente = tentarNovamente;
+    }
+
+    public void setVezesJogadas(int vezesJogadas) {
+        this.vezesJogadas = vezesJogadas;
+    }
+
+    public void setJogarNovamente(boolean jogarNovamente) {
+        this.jogarNovamente = jogarNovamente;
+    }
+
+    public void setQuantCasas(int quantCasas) {
+        this.quantCasas = quantCasas;
     }
 }

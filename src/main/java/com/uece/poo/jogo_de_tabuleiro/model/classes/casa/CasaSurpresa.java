@@ -1,11 +1,18 @@
-package com.uece.poo.jogo_de_tabuleiro.model;
+package com.uece.poo.jogo_de_tabuleiro.model.classes.casa;
 
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.Semaphore;
 
+import com.uece.poo.jogo_de_tabuleiro.config.Config;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorAzarado;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorFactory;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorSortudo;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorNormal;
+
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.Logger;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -22,77 +29,55 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class CasaMudarTipo extends Casa {
+public class CasaSurpresa extends Casa {
+    List<Class<?extends Jogador>> possiveisClasses;
+    
 
-    List<Class<? extends Jogador>> possiveisClasses;
-
-    public CasaMudarTipo(int index, List<Jogador> jogadores) {
+    public CasaSurpresa(int index, List<Jogador> jogadores) {
         super(index, jogadores);
+    }
+
+    public CasaSurpresa(int index) {
+        super(index);
+    }
+    
+    private void setPossiveisClasses() {
         possiveisClasses = new ArrayList<>();
         possiveisClasses.add(JogadorAzarado.class);
-        possiveisClasses.add(JogadorComSorte.class);
+        possiveisClasses.add(JogadorSortudo.class);
         possiveisClasses.add(JogadorNormal.class);
     }
 
     @Override
-    public void executarAcaoEspecial(Tabuleiro tabuleiro) {
-        List<Jogador> copia = new ArrayList<>(this.getJogadores());
-
-        List<Replacement> replacements = new ArrayList<>();
-
-        for (Jogador jogador : copia) {
-            if (jogador.getLastCasaEspecialIndex() == this.getIndex()) {
-                continue;
-            }
-
-            Jogador novoTipo = predefinirJogador(jogador);
-            replacements.add(new Replacement(jogador, novoTipo));
-        }
-        executarTrocasDeTipo(replacements, tabuleiro);
+    public void aplicarRegra(Tabuleiro tabuleiro, Jogador jogador) {
+        Jogador novoTipo = predefinirJogador(jogador);
+        executarTrocasDeTipo(new Replacement(jogador, novoTipo), tabuleiro);
     }
 
     private Jogador predefinirJogador(Jogador jogador) {
         Random random = new Random();
         int tipo = random.nextInt(2);
+        setPossiveisClasses();
 
         possiveisClasses.remove(jogador.getClass());
 
         return (tipo == 0)
-                ? criarJogador(possiveisClasses.get(0), jogador)
-                : criarJogador(possiveisClasses.get(1), jogador);
+                ? JogadorFactory.getJogador(possiveisClasses.get(0), jogador)
+                : JogadorFactory.getJogador(possiveisClasses.get(1), jogador);
     }
 
-    private Jogador criarJogador(Class<? extends Jogador> tipo, Jogador base) {
-        try {
-            return tipo.getConstructor(
-                    boolean.class, String.class, String.class, boolean.class,
-                    int.class, int.class, boolean.class
-            ).newInstance(
-                    base.isAtivo(), base.getCor(), base.getNome(),
-                    base.isJogarNovamente(), base.getPosicao(),
-                    base.getVezesJogadas(), base.isDadosIguais()
-            );
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void executarTrocasDeTipo(List<Replacement> replacements, Tabuleiro tabuleiro) {
-        for (Replacement r : replacements) {
-            List<Jogador> listaGlobal = tabuleiro.getJogadoresGlobal();
-
-            int idx = listaGlobal.indexOf(r.oldPlayer);
-            if (idx >= 0) {
-                listaGlobal.set(idx, r.newPlayer);
-                r.newPlayer.setLastCasaEspecialIndex(this.getIndex());
-                System.out.println(r.oldPlayer.getNome() + " mudou de tipo. Novo tipo: " + r.newPlayer.getClass());
-                abrirPopUpDeEscolha(r);
-            }
-        }
+    private void executarTrocasDeTipo(Replacement replacement, Tabuleiro tabuleiro) {
+        tabuleiro.getJogadores().add(replacement.newPlayer);
+        tabuleiro.getJogadores().remove(replacement.oldPlayer);
+        replacement.newPlayer.setLastCasaEspecialIndex(this.getIndex());
+        Logger.log((replacement.oldPlayer.getNome() + " mudou de tipo. Novo tipo: " + replacement.newPlayer.getTipo()));
+        Platform.runLater(() -> {
+            abrirPopUpDeEscolha(replacement);
+        });
     }
 
     private void abrirPopUpDeEscolha(Replacement r) {
-        String cartasPath = "/com/uece/poo/jogo_de_tabuleiro/assets/cartas/carta_";
+        String cartasPath = Config.get("cartasPath");
         Platform.runLater(() -> {
             Stage popup = new Stage();
             Label mudarTipoLabel = new Label("Escolha uma carta para mudar de tipo:");

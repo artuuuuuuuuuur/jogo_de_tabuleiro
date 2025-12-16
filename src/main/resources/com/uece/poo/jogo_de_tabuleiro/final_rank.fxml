@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rankAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #00008B;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.FinalRankController">
+<AnchorPane fx:id="rankAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #00008B;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uece.poo.jogo_de_tabuleiro.controller.FinalRankController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="173.0" layoutY="228.0" stroke="BLACK" strokeType="INSIDE" width="600.0">
          <fill>
@@ -107,7 +107,7 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Button fx:id="nextButton" layoutX="516.0" layoutY="302.0" mnemonicParsing="false" text="PRÓXIMO" textFill="#0a0000">
+      <Button layoutX="516.0" layoutY="302.0" mnemonicParsing="false" onAction="#goToTelaInicial" text="PRÓXIMO" textFill="#0a0000">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font>
@@ -133,11 +133,12 @@
       <Arc fill="#d7ff05" layoutX="123.0" layoutY="150.0" length="270.0" radiusX="91.0" radiusY="83.0" startAngle="45.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
       <Circle layoutX="136.0" layoutY="105.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
       <HBox layoutX="14.0" layoutY="228.0" prefHeight="100.0" prefWidth="200.0" />
-      <GridPane fx:id="rankGridPane" alignment="CENTER_LEFT" gridLinesVisible="true" layoutX="238.0" layoutY="248.0" prefHeight="152.0" prefWidth="257.0" style="-fx-background-color: #FFFFFF;">
+      <GridPane fx:id="rankGridPane" alignment="CENTER_LEFT" gridLinesVisible="true" layoutX="75.0" layoutY="246.0" prefHeight="138.0" prefWidth="429.0" style="-fx-background-color: #FFFFFF;">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="107.0" minWidth="10.0" prefWidth="82.5" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="99.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="85.0" minWidth="10.0" prefWidth="76.0" />
+            <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="222.0" minWidth="10.0" prefWidth="50.0" />
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="122.0" minWidth="10.0" prefWidth="10.0" />
+          <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="230.0" minWidth="10.0" prefWidth="30.0" />
+            <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="213.0" minWidth="0.0" prefWidth="30.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints />
@@ -149,22 +150,22 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="17.0" prefWidth="91.0" text=" COLOCAÇÃO" textFill="#0a0000" GridPane.columnIndex="1">
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="138.0" text="POSIÇÃO" textAlignment="JUSTIFY" textFill="#0a0000" GridPane.columnIndex="1">
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Label>
-            <Label text="    NOME" textFill="#0a0000">
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="127.0" text="NOME" textFill="#0a0000" GridPane.hgrow="ALWAYS">
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Label>
-            <Label text="  JOGADAS" textFill="#0a0000" GridPane.columnIndex="2">
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="165.0" text="JOGADAS" textFill="#0a0000" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS">
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="playerJogadas6" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+            <Label fx:id="playerJogadas6" prefHeight="17.0" prefWidth="148.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
                <padding>
                   <Insets left="2.0" right="2.0" />
                </padding>
@@ -174,17 +175,17 @@
                   <Insets left="2.0" right="2.0" />
                </padding>
             </Label>
-            <Label fx:id="playerNome1" prefWidth="100.0" GridPane.rowIndex="1">
+            <Label fx:id="playerNome1" prefHeight="17.0" prefWidth="130.0" GridPane.rowIndex="1">
                <padding>
                   <Insets left="2.0" right="2.0" />
                </padding>
             </Label>
-            <Label fx:id="playerNome6" prefWidth="100.0" GridPane.rowIndex="6">
+            <Label fx:id="playerNome6" prefHeight="17.0" prefWidth="187.0" GridPane.rowIndex="6">
                <padding>
                   <Insets left="2.0" right="2.0" />
                </padding>
             </Label>
-            <Label fx:id="playerJogadas5" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+            <Label fx:id="playerJogadas5" prefHeight="17.0" prefWidth="129.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                <padding>
                   <Insets left="2.0" right="2.0" />
                </padding>
@@ -194,12 +195,12 @@
                   <Insets left="2.0" right="2.0" />
                </padding>
             </Label>
-            <Label fx:id="playerNome5" prefWidth="100.0" GridPane.rowIndex="5">
+            <Label fx:id="playerNome5" prefHeight="17.0" prefWidth="172.0" GridPane.rowIndex="5">
                <padding>
                   <Insets left="2.0" right="2.0" />
                </padding>
             </Label>
-            <Label fx:id="playerJogadas4" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+            <Label fx:id="playerJogadas4" prefHeight="17.0" prefWidth="108.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                <padding>
                   <Insets left="2.0" right="2.0" />
                </padding>
@@ -209,12 +210,12 @@
                   <Insets left="2.0" right="2.0" />
                </padding>
             </Label>
-            <Label fx:id="playerNome4" prefWidth="100.0" GridPane.rowIndex="4">
+            <Label fx:id="playerNome4" prefHeight="17.0" prefWidth="152.0" GridPane.rowIndex="4">
                <padding>
                   <Insets left="2.0" right="2.0" />
                </padding>
             </Label>
-            <Label fx:id="playerJogadas3" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <Label fx:id="playerJogadas3" prefHeight="17.0" prefWidth="135.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <padding>
                   <Insets left="2.0" right="2.0" />
                </padding>
@@ -224,12 +225,12 @@
                   <Insets left="2.0" right="2.0" />
                </padding>
             </Label>
-            <Label fx:id="playerNome3" prefWidth="100.0" GridPane.rowIndex="3">
+            <Label fx:id="playerNome3" prefHeight="17.0" prefWidth="159.0" GridPane.rowIndex="3">
                <padding>
                   <Insets left="2.0" right="2.0" />
                </padding>
             </Label>
-            <Label fx:id="playerJogadas2" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <Label fx:id="playerJogadas2" prefHeight="17.0" prefWidth="131.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <padding>
                   <Insets left="2.0" right="2.0" />
                </padding>
@@ -239,17 +240,52 @@
                   <Insets left="2.0" right="2.0" />
                </padding>
             </Label>
-            <Label fx:id="playerNome2" prefWidth="100.0" GridPane.rowIndex="2">
+            <Label fx:id="playerNome2" prefHeight="17.0" prefWidth="136.0" GridPane.rowIndex="2">
                <padding>
                   <Insets left="2.0" right="2.0" />
                </padding>
             </Label>
-            <Label fx:id="playerJogadas1" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Label fx:id="playerJogadas1" prefHeight="17.0" prefWidth="133.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <padding>
                   <Insets left="2.0" right="2.0" />
                </padding>
             </Label>
             <Label fx:id="playerPosicao1" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <padding>
+                  <Insets left="2.0" right="2.0" />
+               </padding>
+            </Label>
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="208.0" text="MOEDAS" textFill="#0a0000" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="playerMoedas1" prefHeight="17.0" prefWidth="133.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <padding>
+                  <Insets left="2.0" right="2.0" />
+               </padding>
+            </Label>
+            <Label fx:id="playerMoedas2" prefHeight="17.0" prefWidth="133.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <padding>
+                  <Insets left="2.0" right="2.0" />
+               </padding>
+            </Label>
+            <Label fx:id="playerMoedas3" prefHeight="17.0" prefWidth="133.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <padding>
+                  <Insets left="2.0" right="2.0" />
+               </padding>
+            </Label>
+            <Label fx:id="playerMoedas4" prefHeight="17.0" prefWidth="133.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <padding>
+                  <Insets left="2.0" right="2.0" />
+               </padding>
+            </Label>
+            <Label fx:id="playerMoedas5" prefHeight="17.0" prefWidth="133.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+               <padding>
+                  <Insets left="2.0" right="2.0" />
+               </padding>
+            </Label>
+            <Label fx:id="playerMoedas6" prefHeight="17.0" prefWidth="133.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
                <padding>
                   <Insets left="2.0" right="2.0" />
                </padding>

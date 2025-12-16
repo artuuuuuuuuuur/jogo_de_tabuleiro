@@ -1,4 +1,4 @@
-package com.uece.poo.jogo_de_tabuleiro;
+package com.uece.poo.jogo_de_tabuleiro.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -6,14 +6,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Semaphore;
 
 import com.uece.poo.jogo_de_tabuleiro.config.Config;
-import com.uece.poo.jogo_de_tabuleiro.model.Casa;
-import com.uece.poo.jogo_de_tabuleiro.model.Jogador;
-import com.uece.poo.jogo_de_tabuleiro.model.Tabuleiro;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.Jogo;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.CasaSimples;
+import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
+import com.uece.poo.jogo_de_tabuleiro.model.util.CasaListener;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.CasaRender;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.ExceptionModal;
+import com.uece.poo.jogo_de_tabuleiro.model.util.JogoListener;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -29,13 +35,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
@@ -43,30 +43,27 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class TabuleiroController {
+public class TabuleiroController implements JogoListener, CasaListener {
 
     private Tabuleiro tabuleiro;
     private List<Jogador> jogadores;
-    private volatile boolean partidaTerminada = false;
     private final Semaphore pauseSemaphore = new Semaphore(0);
     private Jogador jogadorVencedor;
     private final Map<Jogador, Circle> jogadoresIcons = new HashMap<>();
-    private boolean debugMode;
+    private Jogo jogo;
 
-    @FXML
-    private Label currentPlayer;
-    @FXML
-    private Button jogarDadosButton;
-    @FXML
-    private GridPane tabuleiroPane;
-    @FXML
-    AnchorPane gameAnchorPane;
+    @FXML private Label currentPlayer;
+    @FXML private Button jogarDadosButton;
+    @FXML private GridPane tabuleiroGrid;
+    @FXML private AnchorPane gameAnchorPane;
+    @FXML private VBox eventLogVBox;
 
-    public void carregarTabuleiro(Tabuleiro tabuleiro, List<Jogador> jogadores, boolean debugMode) {
-        this.tabuleiro = tabuleiro;
-        this.jogadores = new CopyOnWriteArrayList<>(jogadores);
+    public void carregarTabuleiro(Jogo jogo) {
+        this.jogo = jogo;
+        this.tabuleiro = jogo.getTabuleiro();
+        this.jogadores = jogo.getJogadores();
 
-        this.debugMode = debugMode;
+        Logger.bind(this::logNaTela);
 
         for (Jogador jogador : this.jogadores) {
             Circle jogadorCircle = new Circle(10);
@@ -95,166 +92,68 @@ public class TabuleiroController {
 
     private String infoJogador(int idx) {
         Jogador j = jogadores.get(idx);
-        return j.getNome() + " | Posição: " + j.getPosicao();
+        return j.getNome() + " | Posição: " + j.getPosicao() + " | Moedas: " + j.getMoedas();
     }
 
     private void atualizarCasas() {
+        tabuleiro.atualizarJogadores(jogadores);
+        renderizarCasas();
+    }
+
+    private void renderizarCasas() {
         for (Casa casa : tabuleiro.getCasas()) {
-            casa.clearJogadores();
+            int i = casa.getIndex();
+            renderizarCasa(casa, i);
         }
 
-        for (Jogador jogador : jogadores) {
-            Casa casa = tabuleiro.getCasa(jogador.getPosicao());
-            if (casa != null) {
-                casa.addJogador(jogador);
-            }
-        }
 
+    }
+
+    private void renderizarCasa(Casa casa, int i) {
+        Pane casaPane;
+        if(i == 0) {
+            casaPane = CasaRender.renderCasaInicio();
+        } else if (i == tabuleiro.getCasas().size()-1) {
+            casaPane = CasaRender.renderCasaChegada(i);
+        } else {
+            casaPane = CasaRender.renderCasa(!(casa instanceof CasaSimples), i);
+        }
+        renderizarJogadores(i, casaPane);
+        if ((i / 6) % 2 == 0) {
+            tabuleiroGrid.add(casaPane, i / 6, (i % 6));
+        } else {
+            tabuleiroGrid.add(casaPane, i / 6, (5 - (i % 6)));
+        }
+    }
+
+    private void renderizarJogadores(int i, Pane casaPane) {
         for (Jogador jogador : jogadores) {
-            Pane casaAtual = (Pane) tabuleiroPane.lookup("#casa" + jogador.getPosicao());
-            FlowPane casaAtualFlowPane = (FlowPane) casaAtual.lookup("#casaFlowPane" + jogador.getPosicao());
-            if (casaAtualFlowPane != null) {
+            if (jogador.getPosicao() == i) {
+                FlowPane casaFlowPane = (FlowPane) casaPane.lookup("#casaFlowPane"+ i);
                 Circle circle = jogadoresIcons.get(jogador);
-                if (!casaAtualFlowPane.getChildren().contains(circle)) {
-                    casaAtualFlowPane.getChildren().add(circle);
+                if (!casaFlowPane.getChildren().contains(circle)) {
+                    casaFlowPane.getChildren().add(circle);
                 }
             }
         }
     }
 
-    private void jogarPartida() {
-        Thread.ofVirtual().start(() -> {
-            while (!partidaTerminada) {
-                for (Jogador jogador : jogadores) {
-                    if (partidaTerminada) {
-                        break;
-                    }
-                    jogar(jogador);
-                }
-            }
-        });
-    }
 
-    private void jogar(Jogador jogador) {
-        if (!jogador.isAtivo()) {
-            jogador.setAtivo(true);
-            System.out.println(jogador.getNome() + " agora pode jogar.");
-            return;
-        }
-
-        final Jogador current = jogador;
-
+    private void mostrarJogadorAtual(Jogador jogador) {
         Platform.runLater(() -> {
-            currentPlayer.setText("Vez de " + current.getNome());
-            jogarDadosButton.setDisable(false);
+            currentPlayer.setText(jogador.getNome() + " jogou.");
+            atualizarCasas();
         });
-
-        pause();
-
-        executarAcaoDoJogador(jogador);
-
-        Platform.runLater(() -> checkWinner(jogador));
-        Platform.runLater(() -> atualizarCasas());
-
-        if (jogador.isDadosIguais() && !debugMode) {
-            Platform.runLater(() -> {
-                currentPlayer.setText(jogador.getNome() + " tirou dados iguais! Joga novamente!");
-                jogarDadosButton.setDisable(false);
-            });
-
-            pause();
-
-            jogador.jogar();
-            Platform.runLater(() -> {
-                rollDicesPage(jogador);
-            });
-
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException _) {
-            }
-            Platform.runLater(this::atualizarStats);
-            atualizarCasasSync();
-
-            Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
-            if (casaAtual != null) {
-                casaAtual.executarAcaoEspecial(tabuleiro);
-            }
-
-            Platform.runLater(this::atualizarStats);
-
-            Platform.runLater(() -> checkWinner(jogador));
-            Platform.runLater(() -> atualizarCasas());
-        }
     }
 
-    private void executarAcaoDoJogador(Jogador jogador) {
-        if (debugMode) {
-            CompletableFuture<Integer> resultadoDebug = new CompletableFuture<>();
-
-            debugModePage(resultadoDebug);
-
-            Platform.runLater(() -> atualizarCasas());
-
-            int tempValorDados;
-            try {
-                tempValorDados = resultadoDebug.get();
-            } catch (Exception _) {
-                tempValorDados = 7;
-            }
-            final int valorDados = tempValorDados;
-
-            jogador.setPosicao(jogador.getPosicao() + valorDados);
-
-            Platform.runLater(() -> {
-                atualizarStats();
-            });
-
-            atualizarCasasSync();
-
-            Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
-            if (casaAtual != null) {
-                casaAtual.executarAcaoEspecial(tabuleiro);
-            }
-
-            atualizarCasasSync();
-            Platform.runLater(this::atualizarStats);
-            return;
-
-        }
-        
-        jogador.jogar();
-
-        Platform.runLater(() -> {
-            rollDicesPage(jogador);
-        });
-
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException _) {
-        }
-        Platform.runLater(() -> atualizarCasas());
-        atualizarCasasSync();
-
-        Casa casaAtual = tabuleiro.getCasa(jogador.getPosicao());
-        if (casaAtual != null) {
-            casaAtual.executarAcaoEspecial(tabuleiro);
-            atualizarCasasSync();
-            Platform.runLater(() -> atualizarCasas());
-        }
-
-        Platform.runLater(this::atualizarStats);
-
-    }
-
-    public void resume() {
+    @FXML public void resume() {
         pauseSemaphore.release();
     }
 
     private void pause() {
         try {
             pauseSemaphore.acquire();
-        } catch (InterruptedException e) {
+        } catch (InterruptedException _) {
             Thread.currentThread().interrupt();
         }
     }
@@ -275,7 +174,7 @@ public class TabuleiroController {
                     int valor = Integer.parseInt(input.getText());
                     resultadoDebug.complete(valor);
                     popup.close();
-                } catch (NumberFormatException ex) {
+                } catch (NumberFormatException _) {
                     input.setStyle("-fx-border-color: red;");
                 }
             });
@@ -293,9 +192,8 @@ public class TabuleiroController {
     private void checkWinner(Jogador jogador) {
         Platform.runLater(this::atualizarStats);
         Platform.runLater(() -> {
-            if (jogador.getPosicao() >= 40) {
-                jogador.setPosicao(40);
-                partidaTerminada = true;
+            if (jogador.getPosicao() >= jogo.getTabuleiro().getCasas().size()-1) {
+                jogador.setPosicao(jogo.getTabuleiro().getCasas().size()-1);
                 jogadorVencedor = jogador;
                 Platform.runLater(() -> {
                     currentPlayer.setText("🏆 " + jogadorVencedor.getNome() + " venceu!");
@@ -305,8 +203,8 @@ public class TabuleiroController {
                     pause.setOnFinished(e -> {
                         try {
                             switchToRank();
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
+                        } catch (IOException _) {
+                            ExceptionModal.popUp("Não foi possível abrir página do rank.");
                         }
                     });
                     pause.play();
@@ -402,7 +300,7 @@ public class TabuleiroController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/final_rank.fxml"));
         Parent root = loader.load();
         FinalRankController finalRankController = loader.getController();
-        finalRankController.carregar(jogadores, debugMode);
+        finalRankController.carregar(jogo);
         Stage stage = (Stage) gameAnchorPane.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
@@ -410,6 +308,81 @@ public class TabuleiroController {
 
     private void inicializar() {
         atualizarStats();
-        jogarPartida();
+        jogo.start();
+    }
+
+    private void logNaTela(String efeito) {
+        Platform.runLater(() -> {
+            Label label = new Label(efeito);
+            label.setTextFill(Paint.valueOf("white"));
+            label.setFont(Font.font(14));
+            eventLogVBox.getChildren().add(label);
+        });
+    }
+
+    @Override
+    public void onTurnoIniciado(Jogador jogador) {
+        Platform.runLater(() -> {
+            currentPlayer.setText("Vez de " + jogador.getNome());
+            jogarDadosButton.setDisable(false);
+        });
+        pause();
+    }
+
+    @Override
+    public void onDepoisDeJogarDados(Jogador jogador, CompletableFuture<Integer> resultadoDebug) {
+        mostrarJogadorAtual(jogador);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException _) {
+            ExceptionModal.popUp("Erro ao pausar thread.");
+        }
+        Platform.runLater(() -> atualizarCasas());
+        atualizarCasasSync();
+    }
+
+    @Override
+    public void onNormalMode(Jogador jogador) {
+        Platform.runLater(() -> {
+            rollDicesPage(jogador);
+            });
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException _){
+            ExceptionModal.popUp("Erro ao pausar thread.");
+        }
+    }
+
+    @Override
+    public void onDebugMode(Jogador jogador, CompletableFuture<Integer> resultadoDebug) {
+        debugModePage(resultadoDebug);
+
+        Platform.runLater(this::atualizarCasas);
+        Platform.runLater(this::atualizarStats);
+        atualizarCasasSync();
+    }
+
+    @Override
+    public void onMovimentoConcluido(Jogador jogador) {
+        Platform.runLater(() -> {
+            atualizarCasas();
+            atualizarCasasSync();
+            atualizarStats();
+        });
+    }
+
+    @Override
+    public void onCasaAplicada(String efeito) {
+        Platform.runLater(() -> {
+            logNaTela(efeito);
+            atualizarCasasSync();
+            atualizarCasas();
+        });
+    }
+
+    @Override
+    public void onVitoria(Jogador jogador) {
+        Platform.runLater(() -> checkWinner(jogador));
+        Platform.runLater(() -> atualizarCasas());
     }
 }
