@@ -105,18 +105,16 @@ public class TabuleiroController implements JogoListener, CasaListener {
             int i = casa.getIndex();
             renderizarCasa(casa, i);
         }
-
-
     }
 
     private void renderizarCasa(Casa casa, int i) {
         Pane casaPane;
         if(i == 0) {
-            casaPane = CasaRender.renderCasaInicio();
+            casaPane = CasaRender.renderCasaInicio(i);
         } else if (i == tabuleiro.getCasas().size()-1) {
             casaPane = CasaRender.renderCasaChegada(i);
         } else {
-            casaPane = CasaRender.renderCasa(!(casa instanceof CasaSimples), i);
+            casaPane = CasaRender.renderCasa((casa instanceof CasaSimples) ? "SIMPLES" : "ESPECIAL", i);
         }
         renderizarJogadores(i, casaPane);
         if ((i / 6) % 2 == 0) {
@@ -137,7 +135,6 @@ public class TabuleiroController implements JogoListener, CasaListener {
             }
         }
     }
-
 
     private void mostrarJogadorAtual(Jogador jogador) {
         Platform.runLater(() -> {
