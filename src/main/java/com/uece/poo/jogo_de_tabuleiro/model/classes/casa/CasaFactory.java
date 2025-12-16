@@ -8,6 +8,8 @@ import com.uece.poo.jogo_de_tabuleiro.model.util.view.ExceptionModal;
 
 public class CasaFactory {
 
+    private CasaFactory() {}
+
     public static Casa getCasa(Class<? extends Casa> casaType, int index) {
         try {
             return casaType.getConstructor(int.class).newInstance(index);

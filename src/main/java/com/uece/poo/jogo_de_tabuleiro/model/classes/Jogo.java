@@ -158,7 +158,7 @@ public class Jogo {
                 case JogadorNormal _ -> jogadoresNormais = true;
                 case JogadorAzarado _ -> jogadoresAzarados = true;
                 case JogadorSortudo _ -> jogadoresSortudos = true;
-                default -> {}
+                default -> ExceptionModal.popUp("Tipo não reconhecido.");
             }
         }
     }

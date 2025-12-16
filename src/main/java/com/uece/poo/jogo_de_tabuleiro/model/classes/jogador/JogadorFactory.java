@@ -6,6 +6,8 @@ import com.uece.poo.jogo_de_tabuleiro.model.util.view.ExceptionModal;
 
 public class JogadorFactory {
 
+    private JogadorFactory() {}
+
     public static Jogador getJogador(Class<? extends Jogador> jogadorType, String cor, String nome, int quantCasas) {
         try {
             return jogadorType.getConstructor(String.class, String.class, int.class).newInstance(cor, nome, quantCasas);

@@ -19,11 +19,9 @@ public class CasaAzar extends Casa {
     
     @Override
     public void aplicarRegra(Tabuleiro tabuleiro, Jogador jogador) {
-        if (isNotSortudo(jogador)) {
-            if (jogador.getPosicao() == index) {
-                jogador.andar(-3);
-                Logger.log(jogador.getNome() + " voltou 3 casas.");
-            }
+        if (isNotSortudo(jogador) && jogador.getPosicao() == index) {
+            jogador.andar(-3);
+            Logger.log(jogador.getNome() + " voltou 3 casas.");
         }
     }
     

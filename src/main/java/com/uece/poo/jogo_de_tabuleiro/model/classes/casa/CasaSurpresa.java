@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.uece.poo.jogo_de_tabuleiro.config.Config;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.Tabuleiro;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.JogadorAzarado;
@@ -76,7 +77,7 @@ public class CasaSurpresa extends Casa {
     }
 
     private void abrirPopUpDeEscolha(Replacement r) {
-        String cartasPath = "/com/uece/poo/jogo_de_tabuleiro/assets/cartas/carta_";
+        String cartasPath = Config.get("cartasPath");
         Platform.runLater(() -> {
             Stage popup = new Stage();
             Label mudarTipoLabel = new Label("Escolha uma carta para mudar de tipo:");

@@ -1,6 +1,5 @@
 package com.uece.poo.jogo_de_tabuleiro.model.util;
 
-import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.Casa;
 import com.uece.poo.jogo_de_tabuleiro.model.classes.jogador.Jogador;
 
 import java.util.concurrent.CompletableFuture;

@@ -15,12 +15,12 @@ public abstract class Casa {
 
 
 
-    public Casa(int index, List<Jogador> jogadores) {
+    protected Casa(int index, List<Jogador> jogadores) {
         this.index = index;
         this.jogadores = jogadores;
     }
     
-    public Casa(int index) {
+    protected Casa(int index) {
         this.index = index;
         this.jogadores = new CopyOnWriteArrayList<>();
     }

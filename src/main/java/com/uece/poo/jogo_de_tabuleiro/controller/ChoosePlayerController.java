@@ -97,17 +97,11 @@ public class ChoosePlayerController {
                     }
 
                     switch (String.valueOf(jogadorAtualTipo.getValue())) {
-                        case "Normal" -> {
-                            jogadorType = JogadorNormal.class;
-                        }
-                        case "Com Sorte" -> {
-                            jogadorType = JogadorSortudo.class;
-                        }
-                        case "Azarado" -> {
-                            jogadorType = JogadorAzarado.class;
-                        }
+                        case "Normal" -> jogadorType = JogadorNormal.class;
+                        case "Com Sorte" -> jogadorType = JogadorSortudo.class;
+                        case "Azarado" -> jogadorType = JogadorAzarado.class;
                         default -> {
-                            System.out.println("Não reconhecido. " + jogadorAtualCor.getValue() + ", "
+                            ExceptionModal.popUp("Não reconhecido. " + jogadorAtualCor.getValue() + ", "
                                     + jogadorAtualNome.getText());
                             return;
                         }

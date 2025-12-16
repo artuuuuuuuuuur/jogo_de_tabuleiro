@@ -30,7 +30,7 @@ public class HomeController implements Initializable {
     private boolean modoDebug;
 
     public void configTabuleiro(Event event) throws IOException {
-        int valor = Integer.valueOf(quantJogadoresComboBox.getValue().toString());
+        int valor = Integer.parseInt(quantJogadoresComboBox.getValue().toString());
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/config_tabuleiro.fxml"));
         Parent root = loader.load();
@@ -62,8 +62,7 @@ public class HomeController implements Initializable {
             modoDebug = true;
             try {
                 configTabuleiro(e);
-            } catch (IOException e1) {
-            } catch (NullPointerException e2) {
+            } catch (NullPointerException | IOException _) {
                 ExceptionModal.popUp("Preencha a quantidade de jogadores.");
             }
         });
@@ -71,8 +70,7 @@ public class HomeController implements Initializable {
             modoDebug = false;
             try {
                 configTabuleiro(e);
-            } catch (IOException e1) {
-            } catch (NullPointerException e2) {
+            } catch (NullPointerException | IOException _) {
                 ExceptionModal.popUp("Preencha a quantidade de Jogadores.");
             }
         });

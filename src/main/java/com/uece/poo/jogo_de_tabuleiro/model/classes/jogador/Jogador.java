@@ -4,17 +4,21 @@ import java.util.Random;
 
 public abstract class Jogador {
 
-    protected int posicao, vezesJogadas;
+    protected int posicao;
+    protected int vezesJogadas;
     protected int[] dados = new int[2];
-    protected String cor, nome;
-    protected boolean ativo, tentarNovamente, jogarNovamente;
+    protected String cor;
+    protected String nome;
+    protected boolean ativo;
+    protected boolean tentarNovamente;
+    protected boolean jogarNovamente;
     protected Jogador jogadorAlvo;
     protected int lastCasaEspecialIndex = -1;
     protected String tipo;
     protected int quantCasas;
     protected int moedas;
 
-    public Jogador(String cor, String nome, int quantCasas) {
+    protected Jogador(String cor, String nome, int quantCasas) {
         this.cor = cor;
         this.ativo = true;
         this.posicao = 0;
@@ -25,7 +29,7 @@ public abstract class Jogador {
         this.quantCasas = quantCasas;
     }
 
-    public Jogador(boolean ativo, String cor, String nome, boolean tentarNovamente, int posicao, int vezesJogadas, boolean jogarNovamente, int quantCasas) {
+    protected Jogador(boolean ativo, String cor, String nome, boolean tentarNovamente, int posicao, int vezesJogadas, boolean jogarNovamente, int quantCasas) {
         this.ativo = ativo;
         this.cor = cor;
         this.tentarNovamente = tentarNovamente;

@@ -11,6 +11,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ExceptionModal {
+
+    private ExceptionModal() {}
+
     public static void popUp(String msg) {
         Platform.runLater(() -> {
             Stage alerta = new Stage();

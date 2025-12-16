@@ -103,31 +103,39 @@ public class TabuleiroController implements JogoListener, CasaListener {
     private void renderizarCasas() {
         for (Casa casa : tabuleiro.getCasas()) {
             int i = casa.getIndex();
-            Pane casaPane;
-            if(i == 0) {
-                casaPane = CasaRender.renderCasaInicio();
-            } else if (i == tabuleiro.getCasas().size()-1) {
-                casaPane = CasaRender.renderCasaChegada(i);
-            } else {
-                casaPane = CasaRender.renderCasa(!(casa instanceof CasaSimples), i);
-            }
-            for (Jogador jogador : jogadores) {
-                if (jogador.getPosicao() == i) {
-                    FlowPane casaFlowPane = (FlowPane) casaPane.lookup("#casaFlowPane"+i);
-                    Circle circle = jogadoresIcons.get(jogador);
-                    if (!casaFlowPane.getChildren().contains(circle)) {
-                        casaFlowPane.getChildren().add(circle);
-                    }
-                }
-            }
-            if ((i / 6) % 2 == 0) {
-                tabuleiroGrid.add(casaPane, i / 6, (i % 6));
-            } else {
-                tabuleiroGrid.add(casaPane, i / 6, (5 - (i % 6)));
-            }
+            renderizarCasa(casa, i);
         }
 
 
+    }
+
+    private void renderizarCasa(Casa casa, int i) {
+        Pane casaPane;
+        if(i == 0) {
+            casaPane = CasaRender.renderCasaInicio();
+        } else if (i == tabuleiro.getCasas().size()-1) {
+            casaPane = CasaRender.renderCasaChegada(i);
+        } else {
+            casaPane = CasaRender.renderCasa(!(casa instanceof CasaSimples), i);
+        }
+        renderizarJogadores(i, casaPane);
+        if ((i / 6) % 2 == 0) {
+            tabuleiroGrid.add(casaPane, i / 6, (i % 6));
+        } else {
+            tabuleiroGrid.add(casaPane, i / 6, (5 - (i % 6)));
+        }
+    }
+
+    private void renderizarJogadores(int i, Pane casaPane) {
+        for (Jogador jogador : jogadores) {
+            if (jogador.getPosicao() == i) {
+                FlowPane casaFlowPane = (FlowPane) casaPane.lookup("#casaFlowPane"+ i);
+                Circle circle = jogadoresIcons.get(jogador);
+                if (!casaFlowPane.getChildren().contains(circle)) {
+                    casaFlowPane.getChildren().add(circle);
+                }
+            }
+        }
     }
 
 
@@ -145,7 +153,7 @@ public class TabuleiroController implements JogoListener, CasaListener {
     private void pause() {
         try {
             pauseSemaphore.acquire();
-        } catch (InterruptedException e) {
+        } catch (InterruptedException _) {
             Thread.currentThread().interrupt();
         }
     }
@@ -166,7 +174,7 @@ public class TabuleiroController implements JogoListener, CasaListener {
                     int valor = Integer.parseInt(input.getText());
                     resultadoDebug.complete(valor);
                     popup.close();
-                } catch (NumberFormatException ex) {
+                } catch (NumberFormatException _) {
                     input.setStyle("-fx-border-color: red;");
                 }
             });
@@ -195,8 +203,8 @@ public class TabuleiroController implements JogoListener, CasaListener {
                     pause.setOnFinished(e -> {
                         try {
                             switchToRank();
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
+                        } catch (IOException _) {
+                            ExceptionModal.popUp("Não foi possível abrir página do rank.");
                         }
                     });
                     pause.play();
@@ -327,6 +335,7 @@ public class TabuleiroController implements JogoListener, CasaListener {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException _) {
+            ExceptionModal.popUp("Erro ao pausar thread.");
         }
         Platform.runLater(() -> atualizarCasas());
         atualizarCasasSync();
@@ -339,8 +348,8 @@ public class TabuleiroController implements JogoListener, CasaListener {
             });
         try {
             Thread.sleep(4000);
-        } catch (InterruptedException e){
-            ExceptionModal.popUp(e.getMessage());
+        } catch (InterruptedException _){
+            ExceptionModal.popUp("Erro ao pausar thread.");
         }
     }
 
