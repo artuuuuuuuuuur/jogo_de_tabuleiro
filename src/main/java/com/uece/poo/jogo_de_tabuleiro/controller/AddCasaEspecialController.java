@@ -2,6 +2,7 @@ package com.uece.poo.jogo_de_tabuleiro.controller;
 
 import com.uece.poo.jogo_de_tabuleiro.model.classes.casa.*;
 import com.uece.poo.jogo_de_tabuleiro.model.util.CasasEspeciaisDescricao;
+import com.uece.poo.jogo_de_tabuleiro.model.util.view.ExceptionModal;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
@@ -17,7 +18,7 @@ public class AddCasaEspecialController {
 
     private ConfigTabuleiroController controller;
 
-    public void inicializar(ConfigTabuleiroController controller, int quantCasas, HashMap<Integer, Class<? extends Casa>> casasEspeciais) {
+    public void inicializar(ConfigTabuleiroController controller) {
         this.controller = controller;
 
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9999999, 1);
@@ -29,8 +30,11 @@ public class AddCasaEspecialController {
         }
     }
 
-    @FXML
-    public void addCasaEspecial() {
+    @FXML public void addCasaEspecial() {
+        if (casaTypeComboBox.getValue() == null) {
+            ExceptionModal.popUp("Escolha um tipo de casa especial.");
+            return;
+        }
         controller.addCasaEspecial(indexSpinner.getValue(), CasasEspeciaisDescricao.getClasse(casaTypeComboBox.getValue()));
         ((Stage) casaTypeComboBox.getScene().getWindow()).close();
     }

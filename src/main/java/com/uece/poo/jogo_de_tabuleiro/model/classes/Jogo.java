@@ -22,16 +22,11 @@ import com.uece.poo.jogo_de_tabuleiro.model.util.JogoListener;
 public class Jogo {
 
     private boolean modoDebug;
-    private int numJogadores;
-    private HashMap<Integer, Class<? extends Casa>> casasEspeciais;
-    private int numCasas;
     private List<Jogador> jogadores;
-    private Jogador jogadorVencedor;
     private Set<String> coresEscolhidas;
     private boolean jogadoresNormais;
     private boolean jogadoresSortudos;
     private boolean jogadoresAzarados;
-    private Jogador jogadorAtual;
     private JogoListener listener;
     private Tabuleiro tabuleiro;
 
@@ -48,15 +43,12 @@ public class Jogo {
         if (quantidadeCasas <= 0) {
             throw new IllegalArgumentException("A quantidade de casas deve ser maior que 0.");
         }
-        this.numCasas = quantidadeCasas;
-        this.casasEspeciais = casasEspeciais;
         this.tabuleiro = Tabuleiro.getInstance(jogadores, quantidadeCasas, casasEspeciais);
         this.modoDebug = modoDebug;
     }
 
     public void configJogadores(List<Jogador> jogadores) {
         validarJogadores(jogadores);
-        this.numJogadores = jogadores.size();
         this.jogadores.clear();
         this.jogadores.addAll(jogadores);
     }
@@ -182,7 +174,6 @@ public class Jogo {
     private boolean isGameOver() {
         for (Jogador jogador : jogadores) {
             if (jogador.getPosicao() >= tabuleiro.getCasas().size()-1) {
-                jogadorVencedor = jogador;
                 return true;
             }
         }

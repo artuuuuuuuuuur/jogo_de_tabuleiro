@@ -33,21 +33,15 @@ import javafx.stage.Stage;
 
 public class ChoosePlayerController {
 
-    @FXML
-    private Button voltarButton;
-    @FXML
-    private AnchorPane choosePLayerAnchorPane;
-    private boolean modoDebug;
+    @FXML private Button voltarButton;
+    @FXML private AnchorPane choosePLayerAnchorPane;
+
     private List<Jogador> jogadores = new CopyOnWriteArrayList<>();
     private Set<String> coresEscolhidas = new HashSet<>();
     private int quantidadeDeJogadores;
-    private boolean jogadoresNormais = false;
-    private boolean jogadoresComSorte = false;
-    private boolean jogadoresAzarados = false;
     private Jogo jogo;
 
     public void carregar(Jogo jogo, int quantidadeDeJogadores) {
-        this.modoDebug = jogo.isModoDebug();
         this.jogo = jogo;
         this.quantidadeDeJogadores = quantidadeDeJogadores;
         for (int i = 1; i <= 6; i++) {
@@ -64,7 +58,7 @@ public class ChoosePlayerController {
         }
     }
 
-    public void buildTabletop(ActionEvent event) throws IOException {
+    @FXML public void buildTabletop(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/tabuleiro.fxml"));
         Parent root = loader.load();
 
@@ -105,22 +99,16 @@ public class ChoosePlayerController {
                     switch (String.valueOf(jogadorAtualTipo.getValue())) {
                         case "Normal" -> {
                             jogadorType = JogadorNormal.class;
-                            jogadoresNormais = true;
                         }
                         case "Com Sorte" -> {
                             jogadorType = JogadorSortudo.class;
-                            jogadoresComSorte = true;
                         }
                         case "Azarado" -> {
                             jogadorType = JogadorAzarado.class;
-                            jogadoresAzarados = true;
                         }
                         default -> {
-                            System.out.println("Não reconhecido. " + String.valueOf(jogadorAtualCor.getValue()) + ", "
+                            System.out.println("Não reconhecido. " + jogadorAtualCor.getValue() + ", "
                                     + jogadorAtualNome.getText());
-                            jogadoresAzarados = false;
-                            jogadoresComSorte = false;
-                            jogadoresNormais = false;
                             return;
                         }
                     }
@@ -130,12 +118,13 @@ public class ChoosePlayerController {
         }
     }
 
-    public void voltar(Event event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/home.fxml"));
+    @FXML public void voltar(Event event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/config_tabuleiro.fxml"));
         Parent root = loader.load();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
+        jogadores.clear();
     }
 
 }

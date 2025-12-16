@@ -22,12 +22,9 @@ import javafx.stage.Stage;
 
 public class HomeController implements Initializable {
 
-    @FXML
-    private ComboBox quantJogadoresComboBox;
-    @FXML
-    private Button modoNormalButton;
-    @FXML
-    private Button modoDebugButton;
+    @FXML private ComboBox quantJogadoresComboBox;
+    @FXML private Button modoNormalButton;
+    @FXML private Button modoDebugButton;
 
     private ObservableList quantJogadoresList = FXCollections.observableArrayList();
     private boolean modoDebug;
@@ -46,7 +43,7 @@ public class HomeController implements Initializable {
         stage.show();
     }
 
-    public void goToRules(Event event) throws IOException {
+    @FXML public void goToRules(Event event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/tela_informacao.fxml"));
         Parent root = loader.load();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

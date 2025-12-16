@@ -24,10 +24,8 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class ConfigTabuleiroController {
-    @FXML
-    Spinner<Integer> quantCasasSpinner;
-    @FXML
-    VBox casasEspeciaisVBox;
+    @FXML Spinner<Integer> quantCasasSpinner;
+    @FXML VBox casasEspeciaisVBox;
 
     private Jogo jogo;
     private boolean modoDebug;
@@ -46,13 +44,12 @@ public class ConfigTabuleiroController {
 
     }
 
-    @FXML
-    public void abrirTelaDeEscolha(Event event) throws IOException {
+    @FXML public void abrirTelaDeEscolha(Event event) throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource("add_casa_especial.fxml"));
             Parent root = loader.load();
             AddCasaEspecialController controller = loader.getController();
-            controller.inicializar(this, quantCasasSpinner.getValue(), casasEspeciais);
+            controller.inicializar(this);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -63,8 +60,7 @@ public class ConfigTabuleiroController {
         }
     }
 
-    @FXML
-    public void abrirEscolhaDeJogadores(ActionEvent event) throws IOException {
+    @FXML public void abrirEscolhaDeJogadores(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/choose_player.fxml"));
         Parent root = loader.load();
 
@@ -99,7 +95,13 @@ public class ConfigTabuleiroController {
     }
 
 
-    public void voltar() {}
+    @FXML public void voltar() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/home.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) quantCasasSpinner.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 
     private void validarParametros(int index, Class<? extends Casa> tipoCasa) {
         if(index <= 0) {

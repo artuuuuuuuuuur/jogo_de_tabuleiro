@@ -47,11 +47,9 @@ public class TabuleiroController implements JogoListener, CasaListener {
 
     private Tabuleiro tabuleiro;
     private List<Jogador> jogadores;
-    private volatile boolean partidaTerminada = false;
     private final Semaphore pauseSemaphore = new Semaphore(0);
     private Jogador jogadorVencedor;
     private final Map<Jogador, Circle> jogadoresIcons = new HashMap<>();
-    private boolean debugMode;
     private Jogo jogo;
 
     @FXML private Label currentPlayer;
@@ -64,8 +62,6 @@ public class TabuleiroController implements JogoListener, CasaListener {
         this.jogo = jogo;
         this.tabuleiro = jogo.getTabuleiro();
         this.jogadores = jogo.getJogadores();
-
-        this.debugMode = jogo.isModoDebug();
 
         Logger.bind(this::logNaTela);
 
@@ -142,7 +138,7 @@ public class TabuleiroController implements JogoListener, CasaListener {
         });
     }
 
-    public void resume() {
+    @FXML public void resume() {
         pauseSemaphore.release();
     }
 
@@ -189,8 +185,7 @@ public class TabuleiroController implements JogoListener, CasaListener {
         Platform.runLater(this::atualizarStats);
         Platform.runLater(() -> {
             if (jogador.getPosicao() >= jogo.getTabuleiro().getCasas().size()-1) {
-                jogador.setPosicao(jogo.getTabuleiro().getCasas().size());
-                partidaTerminada = true;
+                jogador.setPosicao(jogo.getTabuleiro().getCasas().size()-1);
                 jogadorVencedor = jogador;
                 Platform.runLater(() -> {
                     currentPlayer.setText("🏆 " + jogadorVencedor.getNome() + " venceu!");
@@ -297,7 +292,7 @@ public class TabuleiroController implements JogoListener, CasaListener {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uece/poo/jogo_de_tabuleiro/final_rank.fxml"));
         Parent root = loader.load();
         FinalRankController finalRankController = loader.getController();
-        finalRankController.carregar(jogadores, debugMode);
+        finalRankController.carregar(jogo);
         Stage stage = (Stage) gameAnchorPane.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
